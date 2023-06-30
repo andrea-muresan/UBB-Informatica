@@ -1,0 +1,132 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  
+     7                                  extern exit, fopen, fclose, printf, scanf, fprintf, fread
+     8                                  import fopen msvcrt.dll
+     9                                  import fclose msvcrt.dll
+    10                                  import printf msvcrt.dll
+    11                                  import scanf msvcrt.dll
+    12                                  import fread msvcrt.dll
+    13                                  import fprintf msvcrt.dll
+    14                                  import exit msvcrt.dll
+    15                                  
+    16                                  segment data use32 class=data
+    17 00000000 00<rept>                    nume_input times 30 db 0
+    18 0000001E 7200                        acces_input db "r", 0
+    19 00000020 FFFFFFFF                    desc_input dd -1
+    20                                      
+    21 00000024 6F75747075742E7478-         nume_output db "output.txt", 0
+    21 0000002D 7400               
+    22 0000002F 7700                        acces_output db "w", 0
+    23 00000031 FFFFFFFF                    desc_output dd -1
+    24                                      
+    25 00000035 00000000                    caract dd 0
+    26                                      
+    27 00000039 256300                      format_caract db "%c", 0
+    28 0000003C 256400                      format_numar db "%d", 0
+    29 0000003F 257300                      format_cit db "%s", 0
+    30                                  
+    31 00000042 446573636869646572-         eroare db "Deschiderea unui fisier a esuat", 0
+    31 0000004B 656120756E75692066-
+    31 00000054 697369657220612065-
+    31 0000005D 7375617400         
+    32                                      
+    33                                  ; our code starts here
+    34                                  segment code use32 class=code
+    35                                      start:
+    36                                          ; scanf(format_cit, nume_input)
+    37 00000000 68[00000000]                    push dword nume_input
+    38 00000005 68[3F000000]                    push dword format_cit
+    39 0000000A FF15[00000000]                  call [scanf]
+    40 00000010 83C408                          add esp, 4*2
+    41                                          
+    42                                          ; fisier input
+    43                                          ; fopen(nume_input, acces_input)
+    44 00000013 68[1E000000]                    push dword acces_input
+    45 00000018 68[00000000]                    push dword nume_input
+    46 0000001D FF15[00000000]                  call [fopen]
+    47 00000023 83C408                          add esp, 4*2
+    48                                          
+    49 00000026 83F800                          cmp eax, 0
+    50 00000029 0F84A3000000                    je eroare_deschidere
+    51                                          
+    52 0000002F A3[20000000]                    mov [desc_input], eax
+    53                                          
+    54                                          ; fisier output
+    55                                          ; fopen(nume_input, acces_input)
+    56 00000034 68[2F000000]                    push dword acces_output
+    57 00000039 68[24000000]                    push dword nume_output
+    58 0000003E FF15[00000000]                  call [fopen]
+    59 00000044 83C408                          add esp, 4*2
+    60                                          
+    61 00000047 83F800                          cmp eax, 0
+    62 0000004A 0F8482000000                    je eroare_deschidere
+    63                                          
+    64 00000050 A3[31000000]                    mov [desc_output], eax
+    65                                          
+    66                                          
+    67                                          repeta:
+    68                                              ; fread(caract, 1, 1, desc_input)
+    69 00000055 FF35[20000000]                      push dword [desc_input]
+    70 0000005B 6A01                                push dword 1
+    71 0000005D 6A01                                push dword 1
+    72 0000005F 68[35000000]                        push dword caract
+    73 00000064 FF15[00000000]                      call [fread]
+    74 0000006A 83C410                              add esp, 4*4
+    75                                              
+    76 0000006D 83F800                              cmp eax, 0
+    77 00000070 7440                                je afara
+    78                                              
+    79 00000072 B800000000                          mov eax, 0
+    80 00000077 A0[35000000]                        mov al, byte [caract]
+    81 0000007C 3C61                                cmp al, 'a'
+    82 0000007E 7C1B                                jl afisare
+    83                                              
+    84 00000080 3C7A                                cmp al, 'z'
+    85 00000082 7F17                                jg afisare
+    86                                              
+    87                                              ; fprintf(desc_output, format_numar, eax)
+    88 00000084 50                                  push dword eax
+    89 00000085 68[3C000000]                        push dword format_numar
+    90 0000008A FF35[31000000]                      push dword [desc_output]
+    91 00000090 FF15[00000000]                      call [fprintf]
+    92 00000096 83C40C                              add esp, 4*3
+    93                                              
+    94 00000099 EBBA                                jmp repeta
+    95                                          
+    96                                              afisare:
+    97                                                  ; fprintf(desc_output, format_caract, eax)
+    98 0000009B 50                                      push dword eax
+    99 0000009C 68[39000000]                            push dword format_caract
+   100 000000A1 FF35[31000000]                          push dword [desc_output]
+   101 000000A7 FF15[00000000]                          call [fprintf]
+   102 000000AD 83C40C                                  add esp, 4*3
+   103                                                  
+   104 000000B0 EBA3                                jmp repeta
+   105                                              
+   106                                              
+   107                                          afara:
+   108                                          
+   109                                          ; fclose(desc_output) 
+   110 000000B2 FF35[31000000]                  push dword [desc_output]
+   111 000000B8 FF15[00000000]                  call [fclose]
+   112 000000BE 83C404                          add esp, 4
+   113                                          
+   114                                          ; fclose(desc_input) 
+   115 000000C1 FF35[20000000]                  push dword [desc_input]
+   116 000000C7 FF15[00000000]                  call [fclose]
+   117 000000CD 83C404                          add esp, 4
+   118                                          
+   119 000000D0 EB0E                            jmp final
+   120                                          eroare_deschidere:
+   121 000000D2 68[42000000]                        push dword eroare
+   122 000000D7 FF15[00000000]                      call [printf]
+   123 000000DD 83C404                              add esp,4
+   124                                              
+   125                                          final:
+   126                                          ; exit(0)
+   127 000000E0 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+   128 000000E2 FF15[00000000]                  call    [exit]       ; call exit to terminate the program

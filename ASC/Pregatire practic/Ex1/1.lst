@@ -1,0 +1,103 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit, fopen, fclose, fscanf, printf
+     8                                  import exit msvcrt.dll
+     9                                  import fopen msvcrt.dll
+    10                                  import fclose msvcrt.dll
+    11                                  import fscanf msvcrt.dll
+    12                                  import printf msvcrt.dll
+    13                                  
+    14                                  segment data use32 class=data
+    15 00000000 696E7075742E747874-         nume_fisier db "input.txt", 0
+    15 00000009 00                 
+    16 0000000A 7200                        mod_acces db "r", 0
+    17 0000000C FFFFFFFF                    descriptor dd -1
+    18                                      
+    19 00000010 00000000                    numar dd 0
+    20 00000014 10000000                    zece dd 10h
+    21                                      
+    22 00000018 257800                      format_hexa db "%x", 0
+    23 0000001B 25782000                    format_hexa_afis db "%x ", 0
+    24 0000001F 256400                      format_dec db "%d", 0
+    25                                      
+    26 00000022 446573636869646572-         eroare db "Deschiderea fisierului a esuat", 0
+    26 0000002B 656120666973696572-
+    26 00000034 756C75692061206573-
+    26 0000003D 75617400           
+    27                                  
+    28                                  ; 1.	Se dă un șir de 10 numere în baza 16 în fișierul input.txt. 
+    29                                  ; Să se determine cifra minimă din fiecare număr.
+    30                                  ; Să se afișeze acest șir al cifrelor minime, în baza 10, pe ecran.
+    31                                  
+    32                                  segment code use32 class=code
+    33                                      start:
+    34                                          ; fopen(nume_fisier, mod_acces)
+    35 00000000 68[0A000000]                    push dword mod_acces
+    36 00000005 68[00000000]                    push dword nume_fisier
+    37 0000000A FF15[00000000]                  call [fopen]
+    38 00000010 83C408                          add esp, 4*2
+    39                                          
+    40 00000013 83F800                          cmp eax, 0
+    41 00000016 7470                            je eroare_deschidere
+    42                                          
+    43 00000018 A3[0C000000]                    mov [descriptor], eax
+    44                                          
+    45 0000001D B90A000000                      mov ecx, 10
+    46                                          repeta:
+    47 00000022 51                                  push ecx
+    48                                                  
+    49                                                  ; fscanf(descriptor, format_hexa, numar)
+    50 00000023 68[10000000]                            push dword numar
+    51 00000028 68[18000000]                            push dword format_hexa
+    52 0000002D FF35[0C000000]                          push dword [descriptor]
+    53 00000033 FF15[00000000]                          call [fscanf]
+    54 00000039 83C40C                                  add esp, 4*3
+    55                                                  
+    56 0000003C BB00000000                              mov ebx, 0
+    57 00000041 B30A                                    mov bl, 10
+    58 00000043 BA00000000                              mov edx, 0
+    59 00000048 A1[10000000]                            mov eax, [numar]
+    60                                                  bucla:
+    61 0000004D BA00000000                                  mov edx, 0
+    62                                                      
+    63 00000052 F735[14000000]                              div dword [zece]
+    64                                                      
+    65 00000058 38DA                                        cmp dl, bl
+    66 0000005A 7F02                                        jg next
+    67                                                      
+    68 0000005C 88D3                                        mov bl, dl
+    69                                                      
+    70                                                      next:
+    71 0000005E 83F800                                          cmp eax, 0
+    72 00000061 7402                                            je gata
+    73 00000063 EBE8                                        jmp bucla
+    74                                                      
+    75                                                  gata: 
+    76                                                  ; printf(format_hexa, ebx)
+    77 00000065 53                                      push dword ebx
+    78 00000066 68[1B000000]                            push dword format_hexa_afis
+    79 0000006B FF15[00000000]                          call [printf]
+    80 00000071 83C408                                  add esp, 4*2
+    81                                                  
+    82 00000074 59                                  pop ecx
+    83 00000075 E2AB                            loop repeta
+    84                                          
+    85                                          ; fclose(descriptor)
+    86 00000077 FF35[0C000000]                  push dword [descriptor]
+    87 0000007D FF15[00000000]                  call [fclose]
+    88 00000083 83C404                          add esp, 4
+    89                                          
+    90 00000086 EB0E                            jmp final
+    91                                          eroare_deschidere:
+    92 00000088 68[22000000]                        push dword eroare
+    93 0000008D FF15[00000000]                      call [printf]
+    94 00000093 83C404                              add esp, 4
+    95                                          
+    96                                          final:
+    97                                          ; exit(0)
+    98 00000096 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    99 00000098 FF15[00000000]                  call    [exit]       ; call exit to terminate the program

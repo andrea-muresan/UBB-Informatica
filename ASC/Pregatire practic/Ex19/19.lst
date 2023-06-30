@@ -1,0 +1,106 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit, fopen, fclose, printf, scanf, fprintf
+     8                                  import exit msvcrt.dll
+     9                                  import fopen msvcrt.dll
+    10                                  import fclose msvcrt.dll
+    11                                  import printf msvcrt.dll
+    12                                  import fprintf msvcrt.dll
+    13                                  import scanf msvcrt.dll
+    14                                  
+    15                                  segment data use32 class=data
+    16 00000000 6669736965722E7478-         nume_fisier db "fisier.txt", 0
+    16 00000009 7400               
+    17 0000000B 7700                        mod_acces db "w", 0
+    18 0000000D FFFFFFFF                    descriptor dd -1
+    19                                      
+    20 00000011 00<rept>                    cuvant times 20 db 0
+    21 00000025 00000000                    numar dd 0
+    22                                      
+    23 00000029 256400                      format_cit_nr db "%d", 0
+    24 0000002C 257300                      format_cit_cuv db "%s", 0
+    25 0000002F 25732000                    format_afis db "%s ", 0
+    26                                      
+    27 00000033 446573636869646572-         eroare db "Deschiderea fisierului a esuat", 0
+    27 0000003C 656120666973696572-
+    27 00000045 756C75692061206573-
+    27 0000004E 75617400           
+    28                                  
+    29                                  ; Sa se citeasca de la tastatura un numar n, apoi sa se citeasca mai multe cuvinte, pana cand se citeste cuvantul/caracterul "#". Sa se scrie intr-un fisier text toate cuvintele citite care incep si se termina cu ac
+    30                                  segment code use32 class=code
+    31                                      start:
+    32                                          ; scanf(format_cit_nr, numar)
+    33 00000000 68[25000000]                    push dword numar
+    34 00000005 68[29000000]                    push dword format_cit_nr
+    35 0000000A FF15[00000000]                  call [scanf]
+    36 00000010 83C408                          add esp, 4*2
+    37                                          
+    38                                          ; fopen(nume_fisier, mod_acces)
+    39 00000013 68[0B000000]                    push dword mod_acces
+    40 00000018 68[00000000]                    push dword nume_fisier
+    41 0000001D FF15[00000000]                  call [fopen]
+    42 00000023 83C408                          add esp, 4*2
+    43                                          
+    44 00000026 83F800                          cmp eax, 0
+    45 00000029 746F                            je eroare_deschidere
+    46                                          
+    47 0000002B A3[0D000000]                    mov [descriptor], eax
+    48                                          
+    49                                          repeta:            
+    50                                              ; scanf(format_cit_cuv, cuvant)
+    51 00000030 68[11000000]                        push dword cuvant
+    52 00000035 68[2C000000]                        push dword format_cit_cuv
+    53 0000003A FF15[00000000]                      call [scanf]
+    54 00000040 83C408                              add esp, 4*2
+    55                                              
+    56 00000043 BE00000000                          mov esi, 0 ;lungime - index
+    57                                              bucla:
+    58 00000048 8A86[11000000]                          mov al, byte [cuvant + esi]
+    59 0000004E 3C00                                    cmp al, 0
+    60 00000050 7407                                    je gata
+    61                                                  
+    62 00000052 3C23                                    cmp al, '#'
+    63 00000054 7433                                    je inchidere
+    64                                                  
+    65 00000056 46                                      inc esi
+    66 00000057 EBEF                                    jmp bucla
+    67                                              
+    68                                              gata:
+    69 00000059 3B35[25000000]                          cmp esi, [numar]
+    70 0000005F 7C26                                    jl next
+    71                                                  
+    72 00000061 A0[11000000]                            mov al, byte [cuvant]
+    73 00000066 3A86[10000000]                          cmp al, [cuvant + esi - 1]
+    74 0000006C 7519                                    jne next
+    75                                                  
+    76                                                  ; fprintf(descriptor, format_afis, cuvant)
+    77 0000006E 68[11000000]                            push dword cuvant
+    78 00000073 68[2F000000]                            push dword format_afis
+    79 00000078 FF35[0D000000]                          push dword [descriptor]
+    80 0000007E FF15[00000000]                          call [fprintf]
+    81 00000084 83C408                                  add esp, 4*2
+    82                                                  
+    83                                                  next:
+    84 00000087 EBA7                                        jmp repeta
+    85                                              
+    86                                          inchidere:
+    87                                          
+    88                                          ; fclose(descriptor)
+    89 00000089 FF35[0D000000]                  push dword [descriptor]
+    90 0000008F FF15[00000000]                  call [fclose]
+    91 00000095 83C404                          add esp, 4
+    92                                          
+    93 00000098 EB0E                            jmp final
+    94                                          eroare_deschidere:
+    95 0000009A 68[33000000]                        push dword eroare
+    96 0000009F FF15[00000000]                      call [printf]
+    97 000000A5 83C404                              add esp, 4
+    98                                          
+    99                                          final:
+   100                                          ; exit(0)
+   101 000000A8 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+   102 000000AA FF15[00000000]                  call    [exit]       ; call exit to terminate the program
