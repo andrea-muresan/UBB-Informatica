@@ -1,0 +1,110 @@
+     1                                  bits 32
+     2                                  
+     3                                  global start        
+     4                                  
+     5                                  
+     6                                  extern exit, fopen, fclose, fread, printf
+     7                                  import exit msvcrt.dll
+     8                                  import fopen msvcrt.dll
+     9                                  import fclose msvcrt.dll
+    10                                  import fread msvcrt.dll
+    11                                  import printf msvcrt.dll
+    12                                  
+    13                                  segment data use32 class=data
+    14 00000000 6669736965722E7478-         nume_fisier db "fisier.txt", 0
+    14 00000009 7400               
+    15 0000000B 7200                        mod_acces db "r", 0
+    16 0000000D FFFFFFFF                    descriptor dd -1
+    17                                      
+    18 00000011 00000000                    n dd 0
+    19 00000015 00000000                    anterior dd 0
+    20                                      
+    21 00000019 256300                      format_cit db "%c", 0
+    22 0000001C 256400                      format_afis db "%d", 0
+    23                                      
+    24 0000001F 2E2000                      speciale db ". ", 0
+    25                                      
+    26 00000022 446573636869646572-         eroare db "Deschiderea fisierului a esuat", 0
+    26 0000002B 656120666973696572-
+    26 00000034 756C75692061206573-
+    26 0000003D 75617400           
+    27                                  
+    28                                  ; 18. Se da un fisier text care contine litere, spatii si puncte. Sa se citeasca continutul fisierului, sa se determine numarul de cuvinte si sa se afiseze pe ecran aceasta valoare. (Se considera cuvant orice secven
+    29                                  segment code use32 class=code
+    30                                      start:
+    31                                          ; fopen(nume_fisier, mod_acces)
+    32 00000000 68[0B000000]                    push dword mod_acces
+    33 00000005 68[00000000]                    push dword nume_fisier
+    34 0000000A FF15[00000000]                  call [fopen]
+    35 00000010 83C408                          add esp, 4*2
+    36                                          
+    37 00000013 83F800                          cmp eax, 0
+    38 00000016 747E                            je eroare_deschidere
+    39                                      
+    40 00000018 A3[0D000000]                    mov [descriptor], eax
+    41                                          
+    42 0000001D BB00000000                      mov ebx, 0
+    43                                          
+    44                                          repeta:
+    45                                              ; fread(n, 1, 1, descriptor)
+    46 00000022 FF35[0D000000]                      push dword [descriptor]
+    47 00000028 6A01                                push dword 1
+    48 0000002A 6A01                                push dword 1
+    49 0000002C 68[11000000]                        push dword n
+    50 00000031 FF15[00000000]                      call [fread]
+    51 00000037 83C410                              add esp, 4*4
+    52                                              
+    53 0000003A 83F800                              cmp eax, 0
+    54 0000003D 7437                                je afara
+    55                                              
+    56 0000003F B902000000                          mov ecx, 2
+    57 00000044 A0[11000000]                        mov al, byte [n]
+    58 00000049 BF[1F000000]                        mov edi, speciale
+    59                                              .cauta:
+    60 0000004E AE                                      scasb
+    61 0000004F 7404                                    je gasit
+    62 00000051 E2FB                                loop .cauta
+    63                                              
+    64                                              negasit:
+    65 00000053 EB15                                    jmp next
+    66                                              gasit:
+    67 00000055 B902000000                              mov ecx, 2
+    68 0000005A A0[15000000]                            mov al, byte [anterior]
+    69 0000005F BF[1F000000]                            mov edi, speciale
+    70                                                  .cauta:
+    71 00000064 AE                                          scasb
+    72 00000065 7403                                        je next
+    73 00000067 E2FB                                    loop .cauta
+    74                                                  
+    75 00000069 43                                      inc ebx
+    76                                              
+    77                                              next:
+    78 0000006A A0[11000000]                            mov al, byte [n]
+    79 0000006F A2[15000000]                            mov [anterior], al
+    80 00000074 EBAC                                    jmp repeta
+    81                                                  
+    82                                                
+    83                                              
+    84                                          afara:
+    85                                          
+    86                                          ; printf(format_afis, ebx)
+    87 00000076 53                              push ebx
+    88 00000077 68[1C000000]                    push format_afis
+    89 0000007C FF15[00000000]                  call [printf]
+    90 00000082 83C408                          add esp, 4*2
+    91                                          
+    92                                          ; fclose(descriptor)
+    93 00000085 FF35[0D000000]                  push dword [descriptor]
+    94 0000008B FF15[00000000]                  call [fclose]
+    95 00000091 83C404                          add esp, 4
+    96                                          
+    97 00000094 EB0E                            jmp final
+    98                                          eroare_deschidere:
+    99 00000096 68[22000000]                        push dword eroare
+   100 0000009B FF15[00000000]                      call [printf]
+   101 000000A1 83C404                              add esp, 4
+   102                                          
+   103                                          final:
+   104                                          ; exit(0)
+   105 000000A4 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+   106 000000A6 FF15[00000000]                  call    [exit]       ; call exit to terminate the program

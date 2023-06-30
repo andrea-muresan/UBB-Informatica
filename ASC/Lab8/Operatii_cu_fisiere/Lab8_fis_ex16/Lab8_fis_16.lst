@@ -1,0 +1,104 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  
+     4                                  global start        
+     5                                  
+     6                                  
+     7                                  extern exit, fopen, fclose, fread, printf
+     8                                  import exit msvcrt.dll
+     9                                  import fopen msvcrt.dll
+    10                                  import fclose msvcrt.dll
+    11                                  import fread msvcrt.dll
+    12                                  import printf msvcrt.dll
+    13                                  
+    14                                  segment data use32 class=data
+    15 00000000 6669736965722E7478-         nume_fisier db "fisier.txt", 0
+    15 00000009 7400               
+    16 0000000B 7200                        mod_acces db "r", 0
+    17 0000000D FFFFFFFF                    descriptor dd -1
+    18                                      
+    19 00000011 00000000                    caract dd 0
+    20 00000015 00000000                    litz dd 0
+    21 00000019 00000000                    lity dd 0
+    22                                      
+    23 0000001D 256300                      format_cit db "%c", 0
+    24 00000020 4E756D6172206C6974-         format_afis db "Numar litere 'y': %d | Numar litere 'z': %d", 0
+    24 00000029 657265202779273A20-
+    24 00000032 2564207C204E756D61-
+    24 0000003B 72206C697465726520-
+    24 00000044 277A273A20256400   
+    25                                      
+    26 0000004C 446573636869646572-         eroare db "Deschiderea fisierului a esuat", 0
+    26 00000055 656120666973696572-
+    26 0000005E 756C75692061206573-
+    26 00000067 75617400           
+    27                                  
+    28                                  ; 16. Se da un fisier text. Sa se citeasca continutul fisierului, sa se contorizeze numarul de litere 'y' si 'z' si sa se afiseze aceaste valori. Numele fisierului text este definit in segmentul de date.
+    29                                  segment code use32 class=code
+    30                                      start:
+    31                                          ; fopen(nume_fisier, mod_acces)
+    32 00000000 68[0B000000]                    push dword mod_acces
+    33 00000005 68[00000000]                    push dword nume_fisier
+    34 0000000A FF15[00000000]                  call [fopen]
+    35 00000010 83C408                          add esp, 4*2
+    36                                          
+    37 00000013 83F800                          cmp eax, 0
+    38 00000016 0F84(4C000000)                  je eroare
+    39                                          
+    40 0000001C A3[0D000000]                    mov [descriptor], eax
+    41                                          
+    42 00000021 BB00000000                      mov ebx, 0 ; in ebx contorizam cifrele de y si z
+    43                                          repeta:
+    44                                              ; fread(caract, 1, 1, descriptor)
+    45 00000026 FF35[0D000000]                      push dword [descriptor]
+    46 0000002C 6A01                                push dword 1
+    47 0000002E 6A01                                push dword 1
+    48 00000030 68[11000000]                        push dword caract
+    49 00000035 FF15[00000000]                      call [fread]
+    50 0000003B 83C410                              add esp, 4*4
+    51                                              
+    52 0000003E 83F800                              cmp eax, 0
+    53 00000041 741D                                je afara
+    54                                              
+    55 00000043 A0[11000000]                        mov al, [caract]
+    56                                              
+    57 00000048 3C7A                                cmp al, 'z'
+    58 0000004A 7508                                jne verifica_y
+    59                                              
+    60 0000004C FF05[15000000]                      inc dword [litz]
+    61 00000052 EB0A                                jmp next
+    62                                              
+    63                                              verifica_y:
+    64 00000054 3C79                                    cmp al, 'y'
+    65 00000056 7506                                    jne next
+    66                                                  
+    67 00000058 FF05[19000000]                          inc dword [lity]
+    68                                              
+    69                                              next:
+    70                                              
+    71 0000005E EBC6                                jmp repeta
+    72                                              
+    73                                          afara:
+    74                                          
+    75                                          ; printf(format, lity, litz)
+    76 00000060 FF35[15000000]                  push dword [litz]
+    77 00000066 FF35[19000000]                  push dword [lity]
+    78 0000006C 68[20000000]                    push dword format_afis
+    79 00000071 FF15[00000000]                  call [printf]
+    80 00000077 83C40C                          add esp, 4*3
+    81                                          
+    82                                          ; fclose(descriptor)
+    83 0000007A FF35[0D000000]                  push dword [descriptor]
+    84 00000080 FF15[00000000]                  call [fclose]
+    85 00000086 83C404                          add esp, 4
+    86                                          
+    87 00000089 EB0E                            jmp final
+    88                                          eroare_deschidere:
+    89 0000008B 68[4C000000]                        push dword eroare
+    90 00000090 FF15[00000000]                      call [printf]
+    91 00000096 83C404                              add esp, 4
+    92                                              
+    93                                          final:
+    94                                          ; exit(0)
+    95 00000099 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    96 0000009B FF15[00000000]                  call    [exit]       ; call exit to terminate the program

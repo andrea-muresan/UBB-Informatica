@@ -1,0 +1,80 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit, fopen, fclose, fprintf, printf 
+     8                                  import exit msvcrt.dll
+     9                                  import fopen msvcrt.dll
+    10                                  import fclose msvcrt.dll
+    11                                  import fprintf msvcrt.dll
+    12                                  import printf msvcrt.dll
+    13                                  
+    14                                  segment data use32 class=data
+    15 00000000 6669736965722E7478-         nume_fisier db "fisier.txt", 0
+    15 00000009 7400               
+    16 0000000B 7700                        mod_acces db "w", 0
+    17 0000000D FFFFFFFF                    descriptor dd -1
+    18                                      
+    19 00000011 1700                        n dw 23
+    20 00000013 1000                        zeceh dw 10h
+    21                                      
+    22 00000015 25780A00                    format db "%x", 10, 0 
+    23                                      
+    24 00000019 446573636869646572-         erare db "Deschiderea fisierului a esuat", 0
+    24 00000022 656120666973696572-
+    24 0000002B 756C75692061206573-
+    24 00000034 75617400           
+    25                                  
+    26                                  ; 23. Se da numele unui fisier si un numar pe cuvant scris in memorie. Sa se scrie cifrele hexazecimale ale acestui numar ca text in fisier, fiecare cifra pe o linie separata.
+    27                                  segment code use32 class=code
+    28                                      start:
+    29                                          ; fopen(nume_fisier, mod_acces)
+    30 00000000 68[0B000000]                    push dword mod_acces
+    31 00000005 68[00000000]                    push dword nume_fisier
+    32 0000000A FF15[00000000]                  call [fopen]
+    33 00000010 83C408                          add esp, 4*2
+    34                                          
+    35 00000013 83F800                          cmp eax, 0
+    36 00000016 744E                            je eroare_deschidere
+    37                                          
+    38 00000018 A3[0D000000]                    mov [descriptor], eax
+    39                                          
+    40                                          
+    41 0000001D 66A1[11000000]                  mov ax, [n]
+    42                                          repeta:
+    43 00000023 66BA0000                            mov dx, 0 
+    44 00000027 66F735[13000000]                    div word [zeceh]
+    45                                              
+    46 0000002E BB00000000                          mov ebx, 0
+    47 00000033 6689D3                              mov bx, dx
+    48 00000036 6650                                push ax
+    49                                              
+    50                                              ; fprintf(descriptor, format, val)
+    51 00000038 53                                  push dword ebx
+    52 00000039 68[15000000]                        push dword format
+    53 0000003E FF35[0D000000]                      push dword [descriptor]
+    54 00000044 FF15[00000000]                      call [fprintf]
+    55 0000004A 83C40C                              add esp, 4*3
+    56                                              
+    57 0000004D 6658                                pop ax
+    58 0000004F 6683F800                            cmp ax, 0
+    59 00000053 75CE                                jne repeta
+    60                                          
+    61                                          
+    62                                          ; fclose(descriptor)
+    63 00000055 FF35[0D000000]                  push dword [descriptor]
+    64 0000005B FF15[00000000]                  call [fclose]
+    65 00000061 83C404                          add esp, 4
+    66                                          
+    67 00000064 EB0E                            jmp final
+    68                                          eroare_deschidere:
+    69 00000066 68[19000000]                        push dword erare
+    70 0000006B FF15[00000000]                      call [printf]
+    71 00000071 83C404                              add esp, 4
+    72                                      
+    73                                          final:
+    74                                          ; exit(0)
+    75 00000074 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    76 00000076 FF15[00000000]                  call    [exit]       ; call exit to terminate the program
