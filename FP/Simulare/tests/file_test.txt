@@ -1,0 +1,4 @@
+23, str. Cernei nr. 10 Cluj Napoca, 600, vanzare
+5, str. Lucian Blaga, 200, inchiriere
+7, str. Vasile Lucaciu, 1000, vanzare
+8, str. Florilor, 400, inchiriere
