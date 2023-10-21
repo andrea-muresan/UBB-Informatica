@@ -1,0 +1,2 @@
+23, str. Cernei nr. 10 Cluj Napoca, 600, vanzare
+7, str. Vasile Lucaciu, 1000, vanzare

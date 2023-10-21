@@ -1,0 +1,88 @@
+     1                                  bits 32
+     2                                  
+     3                                  global start        
+     4                                  
+     5                                  extern exit, fopen, fclose, printf, fprintf
+     6                                  import exit msvcrt.dll
+     7                                  import fopen msvcrt.dll
+     8                                  import fclose msvcrt.dll
+     9                                  import fprintf msvcrt.dll
+    10                                  import printf msvcrt.dll
+    11                                  
+    12                                  segment data use32 class=data
+    13 00000000 6669736965722E7478-         nume_fisier db "fisier.txt", 0
+    13 00000009 7400               
+    14 0000000B 7700                        mod_acces db "w", 0
+    15 0000000D FFFFFFFF                    descriptor dd -1
+    16                                      
+    17 00000011 416E61206172652032-         text db "Ana are 23 de ani, 10 pere, 5 pere si 100 de lei.", 0
+    17 0000001A 3320646520616E692C-
+    17 00000023 20313020706572652C-
+    17 0000002C 203520706572652073-
+    17 00000035 692031303020646520-
+    17 0000003E 6C65692E00         
+    18                                      len equ $ - text - 1
+    19                                      
+    20 00000043 256300                      format_afis db "%c", 0
+    21                                      
+    22 00000046 446573636869646572-         eroare db "Deschiderea fisierului a esuat", 0
+    22 0000004F 656120666973696572-
+    22 00000058 756C75692061206573-
+    22 00000061 75617400           
+    23                                      
+    24                                  
+    25                                  ; 21. Se dau un nume de fisier si un text (definite in segmentul de date). Textul contine litere mici, cifre si spatii. Sa se inlocuiasca toate cifrele de pe pozitii impare cu caracterul ‘X’. Sa se creeze un fis
+    26                                  segment code use32 class=code
+    27                                      start:
+    28                                          ; fopen(nume_fisier, mod_acces)
+    29 00000000 68[0B000000]                    push dword mod_acces
+    30 00000005 68[00000000]                    push dword nume_fisier
+    31 0000000A FF15[00000000]                  call [fopen]
+    32 00000010 83C408                          add esp, 4*2
+    33                                          
+    34 00000013 83F800                          cmp eax, 0
+    35 00000016 7444                            je eroare_deschidere
+    36                                          
+    37 00000018 A3[0D000000]                    mov [descriptor], eax
+    38                                          
+    39 0000001D FC                              cld
+    40 0000001E BE00000000                      mov esi, 0
+    41 00000023 B931000000                      mov ecx, len
+    42                                          repeta:
+    43 00000028 51                                  push ecx
+    44                                              
+    45 00000029 8A86[11000000]                      mov al, byte [text + esi]
+    46 0000002F 3C30                                cmp al, '0'
+    47 00000031 7C0E                                jl afisare
+    48                                              
+    49 00000033 3C39                                cmp al, '9'
+    50 00000035 7F0A                                jg afisare
+    51                                              
+    52 00000037 F7C601000000                        test esi, 0001h
+    53 0000003D 7402                                jz afisare
+    54                                              
+    55 0000003F B058                                mov al, 'X'
+    56                                              
+    57                                              afisare:
+    58                                                  ; fprintf(descriptor, format_afis, eax)
+    59 00000041 50                                      push eax
+    60 00000042 68[43000000]                            push dword format_afis
+    61 00000047 FF35[0D000000]                          push dword [descriptor]
+    62 0000004D FF15[00000000]                          call [fprintf]
+    63 00000053 83C40C                                  add esp, 4*3
+    64                                                  
+    65 00000056 46                                  inc esi
+    66 00000057 59                                  pop ecx
+    67 00000058 E2CE                            loop repeta
+    68                                          
+    69                                          
+    70 0000005A EB0E                            jmp final
+    71                                          eroare_deschidere:
+    72 0000005C 68[46000000]                        push dword eroare
+    73 00000061 FF15[00000000]                      call [printf]
+    74 00000067 83C404                              add esp, 4
+    75                                              
+    76                                          final:
+    77                                          ; exit(0)
+    78 0000006A 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    79 0000006C FF15[00000000]                  call    [exit]       ; call exit to terminate the program

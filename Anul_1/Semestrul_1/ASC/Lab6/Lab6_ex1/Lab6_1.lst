@@ -1,0 +1,68 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                                            ; msvcrt.dll contains exit, printf and all the other important C-runtime specific functions
+    10                                  
+    11                                  
+    12                                  segment data use32 class=data
+    13 00000000 78567F12CDABCDAB            s dd 127F5678h, 0ABCDABCDh
+    14                                      len equ ($-s)/4
+    15 00000008 00000000<rept>              d times len dd 0
+    16                                  
+    17                                  ;  Se da un sir de dublucuvinte continand date impachetate (4 octeti scrisi ca un singur dublucuvant). Sa se obtina un nou sir de dublucuvinte, in care fiecare dublucuvant se va obtine dupa regula: suma octetilor de
+    18                                  segment code use32 class=code
+    19                                      start:
+    20 00000000 B902000000                      mov ecx, len
+    21 00000005 E334                            jecxz final
+    22                                          
+    23 00000007 FC                              cld
+    24 00000008 BE[00000000]                    mov esi, s
+    25 0000000D BF[08000000]                    mov edi, d
+    26                                          
+    27                                          repeta:
+    28 00000012 66BB0000                            mov bx, 0 ; suma para
+    29 00000016 66BA0000                            mov dx, 0 ; suma impara
+    30                                              
+    31 0000001A 51                                  push ecx
+    32                                              
+    33 0000001B B902000000                          mov ecx, 2
+    34                                              bucla:
+    35 00000020 AC                                      lodsb
+    36 00000021 6698                                    cbw
+    37 00000023 6611C3                                  adc bx, ax
+    38 00000026 AC                                      lodsb
+    39 00000027 6698                                    cbw
+    40 00000029 6601C2                                  add dx, ax
+    41 0000002C E2F2                                loop bucla
+    42                                              
+    43                                              ; lodsb
+    44                                              ; cbw
+    45                                              ; adc bx, ax
+    46                                              ; lodsb
+    47                                              ; cbw
+    48                                              ; add dx, ax
+    49                                              ; lodsb
+    50                                              ; cbw
+    51                                              ; adc bx, ax
+    52                                              ; lodsb
+    53                                              ; cbw
+    54                                              ; add dx, ax
+    55                                             
+    56 0000002E 6689D8                              mov ax, bx
+    57 00000031 66AB                                stosw
+    58 00000033 6689D0                              mov ax, dx
+    59 00000036 66AB                                stosw
+    60                                              
+    61 00000038 59                                  pop ecx
+    62                                          
+    63 00000039 E2D7                            loop repeta
+    64                                      
+    65                                          final:
+    66                                          ; exit(0)
+    67 0000003B 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    68 0000003D FF15[00000000]                  call    [exit]       ; call exit to terminate the program

@@ -1,6 +1,0 @@
-song1, artist1, pop, 20.4.2010
-song2, artist2, pop, 15.12.2017
-song3, artist3, rock, 7.3.2009
-song4, artist4, pop, 19.4.2022
-song5, artist5, jazz, 4.1.2020
-

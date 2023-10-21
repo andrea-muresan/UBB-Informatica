@@ -1,0 +1,48 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  global start        
+     3                                  
+     4                                  extern exit               
+     5                                  import exit msvcrt.dll    
+     6                                  
+     7                                  segment data use32 class=data
+     8 00000000 21AF                        a dw 1010_1111_0010_0001b
+     9 00000002 CCF5                        b dw 1111_0101_1100_1100b
+    10 00000004 00000000                    c dd 0
+    11                                  
+    12                                  ; Se dau cuvintele A si B. Sa se obtina dublucuvantul C:
+    13                                  ;   bitii 0-4 ai lui C coincid cu bitii 11-15 ai lui A
+    14                                  ;   bitii 5-11 ai lui C au valoarea 1
+    15                                  ;   bitii 12-15 ai lui C coincid cu bitii 8-11 ai lui B
+    16                                  ;   bitii 16-31 ai lui C coincid cu bitii lui A
+    17                                  segment code use32 class=code
+    18                                      start:
+    19 00000000 BB00000000                      mov ebx, 0 
+    20                                          
+    21                                          ; bitii 0-4 ai lui C coincid cu bitii 11-15 ai lui A
+    22 00000005 66A1[00000000]                  mov ax, [a]
+    23 0000000B 662500F8                        and ax, 1111_1000_0000_0000b
+    24 0000000F B10B                            mov cl, 11
+    25 00000011 66D3E8                          shr ax, cl
+    26 00000014 6609C3                          or bx, ax
+    27                                          
+    28                                          ; bitii 5-11 ai lui C au valoarea 1
+    29 00000017 6681CBE00F                      or bx, 0000_1111_1110_0000b
+    30                                          
+    31                                          ; bitii 12-15 ai lui C coincid cu bitii 8-11 ai lui B
+    32 0000001C 66A1[02000000]                  mov ax, [b]
+    33 00000022 6625000F                        and ax, 0000_1111_0000_0000b
+    34 00000026 B104                            mov cl, 4
+    35 00000028 66D3E0                          shl ax, cl
+    36 0000002B 6609C3                          or bx, ax
+    37                                          
+    38                                          ; bitii 16-31 ai lui C coincid cu bitii lui A
+    39 0000002E A1[00000000]                    mov eax, [a]
+    40 00000033 B110                            mov cl, 16
+    41 00000035 D3E0                            shl eax, cl
+    42 00000037 09C3                            or ebx, eax
+    43                                          
+    44 00000039 891D[04000000]                  mov [c], ebx
+    45                                      
+    46                                          ; exit(0)
+    47 0000003F 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    48 00000041 FF15[00000000]                  call    [exit]       ; call exit to terminate the program

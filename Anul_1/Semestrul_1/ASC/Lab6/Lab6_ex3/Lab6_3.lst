@@ -1,0 +1,66 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                                            ; msvcrt.dll contains exit, printf and all the other important C-runtime specific functions
+    10                                  
+    11                                  ; our data is declared here (the variables needed by our program)
+    12                                  segment data use32 class=data
+    13 00000000 0A09020704030C0B08-         s dd 0702090Ah, 0B0C0304h, 05060108h
+    13 00000009 010605             
+    14                                      len equ ($-s)/2
+    15 0000000C 00<rept>                    d times len db 0
+    16                                      
+    17                                      patru equ 4
+    18                                  
+    19                                  ; 3. Se da un sir de 3 dublucuvinte, fiecare dublucuvant continand 2 valori pe cuvant (despachetate, deci fiecare cifra hexa e precedata de un 0). Sa se creeze un sir de octeti care sa contina acele valori (impachet
+    20                                  
+    21                                  segment code use32 class=code
+    22                                      start:
+    23 00000000 B906000000                      mov ecx, len
+    24 00000005 E345                            jecxz final
+    25                                          
+    26 00000007 FC                              cld
+    27 00000008 BE[00000000]                    mov esi, s
+    28 0000000D BF[0C000000]                    mov edi, d
+    29                                          
+    30                                          repeta:
+    31 00000012 AC                                  lodsb
+    32 00000013 88C3                                mov bl, al
+    33 00000015 AC                                  lodsb
+    34 00000016 C0E004                              shl al, patru
+    35 00000019 00D8                                add al, bl
+    36 0000001B AA                                  stosb
+    37                                              
+    38 0000001C E2F4                            loop repeta
+    39                                          
+    40                                          ; sortare
+    41 0000001E B905000000                      mov ecx, len - 1
+    42                                          do:
+    43 00000023 89CB                                mov ebx, ecx
+    44 00000025 BE00000000                          mov esi, 0
+    45                                              do2:
+    46 0000002A 8A86[0C000000]                          mov al, [d + esi]
+    47 00000030 8A96[0D000000]                          mov dl, [d + esi + 1]
+    48                                                  
+    49 00000036 38D0                                    cmp al, dl
+    50 00000038 7C0C                                    jl no_swap
+    51                                                  
+    52 0000003A 8896[0C000000]                          mov [d + esi], dl
+    53 00000040 8886[0D000000]                          mov [d + esi + 1], al
+    54                                                  
+    55                                                  no_swap:
+    56                                                  
+    57 00000046 46                                      inc esi
+    58 00000047 4B                                      dec ebx
+    59 00000048 75E0                                    jnz do2
+    60 0000004A E2D7                            loop do
+    61                                      
+    62                                          final:
+    63                                          ; exit(0)
+    64 0000004C 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    65 0000004E FF15[00000000]                  call    [exit]       ; call exit to terminate the program

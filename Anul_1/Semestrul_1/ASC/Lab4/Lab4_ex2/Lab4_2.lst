@@ -1,0 +1,58 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  ; declare external functions needed by our program
+     7                                  extern exit               ; tell nasm that exit exists even if we won't be defining it
+     8                                  import exit msvcrt.dll    ; exit is a function that ends the calling process. It is defined in msvcrt.dll
+     9                                                            ; msvcrt.dll contains exit, printf and all the other important C-runtime specific functions
+    10                                  
+    11                                  
+    12                                  segment data use32 class=data
+    13 00000000 21AF                        a dw 1010_1111_0010_0001b
+    14 00000002 CCF5                        b dw 1111_0101_1100_1100b
+    15 00000004 00000000                    c dd 0
+    16                                  
+    17                                  ; Se dau cuvintele A si B. Se cere dublucuvantul C:
+    18                                  ;   bitii 0-3 ai lui C coincid cu bitii 5-8 ai lui B
+    19                                  ;   bitii 4-8 ai lui C coincid cu bitii 0-4 ai lui A
+    20                                  ;   bitii 9-15 ai lui C coincid cu bitii 6-12 ai lui A
+    21                                  ;   bitii 16-31 ai lui C coincid cu bitii lui B
+    22                                  segment code use32 class=code
+    23                                      start:
+    24 00000000 BB00000000                      mov ebx, 0
+    25                                          
+    26                                          ; bitii 0-3 ai lui C coincid cu bitii 5-8 ai lui B
+    27 00000005 66A1[02000000]                  mov ax, [b]
+    28 0000000B 6625E001                        and ax, 0000_0001_1110_0000b
+    29 0000000F B105                            mov cl, 5
+    30 00000011 66D3E8                          shr ax, cl
+    31 00000014 6609C3                          or bx, ax ; bx = 0000_0000_0000_1110b
+    32                                          
+    33                                          ; bitii 4-8 ai lui C coincid cu bitii 0-4 ai lui A
+    34 00000017 66A1[00000000]                  mov ax, [a]
+    35 0000001D 6683E01F                        and ax, 0000_0000_0001_1111b
+    36 00000021 B104                            mov cl, 4
+    37 00000023 66D3E0                          shl ax, cl
+    38 00000026 6609C3                          or bx, ax ; bx = 0000_0000_0001_1110b
+    39                                          
+    40                                          ; bitii 9-15 ai lui C coincid cu bitii 6-12 ai lui A
+    41 00000029 66A1[00000000]                  mov ax, [a]
+    42 0000002F 6625C01F                        and ax, 0001_1111_1100_0000b
+    43 00000033 B103                            mov cl, 3
+    44 00000035 66D3E0                          shl ax, cl
+    45 00000038 6609C3                          or bx, ax ; bx = 0111_1000_0001_1110b
+    46                                          
+    47                                          ; bitii 16-31 ai lui C coincid cu bitii lui B
+    48 0000003B A1[02000000]                    mov eax, [b]
+    49 00000040 B110                            mov cl, 16
+    50 00000042 D3E0                            shl eax, cl ; ebx = F5CC_781Eh
+    51 00000044 09C3                            or ebx, eax
+    52                                          
+    53 00000046 891D[04000000]                  mov [c], ebx
+    54                                          
+    55                                      
+    56                                          ; exit(0)
+    57 0000004C 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    58 0000004E FF15[00000000]                  call    [exit]       ; call exit to terminate the program

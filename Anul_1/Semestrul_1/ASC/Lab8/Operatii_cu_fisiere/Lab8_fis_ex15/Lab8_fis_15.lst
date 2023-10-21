@@ -1,0 +1,98 @@
+     1                                  bits 32 ; assembling for the 32 bits architecture
+     2                                  
+     3                                  ; declare the EntryPoint (a label defining the very first instruction of the program)
+     4                                  global start        
+     5                                  
+     6                                  extern exit, fopen, fclose, printf, fprintf
+     7                                  import exit msvcrt.dll    
+     8                                  import fopen msvcrt.dll    
+     9                                  import fclose msvcrt.dll    
+    10                                  import printf msvcrt.dll    
+    11                                  import fprintf msvcrt.dll 
+    12                                  
+    13                                  segment data use32 class=data
+    14 00000000 6669736965722E7478-         nume_fisier db "fisier.txt", 0
+    14 00000009 7400               
+    15 0000000B 7700                        mod_acces db "w", 0
+    16 0000000D FFFFFFFF                    descriptor dd -1
+    17                                      
+    18 00000011 616E6120617265206D-         text db "ana are mult mere* si. pere", 0
+    18 0000001A 756C74206D6572652A-
+    18 00000023 2073692E2070657265-
+    18 0000002C 00                 
+    19                                      len equ $ - text - 1
+    20                                      
+    21 0000002D 202E2C21402324255E-         speciale db " .,!@#$%^&*", 0
+    21 00000036 262A00             
+    22                                      
+    23 00000039 256300                      format_afis db "%c", 0
+    24                                      
+    25 0000003C 446573636869646572-         eroare db "Deschiderea fisierului a esuat", 0
+    25 00000045 656120666973696572-
+    25 0000004E 756C75692061206573-
+    25 00000057 75617400           
+    26                                  
+    27                                  ; 15. Se dau un nume de fisier si un text (definite in segmentul de date). Textul contine litere mici, litere mari, cifre si caractere speciale. Sa se inlocuiasca toate caracterele speciale din textul dat cu caracte
+    28                                  segment code use32 class=code
+    29                                      start:
+    30                                          ; fopen(nume_fisier, mod_acces)
+    31 00000000 68[0B000000]                    push dword mod_acces
+    32 00000005 68[00000000]                    push dword nume_fisier
+    33 0000000A FF15[00000000]                  call [fopen]
+    34 00000010 83C408                          add esp, 4*2
+    35                                          
+    36 00000013 83F800                          cmp eax, 0
+    37 00000016 7453                            je eroare_deschidere
+    38                                          
+    39 00000018 A3[0D000000]                    mov [descriptor], eax
+    40                                          
+    41 0000001D FC                              cld
+    42 0000001E BE[11000000]                    mov esi, text
+    43 00000023 B91B000000                      mov ecx, len
+    44                                          repeta:
+    45 00000028 51                                  push ecx
+    46                                              
+    47 00000029 B800000000                          mov eax, 0
+    48 0000002E AC                                  lodsb 
+    49                                              
+    50 0000002F B90A000000                          mov ecx, 10
+    51 00000034 BF[2D000000]                        mov edi, speciale
+    52                                              .cauta:
+    53 00000039 AE                                      scasb
+    54 0000003A 7404                                    je gasit
+    55 0000003C E2FB                                loop .cauta
+    56                                              
+    57 0000003E EB02                                jmp next
+    58                                              gasit:
+    59 00000040 B058                                    mov al, 'X'
+    60                                              
+    61                                              next:
+    62                                              
+    63                                              ; fprintf(descriptor, format_afis, eax)
+    64 00000042 50                                  push eax
+    65 00000043 68[39000000]                        push dword format_afis
+    66 00000048 FF35[0D000000]                      push dword [descriptor]
+    67 0000004E FF15[00000000]                      call [fprintf]
+    68 00000054 83C40C                              add esp, 4*3
+    69                                              
+    70                                              
+    71 00000057 59                                  pop ecx
+    72 00000058 E2CE                            loop repeta
+    73                                          
+    74                                          
+    75                                      
+    76                                          ; fclose(descriptor)
+    77 0000005A FF35[0D000000]                  push dword [descriptor]
+    78 00000060 FF15[00000000]                  call [fclose]
+    79 00000066 83C404                          add esp, 4
+    80                                          
+    81 00000069 EB0E                            jmp final
+    82                                          eroare_deschidere:
+    83 0000006B 68[3C000000]                        push dword eroare
+    84 00000070 FF15[00000000]                      call [printf]
+    85 00000076 83C404                              add esp, 4
+    86                                          
+    87                                          final:
+    88                                          ; exit(0)
+    89 00000079 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    90 0000007B FF15[00000000]                  call    [exit]       ; call exit to terminate the program

@@ -1,0 +1,97 @@
+     1                                  bits 32 
+     2                                  
+     3                                  global start        
+     4                                  
+     5                                  extern exit, printf, scanf, fprintf, fopen, fclose          
+     6                                  import exit msvcrt.dll
+     7                                  import fopen msvcrt.dll
+     8                                  import fclose msvcrt.dll
+     9                                  import scanf msvcrt.dll
+    10                                  import printf msvcrt.dll
+    11                                  import fprintf msvcrt.dll
+    12                                  
+    13                                      
+    14                                  segment data use32 class=data
+    15 00000000 6669736965722E7478-         nume_fisier db "fisier.txt", 0
+    15 00000009 7400               
+    16 0000000B 7700                        mod_acces db "w", 0
+    17 0000000D FFFFFFFF                    descriptor dd -1
+    18                                      
+    19 00000011 00000000                    n dd 0
+    20 00000015 07000000                    sapte dd 7
+    21                                      
+    22 00000019 496E74726F64756365-         mesaj_cit db "Introduceti un numar: ", 0
+    22 00000022 746920756E206E756D-
+    22 0000002B 61723A2000         
+    23 00000030 256400                      format_cit db "%d", 0
+    24 00000033 25642000                    format_afis db "%d ", 0
+    25                                      
+    26 00000037 446573636869646572-         eroare db "Deschiderea fisierului a esuat", 0
+    26 00000040 656120666973696572-
+    26 00000049 756C75692061206573-
+    26 00000052 75617400           
+    27                                  
+    28                                  ; 17. Se da un nume de fisier (definit in segmentul de date). Sa se creeze un fisier cu numele dat, apoi sa se citeasca de la tastatura numere si sa se scrie din valorile citite in fisier numerele divizibile cu 7, p
+    29                                  segment code use32 class=code
+    30                                      start:
+    31                                          ; fopen(nume_fisier, mod_acces)
+    32 00000000 68[0B000000]                    push dword mod_acces
+    33 00000005 68[00000000]                    push dword nume_fisier
+    34 0000000A FF15[00000000]                  call [fopen]
+    35 00000010 83C408                          add esp, 4*2
+    36                                          
+    37 00000013 83F800                          cmp eax, 0
+    38 00000016 746E                            je eroare_deschidere
+    39                                          
+    40 00000018 A3[0D000000]                    mov [descriptor], eax
+    41                                          
+    42                                          repeta:
+    43                                              ; mesaj citire
+    44 0000001D 68[19000000]                        push dword mesaj_cit
+    45 00000022 FF15[00000000]                      call [printf]
+    46 00000028 83C404                              add esp, 4
+    47                                              
+    48                                              ; scanf(format_cit, n)
+    49 0000002B 68[11000000]                        push dword n
+    50 00000030 68[30000000]                        push dword format_cit
+    51 00000035 FF15[00000000]                      call [scanf]
+    52 0000003B 83C408                              add esp, 4*2
+    53                                              
+    54 0000003E A1[11000000]                        mov eax, [n]
+    55 00000043 83F800                              cmp eax, 0
+    56 00000046 742D                                je afara
+    57                                              
+    58 00000048 BA00000000                          mov edx, 0
+    59 0000004D F735[15000000]                      div dword [sapte]
+    60                                              
+    61 00000053 6683FA00                            cmp dx, 0
+    62 00000057 751A                                jne next
+    63                                              
+    64                                              ; fprintf(descriptor, format_afis, n)
+    65 00000059 FF35[11000000]                      push dword [n]
+    66 0000005F 68[33000000]                        push dword format_afis
+    67 00000064 FF35[0D000000]                      push dword [descriptor]
+    68 0000006A FF15[00000000]                      call [fprintf]
+    69 00000070 83C40C                              add esp, 4*3
+    70                                              
+    71                                              next:
+    72                                              
+    73 00000073 EBA8                                jmp repeta
+    74                                              
+    75                                          
+    76                                          afara:
+    77                                          
+    78                                          ; fclose(descriptor)
+    79 00000075 FF35[0D000000]                  push dword [descriptor]
+    80 0000007B FF15[00000000]                  call [fclose]
+    81 00000081 83C404                          add esp, 4
+    82                                          
+    83 00000084 EB0E                            jmp final
+    84                                          eroare_deschidere:
+    85 00000086 68[37000000]                        push dword eroare
+    86 0000008B FF15[00000000]                      call [printf]
+    87 00000091 83C404                              add esp, 4
+    88                                          final:
+    89                                          ; exit(0)
+    90 00000094 6A00                            push    dword 0      ; push the parameter for exit onto the stack
+    91 00000096 FF15[00000000]                  call    [exit]       ; call exit to terminate the program
