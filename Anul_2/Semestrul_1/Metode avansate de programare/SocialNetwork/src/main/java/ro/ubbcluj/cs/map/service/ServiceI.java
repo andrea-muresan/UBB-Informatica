@@ -1,0 +1,95 @@
+package ro.ubbcluj.cs.map.service;
+
+import ro.ubbcluj.cs.map.domain.Friendship;
+import ro.ubbcluj.cs.map.domain.User;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+public interface ServiceI {
+
+    /**
+     * Add a user in the userRepo
+     */
+    boolean addUser(String firstName, String lastName, String email);
+
+    /**
+     * Delete a user from userRepo by its email number
+     * @return the user with the given email number - if it exists
+     *          null - otherwise
+     * ! Delete also all friendships that include that user
+     */
+    boolean deleteUser(String email);
+
+    /**
+     * Create a friendship between two users
+     * @param email1 - the email number of the first user
+     * @param email2 - the email number of the second user
+     * @return true - if the friendship is added
+     *          false - otherwise
+     */
+    boolean createFriendship(String email1, String email2);
+
+    /**
+     * Delete a friendship between two users
+     * @param email1 - the email number of the first user
+     * @param email2 - the email number of the second user
+     * @return the friendship - if it is deleted
+     *              false - otherwise
+     */
+    boolean deleteFriendship(String email1, String email2);
+
+    /**
+     * @return an Iterable of all the users
+     */
+    Iterable<User> getAllUsers();
+
+    /**
+     * @return an Iterable of all the friendships
+     */
+    Iterable<Friendship> getAllFriendships();
+
+    /**
+     * @return the number of communities - int
+     */
+    int numberOfCommunities();
+
+
+    /**
+     * Returns the most sociable community
+     * the most sociable community is the community of users with the longest path
+     *
+     * @return an Iterable of all the most sociable communities users
+     */
+    List<List<User>> mostSociableCommunity();
+
+    /**
+     * @return a list of all the communities
+     */
+    List<List<User>> getAllCommunities();
+
+    /**
+     * @param email - the email number of the searched user
+     *
+     * @return the user that has that specific email number
+     *          null - there is no such user
+     */
+    User getUserByEmail(String email);
+
+    /**
+     * Return the friendship between two users knowing their email numbers
+     * @param email1 - the email number of the first user
+     * @param email2 - the email number of the second user
+     * @return the friendship - if it is found
+     *          false - otherwise
+     */
+    Friendship getFriendshipByEmail(String email1, String email2);
+
+    public ArrayList<Friendship> friendList(User user);
+
+    public Map<LocalDateTime, User> friendListFrom(User user, Integer month);
+}
