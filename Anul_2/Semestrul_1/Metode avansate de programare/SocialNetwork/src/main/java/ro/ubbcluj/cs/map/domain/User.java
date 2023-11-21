@@ -1,8 +1,5 @@
 package ro.ubbcluj.cs.map.domain;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 public class User extends Entity<Long>{
@@ -44,12 +41,10 @@ public class User extends Entity<Long>{
 
     @Override
     public String toString() {
-        return "User{" +
-                "id='" + id + '\'' +
+        return  "id='" + id + '\'' +
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                '}';
+                ", email='" + email + '\'';
     }
 
     @Override

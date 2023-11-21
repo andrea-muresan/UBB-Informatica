@@ -4,7 +4,29 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd109017-280e-4a86-95e2-d02048dd290e" name="Changes" comment="" />
+    <list default="true" id="33ec59a6-aa7d-4f91-aa2f-bd57209b1ce3" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/Controller.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/MainConsole.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/sample.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Lab1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Lab1/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/MainApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/console/AbstractUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/console/AbstractUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/console/ConsoleUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/console/ConsoleUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/domain/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/domain/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/repository/FriendshipDBRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/repository/FriendshipDBRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/repository/UserDBRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/repository/UserDBRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/service/Service.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/service/Service.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/service/ServiceI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/service/ServiceI.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,6 +40,9 @@
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
             <expand />
@@ -30,6 +55,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="JavaFXApplication" />
+        <option value="FxmlFile" />
         <option value="Class" />
       </list>
     </option>
@@ -38,39 +65,63 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../.." />
   </component>
   <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 0
 }</component>
-  <component name="ProjectId" id="2Y2KpkMpD1ZONfwqVt4WjLGn5cG" />
+  <component name="ProjectId" id="2YOSUNclUO9wY9bU1Awm7cX0vYz" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Users/Lenovo/Desktop/Github/UBB-Informatica/Anul_2/Semestrul_1/Metode avansate de programare/SocialNetwork",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Facu/MAP/demo1&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.21679688&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.JavaFX&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "postgresql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
     ]
   }
-}]]></component>
-  <component name="RunManager">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="ro.ubbcluj.cs.map.Main" />
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Lenovo\Desktop\Github\UBB-Informatica\Anul_2\Semestrul_1\Metode avansate de programare\SocialNetwork\src\main\java\ro\ubbcluj\cs\map" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Lenovo\Desktop\Github\UBB-Informatica\Anul_2\Semestrul_1\Metode avansate de programare\SocialNetwork\src\main\resources" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.MainApplication">
+    <configuration name="MainApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ro.ubbcluj.cs.map.MainApplication" />
+      <module name="SocialNetwork.main" />
+      <option name="PROGRAM_PARAMETERS" value="jdbc:postgresql://localhost:5432/socialnetwork postgres postgres" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ro.ubbcluj.cs.map.MainApplication" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MainConsole" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ro.ubbcluj.cs.map.MainConsole" />
       <module name="SocialNetwork.main" />
       <option name="PROGRAM_PARAMETERS" value="jdbc:postgresql://localhost:5432/socialnetwork postgres postgres" />
       <extension name="coverage">
@@ -83,39 +134,52 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.MainApplication" />
+      <item itemvalue="Application.MainConsole" />
+    </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Main" />
+        <item itemvalue="Application.MainConsole" />
       </list>
     </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="bd109017-280e-4a86-95e2-d02048dd290e" name="Changes" comment="" />
-      <created>1699718422530</created>
+      <changelist id="33ec59a6-aa7d-4f91-aa2f-bd57209b1ce3" name="Changes" comment="" />
+      <created>1700395155117</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1699718422530</updated>
-      <workItem from="1699718423636" duration="21131000" />
-      <workItem from="1699772299461" duration="3924000" />
-      <workItem from="1699948747010" duration="1940000" />
-      <workItem from="1700067225261" duration="1936000" />
-      <workItem from="1700236061104" duration="665000" />
-      <workItem from="1700330390010" duration="1205000" />
-      <workItem from="1700333499123" duration="48000" />
-      <workItem from="1700338606246" duration="885000" />
-      <workItem from="1700339659384" duration="537000" />
-      <workItem from="1700340200677" duration="416000" />
-      <workItem from="1700340907869" duration="65000" />
-      <workItem from="1700340996007" duration="193000" />
-      <workItem from="1700341318956" duration="105000" />
-      <workItem from="1700341552793" duration="23000" />
-      <workItem from="1700341654098" duration="551000" />
+      <updated>1700395155117</updated>
+      <workItem from="1700395156254" duration="673000" />
+      <workItem from="1700406240162" duration="5364000" />
+      <workItem from="1700419747240" duration="6344000" />
+      <workItem from="1700426455093" duration="2132000" />
+      <workItem from="1700458498880" duration="1580000" />
+      <workItem from="1700479304763" duration="4656000" />
+      <workItem from="1700490383125" duration="1938000" />
+      <workItem from="1700503057589" duration="5363000" />
+      <workItem from="1700554635444" duration="3445000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

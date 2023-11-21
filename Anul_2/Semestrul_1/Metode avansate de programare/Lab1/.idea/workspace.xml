@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="41614071-8f60-4d2b-a613-441fc7e1f77b" name="Changes" comment="" />
+    <list default="true" id="41614071-8f60-4d2b-a613-441fc7e1f77b" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../SocialNetwork/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SocialNetwork/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../SocialNetwork/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../SocialNetwork/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,6 +21,12 @@
         <option value="JUnit5 Test Class" />
       </list>
     </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
@@ -40,7 +49,8 @@
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
     "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
     "create.test.in.the.same.root": "true",
-    "last_opened_file_path": "C:/Facu/MAP/Lab1",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/Facu/MAP/Lab3.3",
     "onboarding.tips.debug.path": "C:/Facu/MAP/Lab1.2/src/Main.java",
     "settings.editor.selected.configurable": "preferences.lookFeel",
     "vue.rearranger.settings.migration": "true"
@@ -84,6 +94,7 @@
       <workItem from="1700334311305" duration="44000" />
       <workItem from="1700334430438" duration="291000" />
       <workItem from="1700334780368" duration="26000" />
+      <workItem from="1700386585902" duration="116000" />
     </task>
     <servers />
   </component>

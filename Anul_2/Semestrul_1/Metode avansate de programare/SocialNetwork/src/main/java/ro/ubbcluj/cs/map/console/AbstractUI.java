@@ -2,8 +2,6 @@ package ro.ubbcluj.cs.map.console;
 
 import ro.ubbcluj.cs.map.service.ServiceI;
 
-import java.util.UUID;
-
 public abstract class AbstractUI implements UI {
     ServiceI srv;
 

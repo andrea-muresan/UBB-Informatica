@@ -4,9 +4,7 @@ import ro.ubbcluj.cs.map.domain.Friendship;
 import ro.ubbcluj.cs.map.domain.User;
 import ro.ubbcluj.cs.map.repository.Repository;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -221,4 +219,36 @@ public class Service implements ServiceI {
                 }));
     }
 
+    @Override
+    public User findUser(String id) {
+        try {
+            Long ID = Long.parseLong(id);
+            Optional<User> u = userRepo.findOne(ID);
+            if (!u.isPresent()) {
+                throw new Exception("ID not found");
+            }
+            return u.get();
+        } catch (Exception e) {
+            System.out.println(yellowColorCode + e.getMessage() + resetColorCode);
+        }
+        return null;
+    }
+
+    @Override
+    public boolean updateUser(String id, String firstName, String lastName, String email) {
+        try {
+            Long ID = Long.parseLong(id);
+            if (!userRepo.findOne(ID).isPresent()) {
+                throw new Exception("ID not found");
+            }
+            User u = new User(firstName, lastName, email);
+            u.setId(ID);
+
+            userRepo.update(u);
+            return true;
+        } catch (Exception e) {
+            System.out.println(yellowColorCode + e.getMessage() + resetColorCode);
+            return false;
+        }
+    }
 }

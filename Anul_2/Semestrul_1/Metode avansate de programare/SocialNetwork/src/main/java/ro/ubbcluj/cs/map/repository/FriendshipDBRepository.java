@@ -1,11 +1,9 @@
 package ro.ubbcluj.cs.map.repository;
 
 import ro.ubbcluj.cs.map.domain.Friendship;
-import ro.ubbcluj.cs.map.domain.User;
 import ro.ubbcluj.cs.map.domain.validators.Validator;
 
 import java.sql.*;
-
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Optional;

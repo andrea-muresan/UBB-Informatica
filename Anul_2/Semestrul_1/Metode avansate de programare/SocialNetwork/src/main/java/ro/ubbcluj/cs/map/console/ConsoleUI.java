@@ -28,7 +28,7 @@ public class ConsoleUI extends AbstractUI {
         List<List<User>> communityList;
         Integer month;
         while (true) {
-            System.out.println("Press m to se the menu\nCommand: ");
+            System.out.println("Press m to see the menu\nCommand: ");
             String command = scanner.next();
 
             switch (command) {
@@ -99,6 +99,9 @@ public class ConsoleUI extends AbstractUI {
                                         + "| Date: " + date));
                     } else System.out.println("\u001B[33m" + "There is no such month" + "\u001B[0m");
 
+                    break;
+                case "m":
+                    printMenu();
                     break;
                 case "x":
                     return;

@@ -3,12 +3,10 @@ package ro.ubbcluj.cs.map.service;
 import ro.ubbcluj.cs.map.domain.Friendship;
 import ro.ubbcluj.cs.map.domain.User;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 public interface ServiceI {
 
@@ -92,4 +90,8 @@ public interface ServiceI {
     public ArrayList<Friendship> friendList(User user);
 
     public Map<LocalDateTime, User> friendListFrom(User user, Integer month);
+
+    User findUser(String id);
+
+    boolean updateUser(String id, String firstName, String lastName, String email);
 }

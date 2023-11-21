@@ -10,7 +10,7 @@ import ro.ubbcluj.cs.map.repository.Repository;
 import ro.ubbcluj.cs.map.repository.UserDBRepository;
 import ro.ubbcluj.cs.map.service.Service;
 
-public class Main {
+public class MainConsole {
     public static void main(String[] args) {
         String url = args[0];
         String username = args[1];

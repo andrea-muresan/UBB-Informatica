@@ -100,6 +100,7 @@ public class UserDBRepository implements Repository<Long, User> {
 
     @Override
     public Optional<User> update(User entity) {
+        validator.validate(entity);
         try(Connection connection = DriverManager.getConnection(url,user,password);
             PreparedStatement statement  = connection.prepareStatement("UPDATE users SET first_name = ?, last_name = ?, email = ? WHERE id = ?");)
         {
