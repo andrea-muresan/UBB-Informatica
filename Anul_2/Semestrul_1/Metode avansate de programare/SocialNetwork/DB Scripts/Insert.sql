@@ -11,7 +11,7 @@ INSERT INTO public.users(
 SELECT * FROM users
 
 INSERT INTO public.friendships(
-	user1_id, user2_id, friends_from)
+	user1Id, user2Id, friendsFrom)
 	VALUES ((select id from users where email='ana@user.com'), (select id from users where email='remus@user.com'), '2023-05-11 17:23:14'),
 	((select id from users where email='ana@user.com'), (select id from users where email='marian@user.com'), '2023-05-23 23:19:03'),
 	((select id from users where email='raluca@user.com'), (select id from users where email='nicu@user.com'), '2023-07-17 12:09:01'),

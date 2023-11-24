@@ -1,5 +1,6 @@
 package ro.ubbcluj.cs.map.service;
 
+import ro.ubbcluj.cs.map.domain.FriendRequest;
 import ro.ubbcluj.cs.map.domain.Friendship;
 import ro.ubbcluj.cs.map.domain.User;
 
@@ -24,13 +25,32 @@ public interface ServiceI {
     boolean deleteUser(String email);
 
     /**
-     * Create a friendship between two users
+     * Create a friendship between two users - accept friend request
      * @param email1 - the email number of the first user
      * @param email2 - the email number of the second user
      * @return true - if the friendship is added
      *          false - otherwise
      */
     boolean createFriendship(String email1, String email2);
+
+    /**
+     * Create a friend request between two users
+     * @param email1 - the email number of the first user
+     * @param email2 - the email number of the second user
+     * @return true - if the friend request was created
+     *          false - otherwise
+     */
+    boolean createFriendRequest(String email1, String email2);
+
+    /**
+     * Respond to a friendship request
+     * @param friendshipReq - the friendship to be rejected
+     * @return true - if the friend request got responded
+     *          false - otherwise
+     */
+    boolean respondFriendRequest(Friendship friendshipReq, FriendRequest response);
+
+
 
     /**
      * Delete a friendship between two users
@@ -40,6 +60,8 @@ public interface ServiceI {
      *              false - otherwise
      */
     boolean deleteFriendship(String email1, String email2);
+
+
 
     /**
      * @return an Iterable of all the users

@@ -5,27 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="33ec59a6-aa7d-4f91-aa2f-bd57209b1ce3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/Controller.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/MainConsole.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/sample.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Lab1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Lab1/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/domain/FriendRequest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/MainApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/console/AbstractUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/console/AbstractUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/console/ConsoleUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/console/ConsoleUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/domain/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/domain/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DB Scripts/Create.sql" beforeDir="false" afterPath="$PROJECT_DIR$/DB Scripts/Create.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DB Scripts/Insert.sql" beforeDir="false" afterPath="$PROJECT_DIR$/DB Scripts/Insert.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/domain/Friendship.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/domain/Friendship.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/domain/validators/FriendshipValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/domain/validators/FriendshipValidator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/repository/FriendshipDBRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/repository/FriendshipDBRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/repository/UserDBRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/repository/UserDBRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/service/Service.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/service/Service.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/service/ServiceI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/service/ServiceI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/sample.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/sample.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -140,6 +130,7 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.MainApplication" />
         <item itemvalue="Application.MainConsole" />
       </list>
     </recent_temporary>
@@ -161,6 +152,12 @@
       <workItem from="1700490383125" duration="1938000" />
       <workItem from="1700503057589" duration="5363000" />
       <workItem from="1700554635444" duration="3445000" />
+      <workItem from="1700737627146" duration="10017000" />
+      <workItem from="1700758084208" duration="618000" />
+      <workItem from="1700762167804" duration="1834000" />
+      <workItem from="1700770825880" duration="1097000" />
+      <workItem from="1700772469940" duration="2587000" />
+      <workItem from="1700821890229" duration="788000" />
     </task>
     <servers />
   </component>

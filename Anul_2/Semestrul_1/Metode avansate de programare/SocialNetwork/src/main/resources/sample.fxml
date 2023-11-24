@@ -8,7 +8,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.381" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ro.ubbcluj.cs.map.Controller">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ro.ubbcluj.cs.map.Controller">
   <tabs>
     <Tab fx:id="usersWindow" text="Users">
       <content>
@@ -31,8 +31,28 @@
     </Tab>
     <Tab fx:id="friendshipsWindow" text="Friendships">
       <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+        <AnchorPane minHeight="0.0" minWidth="0.0" onDragDone="#deleteFriendship" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <ListView fx:id="listOfFriendships" layoutX="33.0" layoutY="29.0" prefHeight="311.0" prefWidth="283.0" />
+                  <Button layoutX="412.0" layoutY="172.0" mnemonicParsing="false" onMouseClicked="#deleteFriendship" text="Delete friendship" />
+               </children></AnchorPane>
       </content>
     </Tab>
+      <Tab fx:id="friendRequestsWindow" text="Friend Requests">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <ListView fx:id="listOfFriendRequests" layoutX="33.0" layoutY="29.0" prefHeight="311.0" prefWidth="283.0" />
+                  <TextField fx:id="friendRequestEmail1" layoutX="379.0" layoutY="53.0" promptText="email1" />
+                  <TextField fx:id="friendRequestEmail2" layoutX="379.0" layoutY="85.0" promptText="email2" />
+                  <Button layoutX="398.0" layoutY="121.0" mnemonicParsing="false" onMouseClicked="#createFriendRequest" text="Create friend request" />
+                  <Button layoutX="372.0" layoutY="219.0" mnemonicParsing="false" onMouseClicked="#acceptFriendRequest" text="Accept" />
+                  <Button layoutX="479.0" layoutY="219.0" mnemonicParsing="false" onMouseClicked="#rejectFriendRequest" text="Reject" />
+                  <Label layoutX="428.0" layoutY="194.0" text="Response" />
+                  <Button layoutX="379.0" layoutY="314.0" mnemonicParsing="false" onMouseClicked="#deleteFriendRequest" text="Delete friendship request" />
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
   </tabs>
 </TabPane>
