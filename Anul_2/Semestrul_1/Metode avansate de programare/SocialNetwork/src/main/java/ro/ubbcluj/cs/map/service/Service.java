@@ -2,6 +2,7 @@ package ro.ubbcluj.cs.map.service;
 
 import ro.ubbcluj.cs.map.domain.FriendRequest;
 import ro.ubbcluj.cs.map.domain.Friendship;
+import ro.ubbcluj.cs.map.domain.Message;
 import ro.ubbcluj.cs.map.domain.User;
 import ro.ubbcluj.cs.map.repository.Repository;
 
@@ -12,16 +13,17 @@ import java.util.stream.Collectors;
 public class Service implements ServiceI {
     protected final Repository<Long, User> userRepo;
     protected final Repository<Long, Friendship> friendshipRepo;
+    protected final Repository<Long, Message> messageRepo;
 
     String yellowColorCode = "\u001B[33m";
 
     String resetColorCode = "\u001B[0m";
 
 
-    public Service(Repository<Long, User> userRepo, Repository<Long, Friendship> friendshipRepo) {
+    public Service(Repository<Long, User> userRepo, Repository<Long, Friendship> friendshipRepo, Repository<Long, Message> messageRepo) {
         this.userRepo = userRepo;
         this.friendshipRepo = friendshipRepo;
-
+        this.messageRepo = messageRepo;
     }
 
     public Repository<Long, Friendship> getFriendshipRepo() {
@@ -148,6 +150,11 @@ public class Service implements ServiceI {
         return friendshipRepo.findAll();
     }
 
+    @Override
+    public Iterable<Message> getAllMessages() {
+        return messageRepo.findAll();
+    }
+
     /**
      * dfs algorithm - get the component that includes a given vertex
      * @param user the vertex where we start
@@ -254,6 +261,15 @@ public class Service implements ServiceI {
     }
 
     @Override
+    public ArrayList<Friendship> friendRequestList(User user) {
+        Collection<Friendship> friendships = (Collection<Friendship>) friendshipRepo.findAll();
+        return friendships.stream()
+                .filter(x -> (x.getUser1Id().equals(user.getId()) || x.getUser2Id().equals(user.getId())))
+                .collect(Collectors.toCollection(ArrayList::new));
+
+    }
+
+    @Override
     public Map<LocalDateTime, User> friendListFrom(User user, Integer month) {
         ArrayList<Friendship> friendList = friendList(user);
 
@@ -299,5 +315,48 @@ public class Service implements ServiceI {
             System.out.println(yellowColorCode + e.getMessage() + resetColorCode);
             return false;
         }
+    }
+
+    @Override
+    public boolean addMessage(String email_from, String email_to, String message) {
+        try {
+            User from = getUserByEmail(email_from);
+            User to = getUserByEmail(email_to);
+
+            if (from == null || to == null)
+                throw new Exception("Email does not exist");
+            if (Objects.equals(message, ""))
+                throw new Exception("Message is empty");
+
+            Message msg = new Message(from, Collections.singletonList(to), message);
+            messageRepo.save(msg);
+
+            List<Message> messagesTwoUsers = getMessagesBetweenTwoUsers(email_to, email_from);
+            if (messagesTwoUsers.size() > 1) {
+                Message secondToLastMessage = messagesTwoUsers.get(messagesTwoUsers.size() - 2);
+                Message lastMessage = messagesTwoUsers.get(messagesTwoUsers.size() - 1);
+                secondToLastMessage.setReply(lastMessage);
+                messageRepo.update(secondToLastMessage);
+            }
+
+            return true;
+        } catch (Exception e) {
+            System.out.println(yellowColorCode + e.getMessage() + resetColorCode);
+            return false;
+        }
+    }
+
+    @Override
+    public ArrayList<Message> getMessagesBetweenTwoUsers(String email1, String email2) {
+        if (getUserByEmail(email1) == null || getUserByEmail(email2) == null)
+            return null;
+
+        Collection<Message> messages = (Collection<Message>) messageRepo.findAll();
+        return messages.stream()
+                .filter(x -> (x.getFrom().getEmail().equals(email1) && x.getTo().get(0).getEmail().equals(email2)) ||
+                        (x.getFrom().getEmail().equals(email2) && x.getTo().get(0).getEmail().equals(email1)))
+                .sorted(Comparator.comparing(Message::getDate))
+                .collect(Collectors.toCollection(ArrayList::new));
+
     }
 }

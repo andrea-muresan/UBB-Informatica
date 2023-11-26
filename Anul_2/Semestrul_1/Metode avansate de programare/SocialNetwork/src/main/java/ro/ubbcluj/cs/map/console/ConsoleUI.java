@@ -105,6 +105,11 @@ public class ConsoleUI extends AbstractUI {
                     break;
                 case "x":
                     return;
+                case ":((":
+                    srv.addMessage("ana@user.com", "nicu@user.com", "Te rog sa mergi");
+                    srv.addMessage("nicu@user.com", "ana@user.com", "Te rog sa mergi");
+                    srv.getAllMessages().forEach(System.out::println);
+                    break;
                 default:
                     break;
             }

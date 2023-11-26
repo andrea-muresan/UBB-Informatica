@@ -2,6 +2,7 @@ package ro.ubbcluj.cs.map.service;
 
 import ro.ubbcluj.cs.map.domain.FriendRequest;
 import ro.ubbcluj.cs.map.domain.Friendship;
+import ro.ubbcluj.cs.map.domain.Message;
 import ro.ubbcluj.cs.map.domain.User;
 
 import java.time.LocalDateTime;
@@ -74,6 +75,11 @@ public interface ServiceI {
     Iterable<Friendship> getAllFriendships();
 
     /**
+     * @return an Iterable of all the friendships
+     */
+    Iterable<Message> getAllMessages();
+
+    /**
      * @return the number of communities - int
      */
     int numberOfCommunities();
@@ -109,11 +115,21 @@ public interface ServiceI {
      */
     Friendship getFriendshipByEmail(String email1, String email2);
 
-    public ArrayList<Friendship> friendList(User user);
+    ArrayList<Friendship> friendList(User user);
 
-    public Map<LocalDateTime, User> friendListFrom(User user, Integer month);
+    ArrayList<Friendship> friendRequestList(User user);
+
+    Map<LocalDateTime, User> friendListFrom(User user, Integer month);
 
     User findUser(String id);
 
     boolean updateUser(String id, String firstName, String lastName, String email);
+
+    /**
+     * Add a message in the messageRepo
+     */
+    boolean addMessage(String email_from, String email_to, String message);
+
+    ArrayList<Message> getMessagesBetweenTwoUsers(String user1, String user2);
+
 }

@@ -1,5 +1,6 @@
 package ro.ubbcluj.cs.map;
 
+import com.sun.javafx.fxml.LoadListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,6 +13,7 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 import ro.ubbcluj.cs.map.domain.FriendRequest;
 import ro.ubbcluj.cs.map.domain.Friendship;
+import ro.ubbcluj.cs.map.domain.Message;
 import ro.ubbcluj.cs.map.domain.User;
 import ro.ubbcluj.cs.map.service.Service;
 
@@ -29,6 +31,7 @@ public class Controller implements Initializable {
     private final ObservableList<User> usersObs = FXCollections.observableArrayList();
     private final ObservableList<Friendship> friendshipsObs = FXCollections.observableArrayList();
     private final ObservableList<Friendship> friendRequestsObs = FXCollections.observableArrayList();
+    private final ObservableList<Message> messagesObs = FXCollections.observableArrayList();
 
     // User window
     @FXML
@@ -57,6 +60,20 @@ public class Controller implements Initializable {
     private TextField friendRequestEmail1;
     @FXML
     private TextField friendRequestEmail2;
+
+    // Message window
+    @FXML
+    private ListView<Message> listOfMessages;
+    @FXML
+    private TextField message;
+    @FXML
+    private TextField sendEmailFrom;
+    @FXML
+    private TextField sendEmailTo;
+    @FXML
+    private TextField showMessagesEmail1;
+    @FXML
+    private TextField showMessagesEmail2;
 
 
     public Service getService() {
@@ -217,5 +234,52 @@ public class Controller implements Initializable {
             initApp(service.getAllUsers());
         }
     }
+
+    public void sendMessage(MouseEvent mouseEvent) {
+        String emailFrom = sendEmailFrom.getText();
+        String emailTo = sendEmailTo.getText();
+        String msg = message.getText();
+
+        if (!service.addMessage(emailFrom, emailTo, msg)) {
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setHeaderText("!!!");
+            errorAlert.setContentText("Something wrong");
+            errorAlert.showAndWait();
+        } else {
+            loadListOfMessages(emailFrom, emailTo);
+        }
+
+        message.clear();
+
+    }
+
+    public void loadListOfMessages(String emailFrom, String emailTo) {
+        listOfMessages.getItems().clear();
+        messagesObs.clear();
+        for (Message msg: service.getMessagesBetweenTwoUsers(emailFrom, emailTo)) {
+            messagesObs.add(msg);
+        }
+        if (messagesObs.isEmpty()) {
+            Alert errorAlert = new Alert(Alert.AlertType.INFORMATION);
+            errorAlert.setHeaderText(":((");
+            errorAlert.setContentText("No messages");
+            errorAlert.showAndWait();
+        }
+
+        listOfMessages.setItems(messagesObs);
+    }
+    public void searchMessages(MouseEvent mouseEvent) {
+        String email1 = showMessagesEmail1.getText();
+        String email2 = showMessagesEmail2.getText();
+
+        showMessagesEmail1.clear();
+        showMessagesEmail2.clear();
+
+        sendEmailFrom.setText(email1);
+        sendEmailTo.setText(email2);
+
+        loadListOfMessages(email1, email2);
+    }
+
 }
 
