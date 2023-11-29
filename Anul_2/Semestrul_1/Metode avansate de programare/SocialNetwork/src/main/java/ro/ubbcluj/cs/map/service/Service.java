@@ -349,7 +349,7 @@ public class Service implements ServiceI {
     @Override
     public ArrayList<Message> getMessagesBetweenTwoUsers(String email1, String email2) {
         if (getUserByEmail(email1) == null || getUserByEmail(email2) == null)
-            return null;
+            return new ArrayList<>();
 
         Collection<Message> messages = (Collection<Message>) messageRepo.findAll();
         return messages.stream()
