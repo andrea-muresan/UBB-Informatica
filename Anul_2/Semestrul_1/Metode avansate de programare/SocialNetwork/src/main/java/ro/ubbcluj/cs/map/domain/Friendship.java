@@ -4,57 +4,84 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Friendship extends Entity<Long> {
-    private Long user1_id;
-    private Long user2_id;
+    private Long user1Id;
+    private Long user2Id;
+    LocalDateTime friendsFrom;
+    private FriendRequest friendRequestStatus;
 
-     LocalDateTime friends_from;
-
-    public Friendship(Long user1_id, Long user2_id) {
-        this.user1_id = user1_id;
-        this.user2_id = user2_id;
-        friends_from = LocalDateTime.now();
+    public Friendship(Long user1Id, Long user2Id) {
+        this.user1Id = user1Id;
+        this.user2Id = user2Id;
+        this.friendsFrom = LocalDateTime.now();
+        this.friendRequestStatus = FriendRequest.PENDING;
     }
 
     public Friendship(User user1, User user2) {
-        this.user1_id = user1.getId();
-        this.user2_id = user2.getId();
-        friends_from = LocalDateTime.now();
+        this.user1Id = user1.getId();
+        this.user2Id = user2.getId();
+        this.friendsFrom = LocalDateTime.now();
+        this.friendRequestStatus = FriendRequest.PENDING;
     }
 
-    public Friendship(Long user1_id, Long user2_id, LocalDateTime friends_from) {
-        this.user1_id = user1_id;
-        this.user2_id = user2_id;
-        this.friends_from = friends_from;
+    public Friendship(Long user1Id, Long user2Id, LocalDateTime friendsFrom) {
+        this.user1Id = user1Id;
+        this.user2Id = user2Id;
+        this.friendsFrom = friendsFrom;
+        this.friendRequestStatus = FriendRequest.PENDING;
     }
 
-
-
-    public Long getUser1_id() {
-        return user1_id;
+    public Friendship(Long user1Id, Long user2Id, FriendRequest friendRequestStatus) {
+        this.user1Id = user1Id;
+        this.user2Id = user2Id;
+        this.friendsFrom = LocalDateTime.now();
+        this.friendRequestStatus = friendRequestStatus;
     }
 
-    public void setUser1_id(Long user1_id) {
-        this.user1_id = user1_id;
+    public Friendship(Long user1Id, Long user2Id, LocalDateTime friendsFrom, FriendRequest friendRequestStatus) {
+        this.user1Id = user1Id;
+        this.user2Id = user2Id;
+        this.friendsFrom = friendsFrom;
+        this.friendRequestStatus = friendRequestStatus;
     }
 
-    public Long getUser2_id() {
-        return user2_id;
+    public Long getUser1Id() {
+        return user1Id;
     }
 
-    public void setUser2_id(Long user2_id) {
-        this.user2_id = user2_id;
+    public void setUser1Id(Long user1Id) {
+        this.user1Id = user1Id;
     }
 
-    public LocalDateTime getFriends_from() {
-        return friends_from;
+    public Long getUser2Id() {
+        return user2Id;
+    }
+
+    public void setUser2Id(Long user2Id) {
+        this.user2Id = user2Id;
+    }
+
+    public LocalDateTime getFriendsFrom() {
+        return friendsFrom;
+    }
+
+    public void setFriendsFrom(LocalDateTime friendsFrom) {
+        this.friendsFrom = friendsFrom;
+    }
+
+    public FriendRequest getFriendRequestStatus() {
+        return friendRequestStatus;
+    }
+
+    public void setFriendRequestStatus(FriendRequest friendRequestStatus) {
+        this.friendRequestStatus = friendRequestStatus;
     }
 
     @Override
     public String toString() {
         return "Friendship{" +
-                "user1_id=" + user1_id +
-                ", user2_id=" + user2_id +
-                ", friends_from=" + friends_from +
+                "user1Id=" + user1Id +
+                ", user2Id=" + user2Id +
+                ", status=" + friendRequestStatus +
                 '}';
     }
 
@@ -63,12 +90,12 @@ public class Friendship extends Entity<Long> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Friendship that = (Friendship) o;
-        return Objects.equals(user1_id, that.user1_id) && Objects.equals(user2_id, that.user2_id) ||
-                Objects.equals(user1_id, that.user2_id) && Objects.equals(user2_id, that.user1_id);
+        return Objects.equals(user1Id, that.user1Id) && Objects.equals(user2Id, that.user2Id) ||
+                Objects.equals(user1Id, that.user2Id) && Objects.equals(user2Id, that.user1Id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(user1_id, user2_id);
+        return Objects.hash(user1Id, user2Id);
     }
 }

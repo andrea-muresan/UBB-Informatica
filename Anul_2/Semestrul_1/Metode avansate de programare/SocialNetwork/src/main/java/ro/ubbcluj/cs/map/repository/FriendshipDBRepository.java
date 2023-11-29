@@ -1,5 +1,6 @@
 package ro.ubbcluj.cs.map.repository;
 
+import ro.ubbcluj.cs.map.domain.FriendRequest;
 import ro.ubbcluj.cs.map.domain.Friendship;
 import ro.ubbcluj.cs.map.domain.validators.Validator;
 
@@ -36,6 +37,7 @@ public class FriendshipDBRepository implements Repository<Long, Friendship> {
                 Long user1_id = resultSet.getLong("user1_id");
                 Long user2_id = resultSet.getLong("user2_id");
                 LocalDateTime friends_from = resultSet.getTimestamp("friends_from").toLocalDateTime();
+                FriendRequest friend_req_status = FriendRequest.valueOf(resultSet.getString("friend_request_status"));
                 Friendship f = new Friendship(user1_id, user2_id, friends_from);
                 f.setId(longID);
                 return Optional.of(f);
@@ -60,8 +62,9 @@ public class FriendshipDBRepository implements Repository<Long, Friendship> {
                 Long user1_id = resultSet.getLong("user1_id");
                 Long user2_id = resultSet.getLong("user2_id");
                 LocalDateTime friends_from = resultSet.getTimestamp("friends_from").toLocalDateTime();
+                FriendRequest friendship_status = FriendRequest.valueOf(resultSet.getString("friend_request_status"));
 
-                Friendship f = new Friendship(user1_id, user2_id, friends_from);
+                Friendship f = new Friendship(user1_id, user2_id, friends_from, friendship_status);
                 f.setId(id);
                 friendships.add(f);
             }
@@ -76,11 +79,12 @@ public class FriendshipDBRepository implements Repository<Long, Friendship> {
     public Optional<Friendship> save(Friendship entity) {
         validator.validate(entity);
         try(Connection connection = DriverManager.getConnection(url,user,password);
-            PreparedStatement statement  = connection.prepareStatement("INSERT INTO friendships(user1_id,user2_id,friends_from) VALUES (?,?,?)"))
+            PreparedStatement statement  = connection.prepareStatement("INSERT INTO friendships(user1_id,user2_id,friends_from, friend_request_status) VALUES (?,?,?,?)"))
         {
-            statement.setLong(1,entity.getUser1_id());
-            statement.setLong(2,entity.getUser2_id());
-            statement.setTimestamp(3, Timestamp.valueOf(entity.getFriends_from()));
+            statement.setLong(1,entity.getUser1Id());
+            statement.setLong(2,entity.getUser2Id());
+            statement.setTimestamp(3, Timestamp.valueOf(entity.getFriendsFrom()));
+            statement.setString(4, entity.getFriendRequestStatus().toString());
             int affectedRows = statement.executeUpdate();
             return affectedRows!=0? Optional.empty():Optional.of(entity);
         } catch (SQLException e) {
@@ -105,12 +109,13 @@ public class FriendshipDBRepository implements Repository<Long, Friendship> {
     @Override
     public Optional<Friendship> update(Friendship entity) {
         try(Connection connection = DriverManager.getConnection(url,user,password);
-            PreparedStatement statement  = connection.prepareStatement("UPDATE friendships SET user1_id = ?, user2_id = ?, friends_from = ? WHERE id = ?"))
+            PreparedStatement statement  = connection.prepareStatement("UPDATE friendships SET user1_id = ?, user2_id = ?, friends_from = ?, friend_request_status = ? WHERE id = ?"))
         {
-            statement.setLong(1,entity.getUser1_id());
-            statement.setLong(2,entity.getUser2_id());
-            statement.setTimestamp(3, Timestamp.valueOf(entity.getFriends_from()));
-            statement.setLong(4,entity.getId());
+            statement.setLong(1,entity.getUser1Id());
+            statement.setLong(2,entity.getUser2Id());
+            statement.setTimestamp(3, Timestamp.valueOf(entity.getFriendsFrom()));
+            statement.setString(4, entity.getFriendRequestStatus().toString());
+            statement.setLong(5,entity.getId());
             int affectedRows = statement.executeUpdate();
             return affectedRows!=0? Optional.empty():Optional.of(entity);
         } catch (SQLException e) {

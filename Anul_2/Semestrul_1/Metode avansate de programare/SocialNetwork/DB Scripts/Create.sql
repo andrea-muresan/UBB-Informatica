@@ -9,9 +9,9 @@ CREATE TABLE users (
 -- Friendship table
 CREATE TABLE friendships (
 	id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    user1_id BIGINT,
-    user2_id BIGINT,
-	friends_from TIMESTAMP,
-    FOREIGN KEY (user1_id) REFERENCES users(id),
-    FOREIGN KEY (user2_id) REFERENCES users(id)
+    user1Id BIGINT,
+    user2Id BIGINT,
+	friendsFrom TIMESTAMP,
+    FOREIGN KEY (user1Id) REFERENCES users(id),
+    FOREIGN KEY (user2Id) REFERENCES users(id)
 );

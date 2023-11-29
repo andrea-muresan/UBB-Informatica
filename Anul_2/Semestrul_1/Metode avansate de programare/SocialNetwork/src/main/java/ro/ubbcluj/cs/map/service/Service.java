@@ -1,6 +1,8 @@
 package ro.ubbcluj.cs.map.service;
 
+import ro.ubbcluj.cs.map.domain.FriendRequest;
 import ro.ubbcluj.cs.map.domain.Friendship;
+import ro.ubbcluj.cs.map.domain.Message;
 import ro.ubbcluj.cs.map.domain.User;
 import ro.ubbcluj.cs.map.repository.Repository;
 
@@ -11,16 +13,21 @@ import java.util.stream.Collectors;
 public class Service implements ServiceI {
     protected final Repository<Long, User> userRepo;
     protected final Repository<Long, Friendship> friendshipRepo;
+    protected final Repository<Long, Message> messageRepo;
 
     String yellowColorCode = "\u001B[33m";
 
     String resetColorCode = "\u001B[0m";
 
 
-    public Service(Repository<Long, User> userRepo, Repository<Long, Friendship> friendshipRepo) {
+    public Service(Repository<Long, User> userRepo, Repository<Long, Friendship> friendshipRepo, Repository<Long, Message> messageRepo) {
         this.userRepo = userRepo;
         this.friendshipRepo = friendshipRepo;
+        this.messageRepo = messageRepo;
+    }
 
+    public Repository<Long, Friendship> getFriendshipRepo() {
+        return friendshipRepo;
     }
 
     @Override
@@ -67,7 +74,7 @@ public class Service implements ServiceI {
             User u1 = getUserByEmail(email1);
             User u2 = getUserByEmail(email2);
 
-            Friendship f = new Friendship(u1, u2);
+            Friendship f = new Friendship(u1.getId(), u2.getId(), FriendRequest.ACCEPTED);
             friendshipRepo.save(f);
             return true;
         } catch (Exception e) {
@@ -75,6 +82,48 @@ public class Service implements ServiceI {
             return false;
         }
     }
+
+    @Override
+    public boolean createFriendRequest(String email1, String email2) {
+        try {
+            Friendship friendship = getFriendshipByEmail(email1, email2);
+            if (friendship != null && friendship.getFriendRequestStatus() != FriendRequest.REJECTED)
+                throw new Exception("The friend request exists and it is not rejected");
+            else if (friendship != null && friendship.getFriendRequestStatus() == FriendRequest.REJECTED) {
+                friendship.setFriendRequestStatus(FriendRequest.PENDING);
+                friendshipRepo.update(friendship);
+                return true;
+            } else {
+                User u1 = getUserByEmail(email1);
+                User u2 = getUserByEmail(email2);
+
+                Friendship f = new Friendship(u1, u2);
+                friendshipRepo.save(f);
+                return true;
+            }
+        } catch (Exception e) {
+            System.out.println(yellowColorCode + e.getMessage() + resetColorCode);
+            return false;
+        }
+    }
+
+    @Override
+    public boolean respondFriendRequest(Friendship friendshipReq, FriendRequest response) {
+        try {
+            if (!friendshipRepo.findOne(friendshipReq.getId()).isPresent())
+                throw new Exception("The friend request does not exist");
+            else if (friendshipReq.getFriendRequestStatus() != FriendRequest.PENDING)
+                throw new Exception("The friend request is not pending");
+
+            friendshipReq.setFriendRequestStatus(response);
+            friendshipRepo.update(friendshipReq);
+            return true;
+        } catch (Exception e) {
+            System.out.println(yellowColorCode + e.getMessage() + resetColorCode);
+            return false;
+        }
+    }
+
 
     @Override
     public boolean deleteFriendship(String email1, String email2) {
@@ -99,6 +148,11 @@ public class Service implements ServiceI {
     @Override
     public Iterable<Friendship> getAllFriendships() {
         return friendshipRepo.findAll();
+    }
+
+    @Override
+    public Iterable<Message> getAllMessages() {
+        return messageRepo.findAll();
     }
 
     /**
@@ -151,8 +205,8 @@ public class Service implements ServiceI {
 
         // Populate adjacency list based on friendships
         for (Friendship friendship : getAllFriendships()) {
-            User u1 = userRepo.findOne(friendship.getUser1_id()).get();
-            User u2 = userRepo.findOne(friendship.getUser2_id()).get();
+            User u1 = userRepo.findOne(friendship.getUser1Id()).get();
+            User u2 = userRepo.findOne(friendship.getUser2Id()).get();
             adjacencyList.computeIfAbsent(u1, k -> new ArrayList<>()).add(u2);
             adjacencyList.computeIfAbsent(u2, k -> new ArrayList<>()).add(u1);
         }
@@ -200,7 +254,18 @@ public class Service implements ServiceI {
     public ArrayList<Friendship> friendList(User user) {
         Collection<Friendship> friendships = (Collection<Friendship>) friendshipRepo.findAll();
         return friendships.stream()
-                .filter(x -> x.getUser1_id().equals(user.getId()) || x.getUser2_id().equals(user.getId())).collect(Collectors.toCollection(ArrayList::new));
+                .filter(x -> (x.getUser1Id().equals(user.getId()) || x.getUser2Id().equals(user.getId())) &&
+                        x.getFriendRequestStatus() == FriendRequest.ACCEPTED)
+                .collect(Collectors.toCollection(ArrayList::new));
+
+    }
+
+    @Override
+    public ArrayList<Friendship> friendRequestList(User user) {
+        Collection<Friendship> friendships = (Collection<Friendship>) friendshipRepo.findAll();
+        return friendships.stream()
+                .filter(x -> (x.getUser1Id().equals(user.getId()) || x.getUser2Id().equals(user.getId())))
+                .collect(Collectors.toCollection(ArrayList::new));
 
     }
 
@@ -209,12 +274,12 @@ public class Service implements ServiceI {
         ArrayList<Friendship> friendList = friendList(user);
 
         return friendList.stream()
-                .filter(f -> f.getFriends_from().getMonthValue() == month)
-                .collect(Collectors.toMap(Friendship::getFriends_from, f -> {
-                    if (f.getUser1_id().equals(user.getId())) {
-                        return userRepo.findOne(f.getUser2_id()).orElseThrow(() -> new RuntimeException("User not found"));
+                .filter(f -> f.getFriendsFrom().getMonthValue() == month)
+                .collect(Collectors.toMap(Friendship::getFriendsFrom, f -> {
+                    if (f.getUser1Id().equals(user.getId())) {
+                        return userRepo.findOne(f.getUser2Id()).orElseThrow(() -> new RuntimeException("User not found"));
                     } else {
-                        return userRepo.findOne(f.getUser1_id()).orElseThrow(() -> new RuntimeException("User not found"));
+                        return userRepo.findOne(f.getUser1Id()).orElseThrow(() -> new RuntimeException("User not found"));
                     }
                 }));
     }
@@ -250,5 +315,48 @@ public class Service implements ServiceI {
             System.out.println(yellowColorCode + e.getMessage() + resetColorCode);
             return false;
         }
+    }
+
+    @Override
+    public boolean addMessage(String email_from, String email_to, String message) {
+        try {
+            User from = getUserByEmail(email_from);
+            User to = getUserByEmail(email_to);
+
+            if (from == null || to == null)
+                throw new Exception("Email does not exist");
+            if (Objects.equals(message, ""))
+                throw new Exception("Message is empty");
+
+            Message msg = new Message(from, Collections.singletonList(to), message);
+            messageRepo.save(msg);
+
+            List<Message> messagesTwoUsers = getMessagesBetweenTwoUsers(email_to, email_from);
+            if (messagesTwoUsers.size() > 1) {
+                Message secondToLastMessage = messagesTwoUsers.get(messagesTwoUsers.size() - 2);
+                Message lastMessage = messagesTwoUsers.get(messagesTwoUsers.size() - 1);
+                secondToLastMessage.setReply(lastMessage);
+                messageRepo.update(secondToLastMessage);
+            }
+
+            return true;
+        } catch (Exception e) {
+            System.out.println(yellowColorCode + e.getMessage() + resetColorCode);
+            return false;
+        }
+    }
+
+    @Override
+    public ArrayList<Message> getMessagesBetweenTwoUsers(String email1, String email2) {
+        if (getUserByEmail(email1) == null || getUserByEmail(email2) == null)
+            return new ArrayList<>();
+
+        Collection<Message> messages = (Collection<Message>) messageRepo.findAll();
+        return messages.stream()
+                .filter(x -> (x.getFrom().getEmail().equals(email1) && x.getTo().get(0).getEmail().equals(email2)) ||
+                        (x.getFrom().getEmail().equals(email2) && x.getTo().get(0).getEmail().equals(email1)))
+                .sorted(Comparator.comparing(Message::getDate))
+                .collect(Collectors.toCollection(ArrayList::new));
+
     }
 }

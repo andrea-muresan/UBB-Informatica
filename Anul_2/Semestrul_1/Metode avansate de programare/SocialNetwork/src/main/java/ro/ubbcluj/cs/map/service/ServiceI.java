@@ -1,6 +1,8 @@
 package ro.ubbcluj.cs.map.service;
 
+import ro.ubbcluj.cs.map.domain.FriendRequest;
 import ro.ubbcluj.cs.map.domain.Friendship;
+import ro.ubbcluj.cs.map.domain.Message;
 import ro.ubbcluj.cs.map.domain.User;
 
 import java.time.LocalDateTime;
@@ -24,13 +26,32 @@ public interface ServiceI {
     boolean deleteUser(String email);
 
     /**
-     * Create a friendship between two users
+     * Create a friendship between two users - accept friend request
      * @param email1 - the email number of the first user
      * @param email2 - the email number of the second user
      * @return true - if the friendship is added
      *          false - otherwise
      */
     boolean createFriendship(String email1, String email2);
+
+    /**
+     * Create a friend request between two users
+     * @param email1 - the email number of the first user
+     * @param email2 - the email number of the second user
+     * @return true - if the friend request was created
+     *          false - otherwise
+     */
+    boolean createFriendRequest(String email1, String email2);
+
+    /**
+     * Respond to a friendship request
+     * @param friendshipReq - the friendship to be rejected
+     * @return true - if the friend request got responded
+     *          false - otherwise
+     */
+    boolean respondFriendRequest(Friendship friendshipReq, FriendRequest response);
+
+
 
     /**
      * Delete a friendship between two users
@@ -41,6 +62,8 @@ public interface ServiceI {
      */
     boolean deleteFriendship(String email1, String email2);
 
+
+
     /**
      * @return an Iterable of all the users
      */
@@ -50,6 +73,11 @@ public interface ServiceI {
      * @return an Iterable of all the friendships
      */
     Iterable<Friendship> getAllFriendships();
+
+    /**
+     * @return an Iterable of all the friendships
+     */
+    Iterable<Message> getAllMessages();
 
     /**
      * @return the number of communities - int
@@ -87,11 +115,21 @@ public interface ServiceI {
      */
     Friendship getFriendshipByEmail(String email1, String email2);
 
-    public ArrayList<Friendship> friendList(User user);
+    ArrayList<Friendship> friendList(User user);
 
-    public Map<LocalDateTime, User> friendListFrom(User user, Integer month);
+    ArrayList<Friendship> friendRequestList(User user);
+
+    Map<LocalDateTime, User> friendListFrom(User user, Integer month);
 
     User findUser(String id);
 
     boolean updateUser(String id, String firstName, String lastName, String email);
+
+    /**
+     * Add a message in the messageRepo
+     */
+    boolean addMessage(String email_from, String email_to, String message);
+
+    ArrayList<Message> getMessagesBetweenTwoUsers(String user1, String user2);
+
 }

@@ -8,7 +8,7 @@ public class FriendshipValidator implements Validator<Friendship> {
 
     @Override
     public void validate(Friendship entity) throws ValidationException {
-        if (Objects.equals(entity.getUser1_id(), entity.getUser2_id()))
+        if (Objects.equals(entity.getUser1Id(), entity.getUser2Id()))
             throw new ValidationException("Error - the IDs are identical");
     }
 }
