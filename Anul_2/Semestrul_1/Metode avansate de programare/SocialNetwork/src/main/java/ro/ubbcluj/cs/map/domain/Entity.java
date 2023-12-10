@@ -6,6 +6,7 @@ import java.util.Objects;
 public class Entity<ID> implements Serializable {
 
     protected ID id;
+
     public ID getId() {
         return id;
     }

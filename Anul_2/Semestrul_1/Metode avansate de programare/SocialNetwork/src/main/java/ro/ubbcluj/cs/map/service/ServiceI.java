@@ -128,8 +128,12 @@ public interface ServiceI {
     /**
      * Add a message in the messageRepo
      */
-    boolean addMessage(String email_from, String email_to, String message);
+
+    boolean addMessage(String email_from, List<String> emails_to, String message);
+    boolean addMessage(String email_from, List<String> emails_to, String message, Message replyTo);
 
     ArrayList<Message> getMessagesBetweenTwoUsers(String user1, String user2);
+
+    boolean updateMessage(Message msg);
 
 }

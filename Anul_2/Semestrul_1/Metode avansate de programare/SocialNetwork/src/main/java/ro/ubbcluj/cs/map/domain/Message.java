@@ -9,21 +9,46 @@ public class Message extends Entity<Long>{
     private List<User> to;
     private LocalDateTime date;
     private String message;
-    private Message reply;
-
-    public Message(User from, List<User> to, LocalDateTime date, String message) {
-        this.from = from;
-        this.to = to;
-        this.date = date;
-        this.message = message;
-        this.reply = null;
-    }
+    private Message replyTo;
 
     public Message(User from, List<User> to, String message) {
         this.from = from;
         this.to = to;
-        this.message = message;
         this.date = LocalDateTime.now();
+        this.message = message;
+        this.replyTo = null;
+    }
+
+    public Message(Long id, User from, List<User> to, LocalDateTime date, String message, Message replyTo) {
+        this.id = id;
+        this.from = from;
+        this.to = to;
+        this.date = date;
+        this.message = message;
+        this.replyTo = replyTo;
+    }
+
+    public Message(Long id, User from, List<User> to, LocalDateTime date, String message) {
+        this.id = id;
+        this.from = from;
+        this.to = to;
+        this.date = date;
+        this.message = message;
+    }
+
+    public Message(User from, List<User> to, String message, Message replyTo) {
+        this.from = from;
+        this.to = to;
+        this.message = message;
+        this.replyTo = replyTo;
+        this.date = LocalDateTime.now();
+    }
+
+    public Message(Long id, User from, String message, LocalDateTime date) {
+        setId(id);
+        this.from = from;
+        this.date = date;
+        this.message = message;
     }
 
     public User getFrom() {
@@ -58,18 +83,33 @@ public class Message extends Entity<Long>{
         this.message = message;
     }
 
-    public Message getReply() {
-        return reply;
+    public Message getReplyTo() {
+        return replyTo;
     }
 
-    public void setReply(Message reply) {
-        this.reply = reply;
+    public void setReplyTo(Message replyTo) {
+        this.replyTo = replyTo;
     }
 
     @Override
     public String toString() {
-        return from.getFirstName() +
-                ": " + message + "\nDATE:" +
-                date;
+        if (replyTo == null) {
+            return from.getFirstName() +
+                    ": " + message + "\nDATE:" +
+                    date;
+        } else {
+            return "REPLY TO: "  + replyTo.getFrom().getFirstName() + ": " + truncateString(getReplyTo().getMessage(), 25) + "\n" +
+                    from.getFirstName() + ": " +
+                    message +
+                    "\nDATE:" + date;
+        }
+    }
+
+    private static String truncateString(String input, int maxLength) {
+        if (input.length() <= maxLength) {
+            return input; // If the string is already within the limit, return it unchanged
+        } else {
+            return input.substring(0, maxLength) + "..."; // Truncate and add "..."
+        }
     }
 }

@@ -6,6 +6,7 @@ import ro.ubbcluj.cs.map.domain.Message;
 import ro.ubbcluj.cs.map.domain.User;
 import ro.ubbcluj.cs.map.repository.Repository;
 
+import javax.jws.soap.SOAPBinding;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -318,26 +319,63 @@ public class Service implements ServiceI {
     }
 
     @Override
-    public boolean addMessage(String email_from, String email_to, String message) {
+    public boolean addMessage(String email_from, List<String> emails_to, String message) {
         try {
             User from = getUserByEmail(email_from);
-            User to = getUserByEmail(email_to);
+            List<User> toUsers = new ArrayList<>();
+            for (String email : emails_to) {
+                User u = getUserByEmail(email);
+                if(u != null) {
+                    toUsers.add(u);
+                } else {
+                    throw new Exception("Email does not exist");
+                }
+            }
 
-            if (from == null || to == null)
+            if (from == null || toUsers.isEmpty())
                 throw new Exception("Email does not exist");
             if (Objects.equals(message, ""))
                 throw new Exception("Message is empty");
 
-            Message msg = new Message(from, Collections.singletonList(to), message);
+            Message msg = new Message(from, toUsers, message);
             messageRepo.save(msg);
 
-            List<Message> messagesTwoUsers = getMessagesBetweenTwoUsers(email_to, email_from);
-            if (messagesTwoUsers.size() > 1) {
-                Message secondToLastMessage = messagesTwoUsers.get(messagesTwoUsers.size() - 2);
-                Message lastMessage = messagesTwoUsers.get(messagesTwoUsers.size() - 1);
-                secondToLastMessage.setReply(lastMessage);
-                messageRepo.update(secondToLastMessage);
+//            List<Message> messagesTwoUsers = getMessagesBetweenTwoUsers(email_to, email_from);
+//            if (messagesTwoUsers.size() > 1) {
+//                Message secondToLastMessage = messagesTwoUsers.get(messagesTwoUsers.size() - 2);
+//                Message lastMessage = messagesTwoUsers.get(messagesTwoUsers.size() - 1);
+//                secondToLastMessage.setReplyTo(lastMessage);
+//                messageRepo.update(secondToLastMessage);
+//            }
+
+            return true;
+        } catch (Exception e) {
+            System.out.println(yellowColorCode + e.getMessage() + resetColorCode);
+            return false;
+        }
+    }
+
+    @Override
+    public boolean addMessage(String email_from, List<String> emails_to, String message, Message replyTo) {
+        try {
+            User from = getUserByEmail(email_from);
+            List<User> toUsers = new ArrayList<>();
+            for (String email : emails_to) {
+                User u = getUserByEmail(email);
+                if(u != null) {
+                    toUsers.add(u);
+                } else {
+                    throw new Exception("Email does not exist");
+                }
             }
+
+            if (from == null || toUsers.isEmpty())
+                throw new Exception("Email does not exist");
+            if (Objects.equals(message, ""))
+                throw new Exception("Message is empty");
+
+            Message msg = new Message(from, toUsers, message, replyTo);
+            messageRepo.save(msg);
 
             return true;
         } catch (Exception e) {
@@ -353,10 +391,25 @@ public class Service implements ServiceI {
 
         Collection<Message> messages = (Collection<Message>) messageRepo.findAll();
         return messages.stream()
-                .filter(x -> (x.getFrom().getEmail().equals(email1) && x.getTo().get(0).getEmail().equals(email2)) ||
-                        (x.getFrom().getEmail().equals(email2) && x.getTo().get(0).getEmail().equals(email1)))
+                .filter(x -> (x.getFrom().getEmail().equals(email1) && userFoundByEmail(x.getTo(), email2)) ||
+                        (x.getFrom().getEmail().equals(email2) && userFoundByEmail(x.getTo(), email1)))
                 .sorted(Comparator.comparing(Message::getDate))
                 .collect(Collectors.toCollection(ArrayList::new));
 
+    }
+
+    @Override
+    public boolean updateMessage(Message msg) {
+        messageRepo.update(msg);
+        return true;
+    }
+
+    boolean userFoundByEmail(List<User> users, String email) {
+        for (User u: users) {
+            if (u.getEmail().equals(email))
+                return true;
+        }
+
+        return false;
     }
 }

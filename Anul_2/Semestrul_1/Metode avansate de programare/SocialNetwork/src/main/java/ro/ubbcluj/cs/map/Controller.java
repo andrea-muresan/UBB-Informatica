@@ -18,9 +18,7 @@ import ro.ubbcluj.cs.map.domain.User;
 import ro.ubbcluj.cs.map.service.Service;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 
 public class Controller implements Initializable {
@@ -238,15 +236,16 @@ public class Controller implements Initializable {
     public void sendMessage(MouseEvent mouseEvent) {
         String emailFrom = sendEmailFrom.getText();
         String emailTo = sendEmailTo.getText();
+        List<String> toUsers = new ArrayList<>(Arrays.asList(emailTo.split(" ")));
         String msg = message.getText();
 
-        if (!service.addMessage(emailFrom, emailTo, msg)) {
+        if (!service.addMessage(emailFrom, toUsers, msg)) {
             Alert errorAlert = new Alert(Alert.AlertType.ERROR);
             errorAlert.setHeaderText("!!!");
             errorAlert.setContentText("Something wrong");
             errorAlert.showAndWait();
         } else {
-            loadListOfMessages(emailFrom, emailTo);
+            loadListOfMessages(emailFrom, toUsers.get(0));
         }
 
         message.clear();
@@ -256,7 +255,7 @@ public class Controller implements Initializable {
     public void loadListOfMessages(String emailFrom, String emailTo) {
         listOfMessages.getItems().clear();
         messagesObs.clear();
-        for (Message msg: service.getMessagesBetweenTwoUsers(emailFrom, emailTo)) {
+        for (Message msg : service.getMessagesBetweenTwoUsers(emailFrom, emailTo)) {
             messagesObs.add(msg);
         }
         if (messagesObs.isEmpty()) {
@@ -268,6 +267,7 @@ public class Controller implements Initializable {
 
         listOfMessages.setItems(messagesObs);
     }
+
     public void searchMessages(MouseEvent mouseEvent) {
         String email1 = showMessagesEmail1.getText();
         String email2 = showMessagesEmail2.getText();
@@ -281,5 +281,27 @@ public class Controller implements Initializable {
         loadListOfMessages(email1, email2);
     }
 
-}
 
+    public void replyMessage(MouseEvent mouseEvent) {
+        if (listOfMessages.getSelectionModel().getSelectedItem() != null) {
+            Message msg = listOfMessages.getSelectionModel().getSelectedItem();
+
+            String emailFrom = sendEmailFrom.getText();
+            String emailTo = sendEmailTo.getText();
+            List<String> toUsers = new ArrayList<>(Collections.singletonList(emailTo));
+            String replyText = message.getText();
+
+            if (!service.addMessage(emailFrom, toUsers, replyText, msg)) {
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setHeaderText("!!!");
+                errorAlert.setContentText("Something wrong");
+                errorAlert.showAndWait();
+            } else {
+                loadListOfMessages(emailFrom, toUsers.get(0));
+            }
+
+            message.clear();
+        }
+
+    }
+}
