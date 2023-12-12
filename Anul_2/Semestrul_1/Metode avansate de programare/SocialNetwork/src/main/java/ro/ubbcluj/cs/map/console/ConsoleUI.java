@@ -1,9 +1,11 @@
 package ro.ubbcluj.cs.map.console;
 
 import ro.ubbcluj.cs.map.domain.Friendship;
+import ro.ubbcluj.cs.map.domain.Message;
 import ro.ubbcluj.cs.map.domain.User;
 import ro.ubbcluj.cs.map.service.ServiceI;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -106,8 +108,9 @@ public class ConsoleUI extends AbstractUI {
                 case "x":
                     return;
                 case ":((":
-                    srv.addMessage("ana@user.com", "nicu@user.com", "Te rog sa mergi");
-                    srv.addMessage("nicu@user.com", "ana@user.com", "Te rog sa mergi");
+                   // srv.addMessage("ana@user.com", Arrays.asList("nicu@user.com", "mara@user.com"), "Te rog sa mergi");
+//                    srv.addMessage("nicu@user.com", "ana@user.com", "Te rog sa mergi");
+//                    Iterable<Message> lst = srv.getAllMessages();
                     srv.getAllMessages().forEach(System.out::println);
                     break;
                 default:

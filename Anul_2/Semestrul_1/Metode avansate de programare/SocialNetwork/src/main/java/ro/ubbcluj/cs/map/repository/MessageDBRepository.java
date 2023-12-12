@@ -1,13 +1,13 @@
 package ro.ubbcluj.cs.map.repository;
 
-import ro.ubbcluj.cs.map.domain.FriendRequest;
-import ro.ubbcluj.cs.map.domain.Friendship;
 import ro.ubbcluj.cs.map.domain.Message;
 import ro.ubbcluj.cs.map.domain.User;
 
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.*;
+
+import static java.sql.DriverManager.getConnection;
 
 public class MessageDBRepository implements Repository<Long, Message> {
 
@@ -23,110 +23,178 @@ public class MessageDBRepository implements Repository<Long, Message> {
         this.userRepo = userRepo;
     }
 
-    public Optional<Message> findOneWithoutReply(Long longID) {
-        try (Connection connection = DriverManager.getConnection(url, user, password);
-             PreparedStatement statement = connection.prepareStatement("SELECT * FROM messages WHERE id=?")) {
-            statement.setLong(1, longID);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                Long from_id = resultSet.getLong("from_id");
-                Long to_id = resultSet.getLong("to_id");
-                LocalDateTime date = resultSet.getTimestamp("date").toLocalDateTime();
-                String message = resultSet.getString("message");
-                Message msg = new Message(userRepo.findOne(from_id).get(), Collections.singletonList(userRepo.findOne(to_id).get()), date, message);
-                msg.setId(longID);
-                return Optional.of(msg);
+    /*
+    * Find the main information about a message( id, from, text, date) from the messages table
+    * - without using message-recipients - it might get into a loop because of the reply
+     */
+    public Optional<Message> findMessage(Long id) {
+        String sql = "SELECT messages.* FROM messages WHERE messages.id = ?";
+
+        try (Connection connection = getConnection(url, user, password);
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setLong(1, id);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    Long messageId = resultSet.getLong("id");
+                    User fromUser = userRepo.findOne(resultSet.getLong("from_user_id")).get();
+                    String messageText = resultSet.getString("message_text");
+                    LocalDateTime dateTime = resultSet.getTimestamp("date_time").toLocalDateTime();
+                    return Optional.of(new Message(id, fromUser, messageText, dateTime));
+                }
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace(); // Handle or log the exception based on your application's needs
         }
+
         return Optional.empty();
     }
 
     @Override
     public Optional<Message> findOne(Long longID) {
+        String sql = "SELECT messages.*, message_recipients.to_user_id, message_recipients.reply_to_message_id " +
+                "FROM messages " +
+                "LEFT JOIN message_recipients ON messages.id = message_recipients.message_id " +
+                "WHERE messages.id = ?";
 
-        Message msg;
-        if (findOneWithoutReply(longID).isPresent()) {
-            msg = findOneWithoutReply(longID).get();
-        } else return Optional.empty();
+        try (Connection connection = getConnection(url, user, password);
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setLong(1, longID);
 
-        try (Connection connection = DriverManager.getConnection(url, user, password);
-             PreparedStatement statement = connection.prepareStatement("SELECT * FROM messages WHERE id=?")) {
-            statement.setLong(1, longID);
-            ResultSet resultSet = statement.executeQuery();
-            long reply_id = resultSet.getLong("reply_id");
-            if (!resultSet.wasNull()) {
-                Message reply;
-                if (findOneWithoutReply(reply_id).isPresent()) {
-                    reply = findOneWithoutReply(reply_id).get();
-                } else return Optional.empty();
-
-
-                msg.setReply(findOneWithoutReply(reply_id).get());
-                return Optional.of(msg);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    Message message = mapResultSetToMessage(resultSet);
+                    return Optional.of(message);
+                }
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace(); // Handle or log the exception based on your application's needs
         }
+
         return Optional.empty();
     }
 
+    private Message mapResultSetToMessage(ResultSet resultSet) throws SQLException {
+        Long messageId = resultSet.getLong("id");
+        User fromUser = userRepo.findOne(resultSet.getLong("from_user_id")).get();
+        String messageText = resultSet.getString("message_text");
+        Timestamp dateTime = resultSet.getTimestamp("date_time");
+        Message replyToMessageId = null;
+        try {
+            long replyToMessageIdValue = resultSet.getLong("reply_to_message_id");
+            if (!resultSet.wasNull()) {
+                replyToMessageId = findMessage(replyToMessageIdValue).get();
+            }
+        } catch (Exception e) {
+            String error = e.getMessage();
+        }
+
+        // Extract the receiver information
+        List<User> toUsers = new ArrayList<>();
+        do {
+            long toUserId = resultSet.getLong("to_user_id");
+            if (toUserId != 0) {
+                toUsers.add(userRepo.findOne(toUserId).get());
+            }
+        } while (resultSet.next());
+
+        // Create and return a Message object
+        return new Message(messageId, fromUser, toUsers, dateTime.toLocalDateTime(), messageText, replyToMessageId);
+    }
+
+
     @Override
     public Iterable<Message> findAll() {
+        String sql = "SELECT messages.*, message_recipients.to_user_id " +
+                "FROM messages " +
+                "LEFT JOIN message_recipients ON messages.id = message_recipients.message_id";
+
         List<Message> messages = new ArrayList<>();
 
-        try (Connection connection = DriverManager.getConnection(url, user, password);
-             PreparedStatement statement = connection.prepareStatement("select * from messages");
-             ResultSet resultSet = statement.executeQuery()
-        ) {
-            while (resultSet.next()) {
-                Long id = resultSet.getLong("id");
-                Long from_id = resultSet.getLong("from_id");
-                Long to_id = resultSet.getLong("to_id");
-                LocalDateTime date = resultSet.getTimestamp("date").toLocalDateTime();
-                String message = resultSet.getString("message");
+        try (Connection connection = getConnection(url, user, password);
+             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
 
-                Message msg = new Message(userRepo.findOne(from_id).get(), Collections.singletonList(userRepo.findOne(to_id).get()), date, message);
-                msg.setId(id);
-                messages.add(msg);
+            Map<Long, Message> messageMap = new HashMap<>();
+
+            while (resultSet.next()) {
+                Long messageId = resultSet.getLong("id");
+                Message message = messageMap.computeIfAbsent(messageId, k -> {
+                    return findOne(messageId).get();
+                });
+
             }
-            return messages;
+
+            messages.addAll(messageMap.values());
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace(); // Handle or log the exception based on your application's needs
         }
+
+        return messages;
     }
 
     @Override
     public Optional<Message> save(Message entity) {
-        try(Connection connection = DriverManager.getConnection(url,user,password);
-            PreparedStatement statement  = connection.prepareStatement("INSERT INTO messages(from_id,to_id,date, message, reply_id) VALUES (?,?,?,?,?)"))
-        {
-            statement.setLong(1,entity.getFrom().getId());
-            statement.setLong(2,entity.getTo().get(0).getId());
-            statement.setTimestamp(3, Timestamp.valueOf(entity.getDate()));
-            statement.setString(4, entity.getMessage());
-            if (entity.getReply() != null)
-                statement.setLong(5, entity.getReply().getId());
-            else statement.setNull(5, java.sql.Types.NULL);
+        String insertMessageSql = "INSERT INTO messages (from_user_id, message_text, date_time) VALUES (?, ?, ?)";
+        String insertRecipientSql = "INSERT INTO message_recipients (to_user_id, message_id,  reply_to_message_id) VALUES (?, ?, ?)";
 
-            int affectedRows = statement.executeUpdate();
-            return affectedRows!=0? Optional.empty():Optional.of(entity);
+        try (Connection connection = getConnection(url, user, password);
+             PreparedStatement insertMessageStatement = connection.prepareStatement(insertMessageSql, Statement.RETURN_GENERATED_KEYS)) {
+
+            // Set parameters for the message
+            insertMessageStatement.setLong(1, entity.getFrom().getId());
+            insertMessageStatement.setString(2, entity.getMessage());
+            insertMessageStatement.setTimestamp(3, Timestamp.valueOf(entity.getDate()));
+
+            // Execute the message insert statement
+            int affectedRows = insertMessageStatement.executeUpdate();
+
+            if (affectedRows == 0) {
+                return Optional.empty(); // Insert failed
+            }
+
+            // Retrieve the generated message ID
+            try (ResultSet generatedKeys = insertMessageStatement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    Long messageId = generatedKeys.getLong(1);
+
+                    // Insert recipients if available
+                    if (!entity.getTo().isEmpty()) {
+                        try (PreparedStatement insertRecipientStatement = connection.prepareStatement(insertRecipientSql)) {
+                            for (User toUser : entity.getTo()) {
+                                insertRecipientStatement.setLong(1, toUser.getId());
+                                insertRecipientStatement.setLong(2, messageId);
+                                if (entity.getReplyTo() != null)
+                                    insertRecipientStatement.setLong(3, entity.getReplyTo().getId());
+                                else insertRecipientStatement.setNull(3, Types.NULL);
+                                insertRecipientStatement.addBatch();
+                            }
+                            insertRecipientStatement.executeBatch();
+                        }
+                    }
+
+                    // Return the saved message with the generated ID
+                    return Optional.of(new Message(messageId, entity.getFrom(), entity.getTo(),
+                            entity.getDate(), entity.getMessage(), entity.getReplyTo()));
+                }
+            }
+
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace(); // Handle or log the exception based on your application's needs
         }
+
+        return Optional.empty();
     }
 
     @Override
     public Optional<Message> delete(Long longID) {
-        try(Connection connection = DriverManager.getConnection(url,user,password);
-            PreparedStatement statement  = connection.prepareStatement("DELETE FROM messages WHERE ID = ?");)
-        {
+        try (Connection connection = getConnection(url, user, password);
+             PreparedStatement statement = connection.prepareStatement("DELETE FROM messages WHERE ID = ?");) {
             Optional<Message> cv = findOne(longID);
-            statement.setLong(1,longID);
+            statement.setLong(1, longID);
             int affectedRows = statement.executeUpdate();
-            return affectedRows==0? Optional.empty():cv;
+            return affectedRows == 0 ? Optional.empty() : cv;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -134,17 +202,16 @@ public class MessageDBRepository implements Repository<Long, Message> {
 
     @Override
     public Optional<Message> update(Message entity) {
-        try(Connection connection = DriverManager.getConnection(url,user,password);
-            PreparedStatement statement  = connection.prepareStatement("UPDATE messages SET from_id = ?, to_id = ?, date = ?, message = ?, reply_id = ? WHERE id = ?"))
-        {
-            statement.setLong(1,entity.getFrom().getId());
-            statement.setLong(2,entity.getTo().get(0).getId());
+        try (Connection connection = getConnection(url, user, password);
+             PreparedStatement statement = connection.prepareStatement("UPDATE messages SET from_id = ?, to_id = ?, date = ?, message = ?, WHERE id = ?")) {
+            statement.setLong(1, entity.getFrom().getId());
+            statement.setLong(2, entity.getTo().get(0).getId());
             statement.setTimestamp(3, Timestamp.valueOf(entity.getDate()));
             statement.setString(4, entity.getMessage());
-            statement.setLong(5,entity.getReply().getId());
-            statement.setLong(6,entity.getId());
+            // statement.setLong(5,entity.getReplyTo().getId());
+            statement.setLong(5, entity.getId());
             int affectedRows = statement.executeUpdate();
-            return affectedRows!=0? Optional.empty():Optional.of(entity);
+            return affectedRows != 0 ? Optional.empty() : Optional.of(entity);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
