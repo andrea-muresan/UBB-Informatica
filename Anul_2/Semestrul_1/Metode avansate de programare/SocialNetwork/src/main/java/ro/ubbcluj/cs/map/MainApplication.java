@@ -9,10 +9,7 @@ import ro.ubbcluj.cs.map.domain.Message;
 import ro.ubbcluj.cs.map.domain.User;
 import ro.ubbcluj.cs.map.domain.validators.FriendshipValidator;
 import ro.ubbcluj.cs.map.domain.validators.UserValidator;
-import ro.ubbcluj.cs.map.repository.FriendshipDBRepository;
-import ro.ubbcluj.cs.map.repository.MessageDBRepository;
-import ro.ubbcluj.cs.map.repository.Repository;
-import ro.ubbcluj.cs.map.repository.UserDBRepository;
+import ro.ubbcluj.cs.map.repository.*;
 import ro.ubbcluj.cs.map.service.Service;
 
 import java.io.IOException;
@@ -43,8 +40,8 @@ public class MainApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Repository<Long, User> userRepo = new UserDBRepository(url, username, password, new UserValidator());
-        Repository<Long, Friendship> friendshipRepo = new FriendshipDBRepository(url, username, password, new FriendshipValidator());
+        PagingRepository<Long, User> userRepo = new UserDBRepository(url, username, password, new UserValidator());
+        PagingRepository<Long, Friendship> friendshipRepo = new FriendshipDBRepository(url, username, password, new FriendshipValidator());
         Repository<Long, Message> messageRepo = new MessageDBRepository(url, username, password, userRepo);
         service = new Service(userRepo, friendshipRepo, messageRepo);
 
@@ -61,6 +58,6 @@ public class MainApplication extends Application {
 
         Controller appController = fxmlLoader.getController();
         appController.setService(this.service);
-        appController.initApp(service.getAllUsers());
+        appController.initApp();
     }
 }

@@ -4,6 +4,9 @@ import ro.ubbcluj.cs.map.domain.FriendRequest;
 import ro.ubbcluj.cs.map.domain.Friendship;
 import ro.ubbcluj.cs.map.domain.Message;
 import ro.ubbcluj.cs.map.domain.User;
+import ro.ubbcluj.cs.map.repository.Page;
+import ro.ubbcluj.cs.map.repository.Pageable;
+import ro.ubbcluj.cs.map.repository.PagingRepository;
 import ro.ubbcluj.cs.map.repository.Repository;
 
 import javax.jws.soap.SOAPBinding;
@@ -12,8 +15,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Service implements ServiceI {
-    protected final Repository<Long, User> userRepo;
-    protected final Repository<Long, Friendship> friendshipRepo;
+    protected final PagingRepository<Long, User> userRepo;
+    protected final PagingRepository<Long, Friendship> friendshipRepo;
     protected final Repository<Long, Message> messageRepo;
 
     String yellowColorCode = "\u001B[33m";
@@ -21,7 +24,7 @@ public class Service implements ServiceI {
     String resetColorCode = "\u001B[0m";
 
 
-    public Service(Repository<Long, User> userRepo, Repository<Long, Friendship> friendshipRepo, Repository<Long, Message> messageRepo) {
+    public Service(PagingRepository<Long, User> userRepo, PagingRepository<Long, Friendship> friendshipRepo, Repository<Long, Message> messageRepo) {
         this.userRepo = userRepo;
         this.friendshipRepo = friendshipRepo;
         this.messageRepo = messageRepo;
@@ -144,6 +147,16 @@ public class Service implements ServiceI {
     @Override
     public Iterable<User> getAllUsers() {
         return userRepo.findAll();
+    }
+
+    @Override
+    public Page<User> findAllUsers(Pageable pageable) {
+        return userRepo.findAll(pageable);
+    }
+
+    @Override
+    public Page<Friendship> findAllFriendships(Pageable pageable) {
+        return friendshipRepo.findAll(pageable);
     }
 
     @Override
@@ -339,14 +352,6 @@ public class Service implements ServiceI {
 
             Message msg = new Message(from, toUsers, message);
             messageRepo.save(msg);
-
-//            List<Message> messagesTwoUsers = getMessagesBetweenTwoUsers(email_to, email_from);
-//            if (messagesTwoUsers.size() > 1) {
-//                Message secondToLastMessage = messagesTwoUsers.get(messagesTwoUsers.size() - 2);
-//                Message lastMessage = messagesTwoUsers.get(messagesTwoUsers.size() - 1);
-//                secondToLastMessage.setReplyTo(lastMessage);
-//                messageRepo.update(secondToLastMessage);
-//            }
 
             return true;
         } catch (Exception e) {

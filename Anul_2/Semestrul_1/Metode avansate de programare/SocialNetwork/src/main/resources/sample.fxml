@@ -14,7 +14,7 @@
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <ListView fx:id="listOfUsers" layoutX="33.0" layoutY="29.0" prefHeight="311.0" prefWidth="283.0" />
+                  <ListView fx:id="listOfUsers" layoutX="33.0" layoutY="29.0" prefHeight="271.0" prefWidth="291.0" />
                   <TextField fx:id="firstNameAdd" layoutX="385.0" layoutY="29.0" promptText="first name" />
                   <TextField fx:id="lastNameAdd" layoutX="385.0" layoutY="61.0" promptText="last name" />
                   <TextField fx:id="emailAdd" layoutX="385.0" layoutY="94.0" promptText="email" />
@@ -26,6 +26,13 @@
                   <Button layoutX="388.0" layoutY="314.0" mnemonicParsing="false" onMouseClicked="#reloadList" prefHeight="25.0" prefWidth="144.0" text="Reload list" />
                   <Button layoutX="476.0" layoutY="134.0" mnemonicParsing="false" onMouseClicked="#updateUser" text="Update" />
                   <TextField fx:id="userIdUpdate" layoutX="429.0" layoutY="134.0" prefHeight="25.0" prefWidth="42.0" promptText="id" />
+                  <Button fx:id="previousBtnUsers" layoutX="73.0" layoutY="307.0" mnemonicParsing="false" onMouseClicked="#onPreviousUsers" text="&lt;" />
+                  <Button fx:id="nextBtnUsers" layoutX="259.0" layoutY="307.0" mnemonicParsing="false" onMouseClicked="#onNextUsers" text="&gt;" />
+                  <Button fx:id="firstPageBtnUsers" layoutX="33.0" layoutY="307.0" mnemonicParsing="false" onMouseClicked="#onFirstUsers" text="&lt;&lt;" />
+                  <Button fx:id="lastPageBtnUsers" layoutX="291.0" layoutY="307.0" mnemonicParsing="false" onMouseClicked="#onLastUsers" text="&gt;&gt;" />
+                  <Label layoutX="35.0" layoutY="339.0" text="Number of elements on page:" />
+                  <TextField fx:id="noElementsOnPageUsers" layoutX="201.0" layoutY="335.0" onKeyPressed="#setNoElementsOnPageUsers" prefHeight="1.0" prefWidth="33.0" />
+                  <Label fx:id="pageNumberUsers" layoutX="171.0" layoutY="311.0" prefHeight="17.0" prefWidth="34.0" text="?/?" />
                </children></AnchorPane>
       </content>
     </Tab>
@@ -33,8 +40,15 @@
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" onDragDone="#deleteFriendship" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <ListView fx:id="listOfFriendships" layoutX="33.0" layoutY="29.0" prefHeight="311.0" prefWidth="283.0" />
+                  <ListView fx:id="listOfFriendships" layoutX="33.0" layoutY="29.0" prefHeight="271.0" prefWidth="283.0" />
                   <Button layoutX="412.0" layoutY="172.0" mnemonicParsing="false" onMouseClicked="#deleteFriendship" text="Delete friendship" />
+                  <Button fx:id="previousBtnFriendships" layoutX="72.0" layoutY="308.0" mnemonicParsing="false" onMouseClicked="#onPreviousFriendships" text="&lt;" />
+                  <Button fx:id="nextBtnFriendships" layoutX="252.0" layoutY="308.0" mnemonicParsing="false" onMouseClicked="#onNextFriendships" text="&gt;" />
+                  <Button fx:id="firstPageBtnFriendships" layoutX="32.0" layoutY="308.0" mnemonicParsing="false" onMouseClicked="#onFirstFriendships" text="&lt;&lt;" />
+                  <Button fx:id="lastPageBtnFriendships" layoutX="283.0" layoutY="308.0" mnemonicParsing="false" onMouseClicked="#onLastFriendships" text="&gt;&gt;" />
+                  <Label layoutX="32.0" layoutY="342.0" text="Number of elements on page:" />
+                  <TextField fx:id="noElementsOnPageFriendships" layoutX="201.0" layoutY="338.0" onKeyPressed="#setNoElementsOnPageFriendships" prefHeight="1.0" prefWidth="33.0" />
+                  <Label fx:id="pageNumberFriendships" layoutX="163.0" layoutY="310.0" prefHeight="21.0" prefWidth="39.0" text="?/?" />
                </children></AnchorPane>
       </content>
     </Tab>

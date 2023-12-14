@@ -4,6 +4,8 @@ import ro.ubbcluj.cs.map.domain.FriendRequest;
 import ro.ubbcluj.cs.map.domain.Friendship;
 import ro.ubbcluj.cs.map.domain.Message;
 import ro.ubbcluj.cs.map.domain.User;
+import ro.ubbcluj.cs.map.repository.Page;
+import ro.ubbcluj.cs.map.repository.Pageable;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -68,6 +70,10 @@ public interface ServiceI {
      * @return an Iterable of all the users
      */
     Iterable<User> getAllUsers();
+
+    public Page<User> findAllUsers(Pageable pageable);
+
+    public Page<Friendship> findAllFriendships(Pageable pageable);
 
     /**
      * @return an Iterable of all the friendships
