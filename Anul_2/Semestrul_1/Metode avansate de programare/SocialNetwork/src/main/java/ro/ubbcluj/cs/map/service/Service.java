@@ -4,10 +4,7 @@ import ro.ubbcluj.cs.map.domain.FriendRequest;
 import ro.ubbcluj.cs.map.domain.Friendship;
 import ro.ubbcluj.cs.map.domain.Message;
 import ro.ubbcluj.cs.map.domain.User;
-import ro.ubbcluj.cs.map.repository.Page;
-import ro.ubbcluj.cs.map.repository.Pageable;
-import ro.ubbcluj.cs.map.repository.PagingRepository;
-import ro.ubbcluj.cs.map.repository.Repository;
+import ro.ubbcluj.cs.map.repository.*;
 
 import javax.jws.soap.SOAPBinding;
 import java.time.LocalDateTime;
@@ -16,15 +13,15 @@ import java.util.stream.Collectors;
 
 public class Service implements ServiceI {
     protected final PagingRepository<Long, User> userRepo;
-    protected final PagingRepository<Long, Friendship> friendshipRepo;
-    protected final Repository<Long, Message> messageRepo;
+    protected final FriendRequestPagingRepository<Long, Friendship> friendshipRepo;
+    protected final MessagePagingRepository<Long, Message> messageRepo;
 
     String yellowColorCode = "\u001B[33m";
 
     String resetColorCode = "\u001B[0m";
 
 
-    public Service(PagingRepository<Long, User> userRepo, PagingRepository<Long, Friendship> friendshipRepo, Repository<Long, Message> messageRepo) {
+    public Service(PagingRepository<Long, User> userRepo, FriendRequestPagingRepository<Long, Friendship> friendshipRepo, MessagePagingRepository<Long, Message> messageRepo) {
         this.userRepo = userRepo;
         this.friendshipRepo = friendshipRepo;
         this.messageRepo = messageRepo;
@@ -157,6 +154,18 @@ public class Service implements ServiceI {
     @Override
     public Page<Friendship> findAllFriendships(Pageable pageable) {
         return friendshipRepo.findAll(pageable);
+    }
+
+    @Override
+    public Page<Friendship> findAllFriendRequests(Pageable pageable) {
+        return friendshipRepo.findAllFriendRequests(pageable);
+    }
+
+    @Override
+    public Page<Message> findAllMessages(Pageable pageable, String emailFrom, String emailTo) {
+        Long user1Id = getUserByEmail(emailFrom).getId();
+        Long user2Id = getUserByEmail(emailTo).getId();
+        return messageRepo.findAll(pageable, user1Id, user2Id);
     }
 
     @Override

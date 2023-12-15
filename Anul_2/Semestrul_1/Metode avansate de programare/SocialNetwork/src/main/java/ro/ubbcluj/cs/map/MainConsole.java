@@ -1,6 +1,7 @@
 package ro.ubbcluj.cs.map;
 
 import ro.ubbcluj.cs.map.console.ConsoleUI;
+import ro.ubbcluj.cs.map.domain.FriendRequest;
 import ro.ubbcluj.cs.map.domain.Friendship;
 import ro.ubbcluj.cs.map.domain.Message;
 import ro.ubbcluj.cs.map.domain.User;
@@ -16,8 +17,8 @@ public class MainConsole {
         String password = args[2];
 
         PagingRepository<Long, User> userRepo = new UserDBRepository(url, username, password, new UserValidator());
-        PagingRepository<Long, Friendship> friendshipRepo = new FriendshipDBRepository(url, username, password, new FriendshipValidator());
-        Repository<Long, Message> messageRepo = new MessageDBRepository(url, username, password, userRepo);
+        FriendRequestPagingRepository<Long, Friendship> friendshipRepo = new FriendshipDBRepository(url, username, password, new FriendshipValidator());
+        MessagePagingRepository<Long, Message> messageRepo = new MessageDBRepository(url, username, password, userRepo);
         Service service = new Service(userRepo, friendshipRepo, messageRepo);
         ConsoleUI console = new ConsoleUI(service);
 

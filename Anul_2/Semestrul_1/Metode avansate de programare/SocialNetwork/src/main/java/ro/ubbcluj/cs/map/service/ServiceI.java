@@ -75,6 +75,9 @@ public interface ServiceI {
 
     public Page<Friendship> findAllFriendships(Pageable pageable);
 
+    public Page<Friendship> findAllFriendRequests(Pageable pageable);
+    public Page<Message> findAllMessages(Pageable pageable, String emailFrom, String emailTo);
+
     /**
      * @return an Iterable of all the friendships
      */

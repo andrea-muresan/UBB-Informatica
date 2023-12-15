@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import ro.ubbcluj.cs.map.domain.FriendRequest;
 import ro.ubbcluj.cs.map.domain.Friendship;
 import ro.ubbcluj.cs.map.domain.Message;
 import ro.ubbcluj.cs.map.domain.User;
@@ -41,8 +42,8 @@ public class MainApplication extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         PagingRepository<Long, User> userRepo = new UserDBRepository(url, username, password, new UserValidator());
-        PagingRepository<Long, Friendship> friendshipRepo = new FriendshipDBRepository(url, username, password, new FriendshipValidator());
-        Repository<Long, Message> messageRepo = new MessageDBRepository(url, username, password, userRepo);
+        FriendRequestPagingRepository<Long, Friendship> friendshipRepo = new FriendshipDBRepository(url, username, password, new FriendshipValidator());
+        MessagePagingRepository<Long, Message> messageRepo = new MessageDBRepository(url, username, password, userRepo);
         service = new Service(userRepo, friendshipRepo, messageRepo);
 
         initView(primaryStage);

@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -36,6 +37,14 @@ public class Controller implements Initializable {
 
     private int currentPageFriendships = 0;
     private int pageSizeFriendships = 5;
+
+    private int currentPageFriendRequests = 0;
+    private int pageSizeFriendRequests = 5;
+
+    private int currentPageMessages = 0;
+    private int pageSizeMessages = 5;
+    private String emailFrom = "mara@user.com";
+    private String emailTo = "nora@user.com";
 
 
     // User window
@@ -82,6 +91,18 @@ public class Controller implements Initializable {
 
     // Friend Request Window
     @FXML
+    private Button nextBtnFriendRequests;
+    @FXML
+    private Button previousBtnFriendRequests;
+    @FXML
+    private Button lastPageBtnFriendRequests;
+    @FXML
+    private Button firstPageBtnFriendRequests;
+    @FXML
+    private TextField noElementsOnPageFriendRequests;
+    @FXML
+    private Label pageNumberFriendRequests;
+    @FXML
     private ListView<Friendship> listOfFriendRequests;
     @FXML
     private TextField friendRequestEmail1;
@@ -89,6 +110,18 @@ public class Controller implements Initializable {
     private TextField friendRequestEmail2;
 
     // Message window
+    @FXML
+    private Button nextBtnMessages;
+    @FXML
+    private Button previousBtnMessages;
+    @FXML
+    private Button lastPageBtnMessages;
+    @FXML
+    private Button firstPageBtnMessages;
+    @FXML
+    private TextField noElementsOnPageMessages;
+    @FXML
+    private Label pageNumberMessages;
     @FXML
     private ListView<Message> listOfMessages;
     @FXML
@@ -102,10 +135,9 @@ public class Controller implements Initializable {
     @FXML
     private TextField showMessagesEmail2;
 
-
-    public Service getService() {
-        return service;
+    public Controller() {
     }
+
 
     public void setService(Service service) {
         this.service = service;
@@ -122,6 +154,7 @@ public class Controller implements Initializable {
         listOfUsers.getItems().clear();
         listOfFriendships.getItems().clear();
         listOfFriendRequests.getItems().clear();
+        listOfMessages.getItems().clear();
 
         // Users pagination init
         Page<User> pageUsers = service.findAllUsers(new Pageable(currentPageUsers, pageSizeUsers));
@@ -131,7 +164,6 @@ public class Controller implements Initializable {
             currentPageUsers = maxPageUsers;
             pageUsers = service.findAllUsers(new Pageable(currentPageUsers, pageSizeUsers));
         }
-
 
         int totalNumberOfElementsUsers = pageUsers.getTotalElementCount();
 
@@ -157,7 +189,6 @@ public class Controller implements Initializable {
             pageFriendships = service.findAllFriendships(new Pageable(currentPageFriendships, pageSizeFriendships));
         }
 
-
         int totalNumberOfElementsFriendships = pageFriendships.getTotalElementCount();
 
         previousBtnFriendships.setDisable(currentPageFriendships == 0);
@@ -173,14 +204,50 @@ public class Controller implements Initializable {
 
         pageNumberFriendships.setText((currentPageFriendships + 1) + "/" + (maxPageFriendships + 1));
 
-        // Friendships
-        for (Friendship friendship : service.getAllFriendships()) {
-//            if (friendship.getFriendRequestStatus() == FriendRequest.ACCEPTED) {
-//                friendshipsObs.add(friendship);
-//            }
-            friendRequestsObs.add(friendship);
+        // Friend Requests
+        Page<Friendship> pageFriendRequests = service.findAllFriendRequests(new Pageable(currentPageFriendRequests, pageSizeFriendRequests));
+
+        int maxPageFriendRequests = (int) Math.ceil((double) pageFriendRequests.getTotalElementCount() / pageSizeFriendRequests) - 1;
+        if (currentPageFriendRequests > maxPageFriendRequests) {
+            currentPageFriendRequests = maxPageFriendRequests;
+            pageFriendRequests = service.findAllFriendRequests(new Pageable(currentPageFriendRequests, pageSizeFriendRequests));
         }
 
+        int totalNumberOfElementsFriendRequests = pageFriendRequests.getTotalElementCount();
+
+        previousBtnFriendRequests.setDisable(currentPageFriendRequests == 0);
+        firstPageBtnFriendRequests.setDisable(currentPageFriendRequests == 0);
+        nextBtnFriendRequests.setDisable((currentPageFriendRequests + 1) * pageSizeFriendRequests >= totalNumberOfElementsFriendRequests);
+        lastPageBtnFriendRequests.setDisable((currentPageFriendRequests + 1) * pageSizeFriendRequests >= totalNumberOfElementsFriendRequests);
+
+        for (Friendship friendship : pageFriendRequests.getElementsOnPage()) {
+            friendRequestsObs.add(friendship);
+        }
+        listOfFriendRequests.setItems(friendRequestsObs);
+
+        pageNumberFriendRequests.setText((currentPageFriendRequests + 1) + "/" + (maxPageFriendRequests + 1));
+
+        // Messages
+        Page<Message> pageMessages = service.findAllMessages(new Pageable(currentPageMessages, pageSizeMessages), this.emailFrom, this.emailTo);
+
+        int maxPageMessages = (int) Math.ceil((double) pageMessages.getTotalElementCount() / pageSizeMessages) - 1;
+        if (currentPageMessages > maxPageMessages) {
+            currentPageMessages = maxPageMessages;
+            pageMessages = service.findAllMessages(new Pageable(currentPageMessages, pageSizeMessages), this.emailFrom, this.emailTo);
+        }
+        int totalNumberOfElementsMessages = pageMessages.getTotalElementCount();
+
+        previousBtnMessages.setDisable(currentPageMessages == 0);
+        firstPageBtnMessages.setDisable(currentPageMessages == 0);
+        nextBtnMessages.setDisable((currentPageMessages + 1) * pageSizeMessages >= totalNumberOfElementsMessages);
+        lastPageBtnMessages.setDisable((currentPageMessages + 1) * pageSizeMessages >= totalNumberOfElementsMessages);
+
+        for (Message msg : pageMessages.getElementsOnPage()) {
+            messagesObs.add(msg);
+        }
+        listOfMessages.setItems(messagesObs);
+
+        pageNumberMessages.setText((currentPageMessages + 1) + "/" + (maxPageMessages + 1));
     }
 
     @FXML
@@ -320,7 +387,9 @@ public class Controller implements Initializable {
             errorAlert.setContentText("Something wrong");
             errorAlert.showAndWait();
         } else {
-            loadListOfMessages(emailFrom, toUsers.get(0));
+//            loadListOfMessages(emailFrom, toUsers.get(0));
+            onLastMessages(mouseEvent);
+            // initApp();
         }
 
         message.clear();
@@ -328,10 +397,10 @@ public class Controller implements Initializable {
     }
 
     public void loadListOfMessages(String emailFrom, String emailTo) {
-        listOfMessages.getItems().clear();
         messagesObs.clear();
         for (Message msg : service.getMessagesBetweenTwoUsers(emailFrom, emailTo)) {
             messagesObs.add(msg);
+
         }
         if (messagesObs.isEmpty()) {
             Alert errorAlert = new Alert(Alert.AlertType.INFORMATION);
@@ -353,7 +422,10 @@ public class Controller implements Initializable {
         sendEmailFrom.setText(email1);
         sendEmailTo.setText(email2);
 
-        loadListOfMessages(email1, email2);
+//        loadListOfMessages(email1, email2);
+        this.emailFrom = email1;
+        this.emailTo = email2;
+        initApp();
     }
 
 
@@ -440,6 +512,76 @@ public class Controller implements Initializable {
         if (key.getCode().equals(KeyCode.ENTER)) {
             try {
                 pageSizeFriendships = Integer.parseInt(noElementsOnPageFriendships.getText());
+            } catch (Exception e) {
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setHeaderText("!!!");
+                errorAlert.setContentText("Something wrong");
+                errorAlert.showAndWait();
+            }
+            initApp();
+        }
+    }
+
+    public void onPreviousFriendRequests(MouseEvent mouseEvent) {
+        currentPageFriendRequests--;
+        initApp();
+    }
+
+    public void onNextFriendRequests(MouseEvent mouseEvent) {
+        currentPageFriendRequests++;
+        initApp();
+    }
+
+    public void onFirstFriendRequests(MouseEvent mouseEvent) {
+        currentPageFriendRequests = 0;
+        initApp();
+    }
+
+    public void onLastFriendRequests(MouseEvent mouseEvent) {
+        Page<Friendship> pageFriendRequests = service.findAllFriendRequests(new Pageable(currentPageFriendRequests, pageSizeFriendRequests));
+        currentPageFriendRequests = (int) Math.ceil((double) pageFriendRequests.getTotalElementCount() / pageSizeFriendRequests) - 1;
+        initApp();
+    }
+
+    public void setNoElementsOnPageFriendRequests(KeyEvent key) {
+        if (key.getCode().equals(KeyCode.ENTER)) {
+            try {
+                pageSizeFriendRequests = Integer.parseInt(noElementsOnPageFriendRequests.getText());
+            } catch (Exception e) {
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setHeaderText("!!!");
+                errorAlert.setContentText("Something wrong");
+                errorAlert.showAndWait();
+            }
+            initApp();
+        }
+    }
+
+    public void onPreviousMessages(MouseEvent mouseEvent) {
+        currentPageMessages--;
+        initApp();
+    }
+
+    public void onNextMessages(MouseEvent mouseEvent) {
+        currentPageMessages++;
+        initApp();
+    }
+
+    public void onFirstMessages(MouseEvent mouseEvent) {
+        currentPageMessages = 0;
+        initApp();
+    }
+
+    public void onLastMessages(MouseEvent mouseEvent) {
+        Page<Message> pageMessages = service.findAllMessages(new Pageable(currentPageMessages, pageSizeMessages), emailFrom, emailTo);
+        currentPageMessages = (int) Math.ceil((double) pageMessages.getTotalElementCount() / pageSizeMessages) - 1;
+        initApp();
+    }
+
+    public void setNoElementsOnPageMessages(KeyEvent key) {
+        if (key.getCode().equals(KeyCode.ENTER)) {
+            try {
+                pageSizeMessages = Integer.parseInt(noElementsOnPageMessages.getText());
             } catch (Exception e) {
                 Alert errorAlert = new Alert(Alert.AlertType.ERROR);
                 errorAlert.setHeaderText("!!!");
