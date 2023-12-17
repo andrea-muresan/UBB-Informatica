@@ -14,14 +14,14 @@ INSERT INTO tables(name) VALUES
 ('observatory_event');
 GO
 
-ALTER TABLE observatory_event
+/*ALTER TABLE observatory_event
 ADD CONSTRAINT fk_event_id FOREIGN KEY (event_id) REFERENCES event(id) ON DELETE CASCADE;
 
 ALTER TABLE image
 ADD CONSTRAINT fk_event_id_img FOREIGN KEY (event_id) REFERENCES event(id) ON DELETE CASCADE;
 
 ALTER TABLE observatory_event
-ADD CONSTRAINT fk_observatory_id FOREIGN KEY (observatory_id) REFERENCES observatory(id) ON DELETE CASCADE;
+ADD CONSTRAINT fk_observatory_id FOREIGN KEY (observatory_id) REFERENCES observatory(id) ON DELETE CASCADE;*/
 
 SELECT * FROM tables;
 GO
