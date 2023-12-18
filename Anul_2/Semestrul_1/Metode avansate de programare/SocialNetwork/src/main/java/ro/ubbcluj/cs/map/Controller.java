@@ -230,24 +230,27 @@ public class Controller implements Initializable {
         // Messages
         Page<Message> pageMessages = service.findAllMessages(new Pageable(currentPageMessages, pageSizeMessages), this.emailFrom, this.emailTo);
 
-        int maxPageMessages = (int) Math.ceil((double) pageMessages.getTotalElementCount() / pageSizeMessages) - 1;
-        if (currentPageMessages > maxPageMessages) {
-            currentPageMessages = maxPageMessages;
-            pageMessages = service.findAllMessages(new Pageable(currentPageMessages, pageSizeMessages), this.emailFrom, this.emailTo);
+        if (pageMessages.getTotalElementCount() != 0) {
+            int maxPageMessages = (int) Math.ceil((double) pageMessages.getTotalElementCount() / pageSizeMessages) - 1;
+            if (currentPageMessages > maxPageMessages) {
+                currentPageMessages = maxPageMessages;
+                pageMessages = service.findAllMessages(new Pageable(currentPageMessages, pageSizeMessages), this.emailFrom, this.emailTo);
+            }
+            int totalNumberOfElementsMessages = pageMessages.getTotalElementCount();
+
+            previousBtnMessages.setDisable(currentPageMessages == 0);
+            firstPageBtnMessages.setDisable(currentPageMessages == 0);
+            nextBtnMessages.setDisable((currentPageMessages + 1) * pageSizeMessages >= totalNumberOfElementsMessages);
+            lastPageBtnMessages.setDisable((currentPageMessages + 1) * pageSizeMessages >= totalNumberOfElementsMessages);
+
+            for (Message msg : pageMessages.getElementsOnPage()) {
+                messagesObs.add(msg);
+            }
+            listOfMessages.setItems(messagesObs);
+
+            pageNumberMessages.setText((currentPageMessages + 1) + "/" + (maxPageMessages + 1));
         }
-        int totalNumberOfElementsMessages = pageMessages.getTotalElementCount();
 
-        previousBtnMessages.setDisable(currentPageMessages == 0);
-        firstPageBtnMessages.setDisable(currentPageMessages == 0);
-        nextBtnMessages.setDisable((currentPageMessages + 1) * pageSizeMessages >= totalNumberOfElementsMessages);
-        lastPageBtnMessages.setDisable((currentPageMessages + 1) * pageSizeMessages >= totalNumberOfElementsMessages);
-
-        for (Message msg : pageMessages.getElementsOnPage()) {
-            messagesObs.add(msg);
-        }
-        listOfMessages.setItems(messagesObs);
-
-        pageNumberMessages.setText((currentPageMessages + 1) + "/" + (maxPageMessages + 1));
     }
 
     @FXML
