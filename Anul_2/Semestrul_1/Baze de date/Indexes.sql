@@ -151,7 +151,7 @@ SELECT * FROM observatory
 EXEC CRUD_observatory 'Royal Observatory', 'https://www.rmg.co.uk/royal-observatory', 'Ina Elina';
 GO
 
--- verifica daca o data nu este mai mare decat cea de azi
+-- verifica daca o data nu este mai mare decat acea de azi
 CREATE OR ALTER FUNCTION CHECK_DATE(@date DATE)
 	RETURNS INT
 AS
@@ -288,7 +288,9 @@ IF EXISTS (SELECT name FROM sys.indexes WHERE name = N'n_idx_event_name_descript
 	DROP INDEX n_idx_event_name_description ON event;
 GO
 CREATE NONCLUSTERED INDEX n_idx_event_name_description ON event(name, description);
+GO
 
+SELECT * FROM view_event ORDER BY no_events
 
 IF EXISTS (SELECT name FROM sys.indexes WHERE name = N'n_idx_observatory_name_manager')
 	DROP INDEX n_idx_observatory_name_manager ON observatory;
@@ -301,7 +303,5 @@ IF EXISTS (SELECT name FROM sys.indexes WHERE name = N'n_idx_observatory_name_we
 GO
 CREATE NONCLUSTERED INDEX n_idx_observatory_name_website ON observatory(name, website);
 GO
-
-SELECT * FROM view_event ORDER BY no_events
 
 SELECT * FROM view_observatory ORDER BY name
