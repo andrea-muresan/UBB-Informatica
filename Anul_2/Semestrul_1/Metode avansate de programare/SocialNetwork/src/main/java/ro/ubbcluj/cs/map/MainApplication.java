@@ -4,15 +4,13 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import ro.ubbcluj.cs.map.domain.FriendRequest;
 import ro.ubbcluj.cs.map.domain.Friendship;
 import ro.ubbcluj.cs.map.domain.Message;
 import ro.ubbcluj.cs.map.domain.User;
 import ro.ubbcluj.cs.map.domain.validators.FriendshipValidator;
 import ro.ubbcluj.cs.map.domain.validators.UserValidator;
-import ro.ubbcluj.cs.map.repository.FriendshipDBRepository;
-import ro.ubbcluj.cs.map.repository.MessageDBRepository;
-import ro.ubbcluj.cs.map.repository.Repository;
-import ro.ubbcluj.cs.map.repository.UserDBRepository;
+import ro.ubbcluj.cs.map.repository.*;
 import ro.ubbcluj.cs.map.service.Service;
 
 import java.io.IOException;
@@ -43,9 +41,9 @@ public class MainApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Repository<Long, User> userRepo = new UserDBRepository(url, username, password, new UserValidator());
-        Repository<Long, Friendship> friendshipRepo = new FriendshipDBRepository(url, username, password, new FriendshipValidator());
-        Repository<Long, Message> messageRepo = new MessageDBRepository(url, username, password, userRepo);
+        PagingRepository<Long, User> userRepo = new UserDBRepository(url, username, password, new UserValidator());
+        FriendRequestPagingRepository<Long, Friendship> friendshipRepo = new FriendshipDBRepository(url, username, password, new FriendshipValidator());
+        MessagePagingRepository<Long, Message> messageRepo = new MessageDBRepository(url, username, password, userRepo);
         service = new Service(userRepo, friendshipRepo, messageRepo);
 
         initView(primaryStage);
@@ -61,6 +59,6 @@ public class MainApplication extends Application {
 
         Controller appController = fxmlLoader.getController();
         appController.setService(this.service);
-        appController.initApp(service.getAllUsers());
+        appController.initApp();
     }
 }

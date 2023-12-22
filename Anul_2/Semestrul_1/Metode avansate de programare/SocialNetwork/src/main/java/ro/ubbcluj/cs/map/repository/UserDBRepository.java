@@ -4,11 +4,9 @@ import ro.ubbcluj.cs.map.domain.User;
 import ro.ubbcluj.cs.map.domain.validators.Validator;
 
 import java.sql.*;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
-public class UserDBRepository implements Repository<Long, User> {
+public class UserDBRepository implements PagingRepository<Long, User> {
     private final String url;
     private final String user;
     private final String password;
@@ -111,6 +109,44 @@ public class UserDBRepository implements Repository<Long, User> {
             int affectedRows = statement.executeUpdate();
             return affectedRows!=0? Optional.empty():Optional.of(entity);
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public Page<User> findAll(Pageable pageable) {
+        List<User> userList = new ArrayList<>();
+        try(Connection connection= DriverManager.getConnection(this.url,this.user,this.password);
+            PreparedStatement pagePreparedStatement=connection.prepareStatement("SELECT * FROM users " +
+                    "LIMIT ? OFFSET ?");
+
+            PreparedStatement countPreparedStatement = connection.prepareStatement
+                    ("SELECT COUNT(*) AS count FROM users ");
+
+        ) {
+            pagePreparedStatement.setInt(1, pageable.getPageSize());
+            pagePreparedStatement.setInt(2, pageable.getPageSize() * pageable.getPageNumber());
+            try (ResultSet pageResultSet = pagePreparedStatement.executeQuery();
+                 ResultSet countResultSet = countPreparedStatement.executeQuery(); ) {
+                while (pageResultSet.next()) {
+                    Long id = pageResultSet.getLong("id");
+                    String firstName = pageResultSet.getString("first_name");
+                    String lastName = pageResultSet.getString("last_name");
+                    String email = pageResultSet.getString("email");
+                    User user = new User(firstName, lastName, email);
+                    user.setId(id);
+                    userList.add(user);
+                }
+                int totalCount = 0;
+                if(countResultSet.next()) {
+                    totalCount = countResultSet.getInt("count");
+                }
+
+                return new Page<>(userList, totalCount);
+
+            }
+        }
+        catch (SQLException e){
             throw new RuntimeException(e);
         }
     }

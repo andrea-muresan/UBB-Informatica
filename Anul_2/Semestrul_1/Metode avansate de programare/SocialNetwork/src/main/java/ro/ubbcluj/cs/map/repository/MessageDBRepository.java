@@ -1,5 +1,7 @@
 package ro.ubbcluj.cs.map.repository;
 
+import ro.ubbcluj.cs.map.domain.FriendRequest;
+import ro.ubbcluj.cs.map.domain.Friendship;
 import ro.ubbcluj.cs.map.domain.Message;
 import ro.ubbcluj.cs.map.domain.User;
 
@@ -9,7 +11,7 @@ import java.util.*;
 
 import static java.sql.DriverManager.getConnection;
 
-public class MessageDBRepository implements Repository<Long, Message> {
+public class MessageDBRepository implements MessagePagingRepository<Long, Message> {
 
     private final String url;
     private final String user;
@@ -24,8 +26,8 @@ public class MessageDBRepository implements Repository<Long, Message> {
     }
 
     /*
-    * Find the main information about a message( id, from, text, date) from the messages table
-    * - without using message-recipients - it might get into a loop because of the reply
+     * Find the main information about a message( id, from, text, date) from the messages table
+     * - without using message-recipients - it might get into a loop because of the reply
      */
     public Optional<Message> findMessage(Long id) {
         String sql = "SELECT messages.* FROM messages WHERE messages.id = ?";
@@ -36,7 +38,6 @@ public class MessageDBRepository implements Repository<Long, Message> {
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
-                    Long messageId = resultSet.getLong("id");
                     User fromUser = userRepo.findOne(resultSet.getLong("from_user_id")).get();
                     String messageText = resultSet.getString("message_text");
                     LocalDateTime dateTime = resultSet.getTimestamp("date_time").toLocalDateTime();
@@ -119,7 +120,7 @@ public class MessageDBRepository implements Repository<Long, Message> {
 
             while (resultSet.next()) {
                 Long messageId = resultSet.getLong("id");
-                Message message = messageMap.computeIfAbsent(messageId, k -> {
+                messageMap.computeIfAbsent(messageId, k -> {
                     return findOne(messageId).get();
                 });
 
@@ -157,7 +158,7 @@ public class MessageDBRepository implements Repository<Long, Message> {
             // Retrieve the generated message ID
             try (ResultSet generatedKeys = insertMessageStatement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
-                    Long messageId = generatedKeys.getLong(1);
+                    long messageId = generatedKeys.getLong(1);
 
                     // Insert recipients if available
                     if (!entity.getTo().isEmpty()) {
@@ -212,6 +213,63 @@ public class MessageDBRepository implements Repository<Long, Message> {
             statement.setLong(5, entity.getId());
             int affectedRows = statement.executeUpdate();
             return affectedRows != 0 ? Optional.empty() : Optional.of(entity);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public Page<Message> findAll(Pageable pageable, Long user1Id, Long user2Id) {
+        try (Connection connection = DriverManager.getConnection(this.url, this.user, this.password);
+             PreparedStatement pagePreparedStatement = connection.prepareStatement
+                     ("SELECT messages.*, message_recipients.to_user_id " +
+                     "FROM messages " +
+                     "LEFT JOIN message_recipients ON messages.id = message_recipients.message_id " +
+                     "WHERE (messages.from_user_id = ? AND message_recipients.to_user_id = ?) " +
+                     "OR (messages.from_user_id = ? AND message_recipients.to_user_id = ?) " +
+                     "LIMIT ? OFFSET ?");
+
+             PreparedStatement countPreparedStatement = connection.prepareStatement
+                     ("SELECT COUNT(*) AS count " +
+                             "FROM messages " +
+                             "LEFT JOIN message_recipients ON messages.id = message_recipients.message_id " +
+                             "WHERE (messages.from_user_id = ? AND message_recipients.to_user_id = ?) " +
+                             "OR (messages.from_user_id = ? AND message_recipients.to_user_id = ?) ");
+
+        ) {
+            pagePreparedStatement.setLong(1, user1Id);
+            pagePreparedStatement.setLong(2, user2Id);
+            pagePreparedStatement.setLong(3, user2Id);
+            pagePreparedStatement.setLong(4, user1Id);
+            pagePreparedStatement.setInt(5, pageable.getPageSize());
+            pagePreparedStatement.setInt(6, pageable.getPageSize() * pageable.getPageNumber());
+
+            countPreparedStatement.setLong(1, user1Id);
+            countPreparedStatement.setLong(2, user2Id);
+            countPreparedStatement.setLong(3, user2Id);
+            countPreparedStatement.setLong(4, user1Id);
+            try (ResultSet pageResultSet = pagePreparedStatement.executeQuery();
+                 ResultSet countResultSet = countPreparedStatement.executeQuery();) {
+
+                Map<Long, Message> messageMap = new HashMap<>();
+
+                while (pageResultSet.next()) {
+                    Long messageId = pageResultSet.getLong("id");
+                    messageMap.computeIfAbsent(messageId, k -> {
+                        return findOne(messageId).get();
+                    });
+
+                }
+
+                List<Message> messageList = new ArrayList<>(messageMap.values());
+                int totalCount = 0;
+                if (countResultSet.next()) {
+                    totalCount = countResultSet.getInt("count");
+                }
+
+                return new Page<>(messageList, totalCount);
+
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
