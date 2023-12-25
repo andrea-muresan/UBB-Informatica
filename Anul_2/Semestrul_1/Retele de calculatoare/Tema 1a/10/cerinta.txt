@@ -1,0 +1,3 @@
+Un client trimite unui server doua siruri de caractere. 
+Serverul ii raspunde clientului cu caracterul care se regaseste de cele mai multe ori 
+pe pozitii identice in cele doua siruri si cu numarul de aparitii ale acestui caracter.
