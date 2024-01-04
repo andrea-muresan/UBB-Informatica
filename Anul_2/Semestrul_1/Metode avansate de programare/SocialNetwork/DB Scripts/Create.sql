@@ -12,6 +12,6 @@ CREATE TABLE friendships (
     user1Id BIGINT,
     user2Id BIGINT,
 	friendsFrom TIMESTAMP,
-    FOREIGN KEY (user1Id) REFERENCES users(id),
-    FOREIGN KEY (user2Id) REFERENCES users(id)
+    FOREIGN KEY (user1Id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (user2Id) REFERENCES users(id) ON DELETE CASCADE
 );

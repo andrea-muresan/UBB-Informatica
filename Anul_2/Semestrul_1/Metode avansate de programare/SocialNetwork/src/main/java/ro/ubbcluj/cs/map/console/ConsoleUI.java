@@ -23,7 +23,7 @@ public class ConsoleUI extends AbstractUI {
         printMenu();
 
         User user;
-        String firstName, lastName, email;
+        String firstName, lastName, email, password;
         String email1, email2;
         Iterable<User> userList;
         Iterable<Friendship> friendshipList;
@@ -39,7 +39,8 @@ public class ConsoleUI extends AbstractUI {
                     firstName = readFirstName();
                     lastName = readLastName();
                     email = readEmail();
-                    if (srv.addUser(firstName, lastName, email))
+                    password = readPassword();
+                    if (srv.addUser(firstName, lastName, email, password))
                         System.out.println("Done!");
                     break;
                 case "2":
@@ -151,5 +152,10 @@ public class ConsoleUI extends AbstractUI {
     public Integer readMonth() {
         System.out.print("Month - number: ");
         return scanner.nextInt();
+    }
+
+    public String readPassword() {
+        System.out.print("Password: ");
+        return scanner.next();
     }
 }

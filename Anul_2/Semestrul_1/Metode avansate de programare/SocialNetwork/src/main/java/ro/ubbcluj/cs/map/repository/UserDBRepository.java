@@ -24,15 +24,19 @@ public class UserDBRepository implements PagingRepository<Long, User> {
     @Override
     public Optional<User> findOne(Long longID) {
         try (Connection connection = DriverManager.getConnection(url, user, password);
-             PreparedStatement statement = connection.prepareStatement("SELECT * FROM users WHERE id=?");) {
+             PreparedStatement statement = connection.prepareStatement("SELECT * FROM users " +
+                     "LEFT JOIN passwords ON passwords.id = users.id " +
+                     "WHERE id=? ");) {
             statement.setLong(1, longID);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 String firstName = resultSet.getString("first_name");
                 String lastName = resultSet.getString("last_name");
                 String email = resultSet.getString("email");
+                String password = resultSet.getString("password");
                 User u = new User(firstName, lastName, email);
                 u.setId(longID);
+                u.setPassword(u.decryptPassword());
                 return Optional.of(u);
             }
         } catch (SQLException e) {
@@ -70,12 +74,26 @@ public class UserDBRepository implements PagingRepository<Long, User> {
     public Optional<User> save(User entity) {
         validator.validate(entity);
         try(Connection connection = DriverManager.getConnection(url,user,password);
-            PreparedStatement statement  = connection.prepareStatement("INSERT INTO users(first_name,last_name,email) VALUES (?,?,?)");)
+            PreparedStatement statement  = connection.prepareStatement("INSERT INTO users(first_name,last_name,email) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement passwordStatement = connection.prepareStatement("INSERT INTO passwords(id, password) VALUES (?, ?)"))
         {
             statement.setString(1,entity.getFirstName());
             statement.setString(2,entity.getLastName());
             statement.setString(3,entity.getEmail());
             int affectedRows = statement.executeUpdate();
+
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    long generatedId = generatedKeys.getLong(1);
+                    passwordStatement.setLong(1, generatedId);
+                    passwordStatement.setString(2, entity.encryptPassword());
+
+                    passwordStatement.executeUpdate();
+                } else {
+                    System.out.println("No ID obtained.");
+                }
+            }
+
             return affectedRows!=0? Optional.empty():Optional.of(entity);
         } catch (SQLException e) {
             throw new RuntimeException(e);

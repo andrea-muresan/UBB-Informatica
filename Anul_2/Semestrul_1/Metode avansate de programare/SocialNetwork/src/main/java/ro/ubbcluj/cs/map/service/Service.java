@@ -32,12 +32,13 @@ public class Service implements ServiceI {
     }
 
     @Override
-    public boolean addUser(String firstName, String lastName, String email) {
+    public boolean addUser(String firstName, String lastName, String email, String password) {
         try {
             if (getUserByEmail(email) != null)
                 throw new Exception("The email already exist");
 
             User u = new User(firstName, lastName, email);
+            u.setPassword(password);
             userRepo.save(u);
             return true;
         } catch (Exception e) {
@@ -163,9 +164,17 @@ public class Service implements ServiceI {
 
     @Override
     public Page<Message> findAllMessages(Pageable pageable, String emailFrom, String emailTo) {
-        Long user1Id = getUserByEmail(emailFrom).getId();
-        Long user2Id = getUserByEmail(emailTo).getId();
-        return messageRepo.findAll(pageable, user1Id, user2Id);
+
+        User u1 = getUserByEmail(emailFrom);
+        User u2 = getUserByEmail(emailTo);
+
+        if (u1 != null && u2 != null) {
+            Long user1Id = u1.getId();
+            Long user2Id = u2.getId();
+            return messageRepo.findAll(pageable, user1Id, user2Id);
+        } else {
+            return new Page<>(null, 0);
+        }
     }
 
     @Override

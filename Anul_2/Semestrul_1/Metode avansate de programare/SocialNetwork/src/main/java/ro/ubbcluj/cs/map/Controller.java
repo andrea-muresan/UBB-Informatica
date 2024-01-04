@@ -159,8 +159,8 @@ public class Controller implements Initializable {
         // Users pagination init
         Page<User> pageUsers = service.findAllUsers(new Pageable(currentPageUsers, pageSizeUsers));
 
-        int maxPageUsers = (int) Math.ceil((double) pageUsers.getTotalElementCount() / pageSizeUsers) - 1;
-        if (currentPageUsers > maxPageUsers) {
+        int maxPageUsers = (int) Math.ceil((double) pageUsers.getTotalElementCount() / pageSizeUsers) ;
+        if (currentPageUsers > maxPageUsers ) {
             currentPageUsers = maxPageUsers;
             pageUsers = service.findAllUsers(new Pageable(currentPageUsers, pageSizeUsers));
         }
@@ -178,12 +178,12 @@ public class Controller implements Initializable {
         }
         listOfUsers.setItems(usersObs);
 
-        pageNumberUsers.setText((currentPageUsers + 1) + "/" + (maxPageUsers + 1));
+        pageNumberUsers.setText((currentPageUsers + 1) + "/" + (maxPageUsers));
 
         // Friendships
         Page<Friendship> pageFriendships = service.findAllFriendships(new Pageable(currentPageFriendships, pageSizeFriendships));
 
-        int maxPageFriendships = (int) Math.ceil((double) pageFriendships.getTotalElementCount() / pageSizeFriendships) - 1;
+        int maxPageFriendships = (int) Math.ceil((double) pageFriendships.getTotalElementCount() / pageSizeFriendships);
         if (currentPageFriendships > maxPageFriendships) {
             currentPageFriendships = maxPageFriendships;
             pageFriendships = service.findAllFriendships(new Pageable(currentPageFriendships, pageSizeFriendships));
@@ -202,13 +202,13 @@ public class Controller implements Initializable {
         }
         listOfFriendships.setItems(friendshipsObs);
 
-        pageNumberFriendships.setText((currentPageFriendships + 1) + "/" + (maxPageFriendships + 1));
+        pageNumberFriendships.setText((currentPageFriendships + 1) + "/" + (maxPageFriendships));
 
         // Friend Requests
         Page<Friendship> pageFriendRequests = service.findAllFriendRequests(new Pageable(currentPageFriendRequests, pageSizeFriendRequests));
 
-        int maxPageFriendRequests = (int) Math.ceil((double) pageFriendRequests.getTotalElementCount() / pageSizeFriendRequests) - 1;
-        if (currentPageFriendRequests > maxPageFriendRequests) {
+        int maxPageFriendRequests = (int) Math.ceil((double) pageFriendRequests.getTotalElementCount() / pageSizeFriendRequests);
+        if (currentPageFriendRequests > maxPageFriendRequests ) {
             currentPageFriendRequests = maxPageFriendRequests;
             pageFriendRequests = service.findAllFriendRequests(new Pageable(currentPageFriendRequests, pageSizeFriendRequests));
         }
@@ -225,13 +225,13 @@ public class Controller implements Initializable {
         }
         listOfFriendRequests.setItems(friendRequestsObs);
 
-        pageNumberFriendRequests.setText((currentPageFriendRequests + 1) + "/" + (maxPageFriendRequests + 1));
+        pageNumberFriendRequests.setText((currentPageFriendRequests + 1) + "/" + (maxPageFriendRequests));
 
         // Messages
         Page<Message> pageMessages = service.findAllMessages(new Pageable(currentPageMessages, pageSizeMessages), this.emailFrom, this.emailTo);
 
         if (pageMessages.getTotalElementCount() != 0) {
-            int maxPageMessages = (int) Math.ceil((double) pageMessages.getTotalElementCount() / pageSizeMessages) - 1;
+            int maxPageMessages = (int) Math.ceil((double) pageMessages.getTotalElementCount() / pageSizeMessages);
             if (currentPageMessages > maxPageMessages) {
                 currentPageMessages = maxPageMessages;
                 pageMessages = service.findAllMessages(new Pageable(currentPageMessages, pageSizeMessages), this.emailFrom, this.emailTo);
@@ -248,7 +248,7 @@ public class Controller implements Initializable {
             }
             listOfMessages.setItems(messagesObs);
 
-            pageNumberMessages.setText((currentPageMessages + 1) + "/" + (maxPageMessages + 1));
+            pageNumberMessages.setText((currentPageMessages + 1) + "/" + (maxPageMessages));
         }
 
     }
@@ -259,7 +259,7 @@ public class Controller implements Initializable {
         String lastName = lastNameAdd.getText();
         String email = emailAdd.getText();
 
-        if (!service.addUser(firstName, lastName, email)) {
+        if (!service.addUser(firstName, lastName, email, "password")) {
             Alert errorAlert = new Alert(Alert.AlertType.ERROR);
             errorAlert.setHeaderText("Error");
             errorAlert.setContentText("Invalid user");

@@ -17,7 +17,7 @@ public interface ServiceI {
     /**
      * Add a user in the userRepo
      */
-    boolean addUser(String firstName, String lastName, String email);
+    boolean addUser(String firstName, String lastName, String email, String password);
 
     /**
      * Delete a user from userRepo by its email number
