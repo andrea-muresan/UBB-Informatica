@@ -223,11 +223,11 @@ public class MessageDBRepository implements MessagePagingRepository<Long, Messag
         try (Connection connection = DriverManager.getConnection(this.url, this.user, this.password);
              PreparedStatement pagePreparedStatement = connection.prepareStatement
                      ("SELECT messages.*, message_recipients.to_user_id " +
-                     "FROM messages " +
-                     "LEFT JOIN message_recipients ON messages.id = message_recipients.message_id " +
-                     "WHERE (messages.from_user_id = ? AND message_recipients.to_user_id = ?) " +
-                     "OR (messages.from_user_id = ? AND message_recipients.to_user_id = ?) " +
-                     "LIMIT ? OFFSET ?");
+                             "FROM messages " +
+                             "LEFT JOIN message_recipients ON messages.id = message_recipients.message_id " +
+                             "WHERE (messages.from_user_id = ? AND message_recipients.to_user_id = ?) " +
+                             "OR (messages.from_user_id = ? AND message_recipients.to_user_id = ?) " +
+                             "LIMIT ? OFFSET ?");
 
              PreparedStatement countPreparedStatement = connection.prepareStatement
                      ("SELECT COUNT(*) AS count " +

@@ -159,7 +159,9 @@ public class Controller implements Initializable {
         // Users pagination init
         Page<User> pageUsers = service.findAllUsers(new Pageable(currentPageUsers, pageSizeUsers));
 
-        int maxPageUsers = (int) Math.ceil((double) pageUsers.getTotalElementCount() / pageSizeUsers) ;
+        int maxPageUsers = (int) Math.ceil((double) pageUsers.getTotalElementCount() / pageSizeUsers) - 1;
+        if (maxPageUsers == -1) maxPageUsers = 0;
+
         if (currentPageUsers > maxPageUsers ) {
             currentPageUsers = maxPageUsers;
             pageUsers = service.findAllUsers(new Pageable(currentPageUsers, pageSizeUsers));
@@ -178,12 +180,13 @@ public class Controller implements Initializable {
         }
         listOfUsers.setItems(usersObs);
 
-        pageNumberUsers.setText((currentPageUsers + 1) + "/" + (maxPageUsers));
+        pageNumberUsers.setText((currentPageUsers + 1) + "/" + (maxPageUsers + 1));
 
         // Friendships
         Page<Friendship> pageFriendships = service.findAllFriendships(new Pageable(currentPageFriendships, pageSizeFriendships));
 
-        int maxPageFriendships = (int) Math.ceil((double) pageFriendships.getTotalElementCount() / pageSizeFriendships);
+        int maxPageFriendships = (int) Math.ceil((double) pageFriendships.getTotalElementCount() / pageSizeFriendships) - 1;
+        if (maxPageFriendships == -1) maxPageFriendships = 0;
         if (currentPageFriendships > maxPageFriendships) {
             currentPageFriendships = maxPageFriendships;
             pageFriendships = service.findAllFriendships(new Pageable(currentPageFriendships, pageSizeFriendships));
@@ -202,12 +205,13 @@ public class Controller implements Initializable {
         }
         listOfFriendships.setItems(friendshipsObs);
 
-        pageNumberFriendships.setText((currentPageFriendships + 1) + "/" + (maxPageFriendships));
+        pageNumberFriendships.setText((currentPageFriendships + 1) + "/" + (maxPageFriendships + 1));
 
         // Friend Requests
         Page<Friendship> pageFriendRequests = service.findAllFriendRequests(new Pageable(currentPageFriendRequests, pageSizeFriendRequests));
 
-        int maxPageFriendRequests = (int) Math.ceil((double) pageFriendRequests.getTotalElementCount() / pageSizeFriendRequests);
+        int maxPageFriendRequests = (int) Math.ceil((double) pageFriendRequests.getTotalElementCount() / pageSizeFriendRequests) - 1;
+        if (maxPageFriendRequests == -1) maxPageFriendRequests = 0;
         if (currentPageFriendRequests > maxPageFriendRequests ) {
             currentPageFriendRequests = maxPageFriendRequests;
             pageFriendRequests = service.findAllFriendRequests(new Pageable(currentPageFriendRequests, pageSizeFriendRequests));
@@ -225,13 +229,14 @@ public class Controller implements Initializable {
         }
         listOfFriendRequests.setItems(friendRequestsObs);
 
-        pageNumberFriendRequests.setText((currentPageFriendRequests + 1) + "/" + (maxPageFriendRequests));
+        pageNumberFriendRequests.setText((currentPageFriendRequests + 1) + "/" + (maxPageFriendRequests + 1));
 
         // Messages
         Page<Message> pageMessages = service.findAllMessages(new Pageable(currentPageMessages, pageSizeMessages), this.emailFrom, this.emailTo);
 
         if (pageMessages.getTotalElementCount() != 0) {
-            int maxPageMessages = (int) Math.ceil((double) pageMessages.getTotalElementCount() / pageSizeMessages);
+            int maxPageMessages = (int) Math.ceil((double) pageMessages.getTotalElementCount() / pageSizeMessages) - 1;
+            if (maxPageMessages == -1) maxPageMessages = 0;
             if (currentPageMessages > maxPageMessages) {
                 currentPageMessages = maxPageMessages;
                 pageMessages = service.findAllMessages(new Pageable(currentPageMessages, pageSizeMessages), this.emailFrom, this.emailTo);
@@ -248,7 +253,7 @@ public class Controller implements Initializable {
             }
             listOfMessages.setItems(messagesObs);
 
-            pageNumberMessages.setText((currentPageMessages + 1) + "/" + (maxPageMessages));
+            pageNumberMessages.setText((currentPageMessages + 1) + "/" + (maxPageMessages + 1));
         }
 
     }

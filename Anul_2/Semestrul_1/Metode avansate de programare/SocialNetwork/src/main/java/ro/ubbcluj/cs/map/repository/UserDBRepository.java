@@ -26,7 +26,7 @@ public class UserDBRepository implements PagingRepository<Long, User> {
         try (Connection connection = DriverManager.getConnection(url, user, password);
              PreparedStatement statement = connection.prepareStatement("SELECT * FROM users " +
                      "LEFT JOIN passwords ON passwords.id = users.id " +
-                     "WHERE id=? ");) {
+                     "WHERE users.id=? ");) {
             statement.setLong(1, longID);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -36,6 +36,7 @@ public class UserDBRepository implements PagingRepository<Long, User> {
                 String password = resultSet.getString("password");
                 User u = new User(firstName, lastName, email);
                 u.setId(longID);
+                u.setPassword(password);
                 u.setPassword(u.decryptPassword());
                 return Optional.of(u);
             }
