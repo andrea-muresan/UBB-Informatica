@@ -1,4 +1,4 @@
-package ro.ubbcluj.cs.map;
+package ro.ubbcluj.cs.map.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

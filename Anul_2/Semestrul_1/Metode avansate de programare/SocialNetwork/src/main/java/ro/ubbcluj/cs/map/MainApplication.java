@@ -4,7 +4,8 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import ro.ubbcluj.cs.map.domain.FriendRequest;
+import ro.ubbcluj.cs.map.controller.Controller;
+import ro.ubbcluj.cs.map.controller.LogInController;
 import ro.ubbcluj.cs.map.domain.Friendship;
 import ro.ubbcluj.cs.map.domain.Message;
 import ro.ubbcluj.cs.map.domain.User;
@@ -52,13 +53,14 @@ public class MainApplication extends Application {
     }
 
     private void initView(Stage primaryStage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sample.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/logIn.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
         primaryStage.setTitle("Hello!");
         primaryStage.setScene(scene);
 
-        Controller appController = fxmlLoader.getController();
-        appController.setService(this.service);
-        appController.initApp();
+//        Controller appController = fxmlLoader.getController();
+//        appController.setService(this.service);
+//        appController.initApp();
+        LogInController logInController = fxmlLoader.getController();
     }
 }
