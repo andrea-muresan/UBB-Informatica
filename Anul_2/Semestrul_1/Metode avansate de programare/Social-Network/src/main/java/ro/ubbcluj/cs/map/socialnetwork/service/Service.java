@@ -33,6 +33,7 @@ public class Service implements ServiceI {
     @Override
     public boolean addUser(String firstName, String lastName, String email, String password) {
         try {
+            if (password.isEmpty()) return false;
             if (getUserByEmail(email) != null)
                 throw new Exception("The email already exist");
 

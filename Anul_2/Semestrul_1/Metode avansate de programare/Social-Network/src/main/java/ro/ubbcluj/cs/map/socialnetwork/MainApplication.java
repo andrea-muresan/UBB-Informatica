@@ -55,12 +55,13 @@ public class MainApplication extends Application {
     private void initView(Stage primaryStage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("logIn.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
-        primaryStage.setTitle("Hello!");
+        primaryStage.setTitle("Social Network");
         primaryStage.setScene(scene);
 
 //        Controller appController = fxmlLoader.getController();
 //        appController.setService(this.service);
 //        appController.initApp();
         LogInController logInController = fxmlLoader.getController();
+        logInController.setService(this.service);
     }
 }

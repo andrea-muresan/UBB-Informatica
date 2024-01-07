@@ -7,4 +7,6 @@ module ro.ubbcluj.cs.map.socialnetwork {
 
     opens ro.ubbcluj.cs.map.socialnetwork to javafx.fxml;
     exports ro.ubbcluj.cs.map.socialnetwork;
+    exports ro.ubbcluj.cs.map.socialnetwork.controller;
+    opens ro.ubbcluj.cs.map.socialnetwork.controller to javafx.fxml;
 }
