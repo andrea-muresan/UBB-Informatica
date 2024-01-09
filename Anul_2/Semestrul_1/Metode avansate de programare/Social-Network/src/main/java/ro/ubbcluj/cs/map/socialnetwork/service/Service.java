@@ -158,8 +158,32 @@ public class Service implements ServiceI {
     }
 
     @Override
+    public Page<Friendship> findAllUserFriends(Pageable pageable, User user) {
+        Page<Friendship> pgF = friendshipRepo.findAllUserFriends(pageable, user.getId());
+        for (Friendship f: pgF.getElementsOnPage()) {
+            f.setNameUser1(userRepo.findOne(f.getUser1Id()).get().getFirstName() + " " +
+                    userRepo.findOne(f.getUser1Id()).get().getLastName());
+            f.setNameUser2(userRepo.findOne(f.getUser2Id()).get().getFirstName() + " " +
+                    userRepo.findOne(f.getUser2Id()).get().getLastName());
+        }
+        return pgF;
+    }
+
+    @Override
     public Page<Friendship> findAllFriendRequests(Pageable pageable) {
         return friendshipRepo.findAllFriendRequests(pageable);
+    }
+
+    @Override
+    public Page<Friendship> findAllUserFriendRequests(Pageable pageable, User user) {
+       Page<Friendship> pgF = friendshipRepo.findAllUserFriendRequests(pageable, user.getId());
+       for (Friendship f: pgF.getElementsOnPage()) {
+           f.setNameUser1(userRepo.findOne(f.getUser1Id()).get().getFirstName() + " " +
+                   userRepo.findOne(f.getUser1Id()).get().getLastName());
+           f.setNameUser2(userRepo.findOne(f.getUser2Id()).get().getFirstName() + " " +
+                   userRepo.findOne(f.getUser2Id()).get().getLastName());
+       }
+       return pgF;
     }
 
     @Override
@@ -272,6 +296,9 @@ public class Service implements ServiceI {
         Iterable<Friendship> lst = friendshipRepo.findAll();
         User u1 = getUserByEmail(email1);
         User u2 = getUserByEmail(email2);
+
+        if (u1 == null || u2 == null)
+            return null;
 
         for (Friendship fr : lst) {
             if (fr.equals(new Friendship(u1, u2))) {

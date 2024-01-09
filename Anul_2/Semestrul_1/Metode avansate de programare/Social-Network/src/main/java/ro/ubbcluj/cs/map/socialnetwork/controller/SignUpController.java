@@ -63,6 +63,7 @@ public class SignUpController {
 
                 ApplicationController appController = stageLoader.getController();
                 appController.setService(this.service);
+                appController.setUserLogged(service.getUserByEmail(email));
 
                 stage.show();
 

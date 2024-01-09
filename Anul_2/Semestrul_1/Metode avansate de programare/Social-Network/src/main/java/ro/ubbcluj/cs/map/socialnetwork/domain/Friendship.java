@@ -6,6 +6,9 @@ import java.util.Objects;
 public class Friendship extends Entity<Long> {
     private Long user1Id;
     private Long user2Id;
+
+    private String nameUser1;
+    private String nameUser2;
     LocalDateTime friendsFrom;
     private FriendRequest friendRequestStatus;
 
@@ -76,13 +79,19 @@ public class Friendship extends Entity<Long> {
         this.friendRequestStatus = friendRequestStatus;
     }
 
+    public void setNameUser1(String nameUser1) {
+        this.nameUser1 = nameUser1;
+    }
+
+    public void setNameUser2(String nameUser2) {
+        this.nameUser2 = nameUser2;
+    }
+
     @Override
     public String toString() {
-        return "Friendship{" +
-                "user1Id=" + user1Id +
-                ", user2Id=" + user2Id +
-                ", status=" + friendRequestStatus +
-                '}';
+        return "FROM: " + this.nameUser1 +
+                " ,TO: " + this.nameUser2 +
+                " ,STATUS: " + friendRequestStatus;
     }
 
     @Override

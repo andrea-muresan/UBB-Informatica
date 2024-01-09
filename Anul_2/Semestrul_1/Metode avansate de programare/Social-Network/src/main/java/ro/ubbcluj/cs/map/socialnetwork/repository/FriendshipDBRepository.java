@@ -199,4 +199,89 @@ public class FriendshipDBRepository implements FriendRequestPagingRepository<Lon
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public Page<Friendship> findAllUserFriends(Pageable pageable, Long idU) {
+        List<Friendship> friendshipList = new ArrayList<>();
+        try(Connection connection= DriverManager.getConnection(this.url,this.user,this.password);
+            PreparedStatement pagePreparedStatement=connection.prepareStatement("SELECT * FROM friendships WHERE (friendships.friend_request_status LIKE 'ACCEPTED' AND (friendships.user1_id = ? OR friendships.user2_id = ?)) " +
+                    "LIMIT ? OFFSET ?");
+
+            PreparedStatement countPreparedStatement = connection.prepareStatement
+                    ("SELECT COUNT(*) AS count FROM friendships");
+
+        ) {
+            pagePreparedStatement.setLong(1, idU);
+            pagePreparedStatement.setLong(2, idU);
+            pagePreparedStatement.setInt(3, pageable.getPageSize());
+            pagePreparedStatement.setInt(4, pageable.getPageSize() * pageable.getPageNumber());
+            try (ResultSet pageResultSet = pagePreparedStatement.executeQuery();
+                 ResultSet countResultSet = countPreparedStatement.executeQuery(); ) {
+                while (pageResultSet.next()) {
+                    Long id = pageResultSet.getLong("id");
+                    Long user1_id = pageResultSet.getLong("user1_id");
+                    Long user2_id = pageResultSet.getLong("user2_id");
+                    LocalDateTime friends_from = pageResultSet.getTimestamp("friends_from").toLocalDateTime();
+                    FriendRequest friend_req_status = FriendRequest.valueOf(pageResultSet.getString("friend_request_status"));
+                    Friendship friendship = new Friendship(user1_id, user2_id, friends_from, friend_req_status);
+                    friendship.setId(id);
+                    friendshipList.add(friendship);
+                }
+                int totalCount = 0;
+                if(countResultSet.next()) {
+                    totalCount = countResultSet.getInt("count");
+                }
+
+                return new Page<>(friendshipList, totalCount);
+
+            }
+        }
+        catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public Page<Friendship> findAllUserFriendRequests(Pageable pageable, Long idU) {
+        List<Friendship> friendshipList = new ArrayList<>();
+        try(Connection connection= DriverManager.getConnection(this.url,this.user,this.password);
+            PreparedStatement pagePreparedStatement=connection.prepareStatement("SELECT * FROM friendships WHERE (friendships.user1_id = ? OR friendships.user2_id = ?) " +
+                    "LIMIT ? OFFSET ?");
+
+            PreparedStatement countPreparedStatement = connection.prepareStatement
+                    ("SELECT COUNT(*) AS count FROM friendships  WHERE (friendships.user1_id = ? OR friendships.user2_id = ?) ");
+
+        ) {
+            pagePreparedStatement.setLong(1, idU);
+            pagePreparedStatement.setLong(2, idU);
+            pagePreparedStatement.setInt(3, pageable.getPageSize());
+            pagePreparedStatement.setInt(4, pageable.getPageSize() * pageable.getPageNumber());
+
+            countPreparedStatement.setLong(1, idU);
+            countPreparedStatement.setLong(2, idU);
+            try (ResultSet pageResultSet = pagePreparedStatement.executeQuery();
+                 ResultSet countResultSet = countPreparedStatement.executeQuery(); ) {
+                while (pageResultSet.next()) {
+                    Long id = pageResultSet.getLong("id");
+                    Long user1_id = pageResultSet.getLong("user1_id");
+                    Long user2_id = pageResultSet.getLong("user2_id");
+                    LocalDateTime friends_from = pageResultSet.getTimestamp("friends_from").toLocalDateTime();
+                    FriendRequest friend_req_status = FriendRequest.valueOf(pageResultSet.getString("friend_request_status"));
+                    Friendship friendship = new Friendship(user1_id, user2_id, friends_from, friend_req_status);
+                    friendship.setId(id);
+                    friendshipList.add(friendship);
+                }
+                int totalCount = 0;
+                if(countResultSet.next()) {
+                    totalCount = countResultSet.getInt("count");
+                }
+
+                return new Page<>(friendshipList, totalCount);
+
+            }
+        }
+        catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
 }

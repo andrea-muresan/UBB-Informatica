@@ -75,8 +75,10 @@ public interface ServiceI {
     public Page<User> findAllUsers(Pageable pageable);
 
     public Page<Friendship> findAllFriendships(Pageable pageable);
+    public Page<Friendship> findAllUserFriends(Pageable pageable, User user);
 
     public Page<Friendship> findAllFriendRequests(Pageable pageable);
+    public Page<Friendship> findAllUserFriendRequests(Pageable pageable, User user);
     public Page<Message> findAllMessages(Pageable pageable, String emailFrom, String emailTo);
 
     /**
