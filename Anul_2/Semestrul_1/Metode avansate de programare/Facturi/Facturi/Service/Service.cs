@@ -47,4 +47,24 @@ public class Service
                 Cantitate = totalCantitate
             };
     }
+    
+    public IEnumerable<Achizitie> AchizitiiUtilities()
+    {
+        return from achizitie in achizitii.FindAll()
+            join fact in facturi.FindAll() on achizitie.Factura.Id equals fact.Id
+            where fact.Categorie == Categorie.Utilities
+            select achizitie;
+    }
+    
+    public Categorie MulteCheltuilei()
+    {
+        var result = from factura in facturi.FindAll()
+            join achizitie in achizitii.FindAll() on factura.Id equals achizitie.Factura.Id
+            group achizitie by factura.Categorie into groupedByCategory
+            let totalExpenses = groupedByCategory.Sum(a => a.PretProdus)
+            orderby totalExpenses descending
+            select groupedByCategory.Key;
+
+        return result.FirstOrDefault();
+    } 
 }
