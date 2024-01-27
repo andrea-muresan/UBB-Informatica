@@ -1,0 +1,2 @@
+Un client trimite unui server un sir de lungime cel mult 100 de caractere si un caracter.
+Serverul va returna clientului toate pozitiile pe care caracterul primit se regaseste in sir.

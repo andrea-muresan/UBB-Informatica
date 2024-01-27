@@ -1,0 +1,2 @@
+Un client trimite unui server un numar reprezentat pe un octet fara semn.
+Serverul va returna clientului sirul divizorilor acestui numar.
