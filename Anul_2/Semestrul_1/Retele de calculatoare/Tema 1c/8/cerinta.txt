@@ -1,0 +1,2 @@
+Un client trimite unui server doua numere reprezentate pe doi octeti fara semn fiecare.
+Serverul va returna clientului cmmdc si cmmmc al numerelor primite.

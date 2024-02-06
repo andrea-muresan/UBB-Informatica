@@ -1,0 +1,3 @@
+Un client trimite unui server o cerere prin care ii cere acestuia data si ora curenta.
+Serverul va returna clientului data sub forma unui intreg ce reprezinta numarul de secunde trecute de la 1 ianuarie 1970.
+Clientul va afisa corespunzator data pe baza acestui intreg.
