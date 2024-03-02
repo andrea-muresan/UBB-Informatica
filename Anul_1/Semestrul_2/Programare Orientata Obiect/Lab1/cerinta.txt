@@ -1,0 +1,2 @@
+1. afiseaza numerele prime mai mici decat N
+2. afiseaza primele N numere prime
