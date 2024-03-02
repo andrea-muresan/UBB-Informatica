@@ -1,0 +1,10 @@
+1 model1 tip1 culoare1 2002 7
+42 model8 tip2 culoare2 2007 19
+3 model5 tip3 culoare3 2019 23
+54 model4 tip4 culoare4 2012 44
+15 model3 tip5 culoare5 2000 66
+6 model6 tip6 culoare6 2007 100
+7 model7 tip7 culoare7 2020 2
+28 model2 tip8 culoare8 2009 1
+99 model9 tip9 culoare9 2007 14
+10 model0 tip10 culoare10 2001 99
