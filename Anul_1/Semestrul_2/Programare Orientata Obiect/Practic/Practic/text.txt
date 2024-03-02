@@ -1,0 +1,4 @@
+22 Alex 18 info
+8 Petru 21 mate-info
+10 Larisa 23 ai
+9 Matei 26 ai
