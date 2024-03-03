@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ro.ubbcluj.cs.map.socialnetwork.controller.LogInController">
    <left>
@@ -19,12 +20,17 @@
                   <Font size="30.0" />
                </font>
             </Label>
-            <Label layoutX="97.0" layoutY="232.0" text="MAP -Project" textAlignment="CENTER" textFill="WHITE">
+            <Label layoutX="94.0" layoutY="231.0" text="MAP - Project" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font size="17.0" />
                </font>
             </Label>
-            <FontAwesomeIconView fill="WHITE" glyphName="BOOK" layoutX="109.0" layoutY="174.0" size="80" />
+            <FontAwesomeIconView fill="WHITE" glyphName="COMMENT_ALT" layoutX="109.0" layoutY="174.0" size="80" />
+            <Text fill="WHITE" layoutX="137.0" layoutY="157.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-weight: bold;" text="..." wrappingWidth="25.0">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Text>
          </children>
       </AnchorPane>
    </left>
@@ -33,7 +39,7 @@
          <children>
             <TextField fx:id="emailTxtField" layoutX="85.0" layoutY="175.0" promptText="email" style="-fx-background-color: transparent; -fx-border-color: #166678; -fx-border-width: 0 0 2 0;" />
             <PasswordField fx:id="passwordTxtField" layoutX="85.0" layoutY="210.0" promptText="password" style="-fx-background-color: transparent; -fx-border-color: #166678; -fx-border-width: 0 0 2 0;" />
-            <Button fx:id="logInBtn" layoutX="180.0" layoutY="247.0" mnemonicParsing="false" onMouseClicked="#logIn" prefHeight="25.0" prefWidth="53.0" style="-fx-background-color: #166678;" text="Login" textAlignment="CENTER" textFill="WHITE" />
+            <Button fx:id="logInBtn" layoutX="180.0" layoutY="247.0" mnemonicParsing="false" onMouseClicked="#logIn" prefHeight="25.0" prefWidth="53.0" style="-fx-background-color: #166678;" text="Log In" textAlignment="CENTER" textFill="WHITE" />
             <FontAwesomeIconView fill="#166678" glyphName="USER" layoutX="66.0" layoutY="194.0" size="17" />
             <FontAwesomeIconView fill="#166678" glyphName="KEY" layoutX="64.0" layoutY="229.0" size="17" />
             <FontAwesomeIconView fill="#166678" glyphName="USERS" layoutX="123.0" layoutY="101.0" size="50" />
@@ -42,12 +48,16 @@
                   <Font size="17.0" />
                </font>
             </Label>
-            <Hyperlink fx:id="signUpHLink" layoutX="129.0" layoutY="343.0" onAction="#signUpWindow" text="Signup" />
+            <Hyperlink fx:id="signUpHLink" layoutX="123.0" layoutY="341.0" onAction="#signUpWindow" text="Sign Up">
+               <font>
+                  <Font size="13.0" />
+               </font></Hyperlink>
             <Button fx:id="closeAppBtn" layoutX="262.0" layoutY="7.0" mnemonicParsing="false" onMouseClicked="#closeApp" prefHeight="18.0" prefWidth="22.0" style="-fx-background-color: transparent;">
                <graphic>
                   <FontAwesomeIconView fill="#166678" glyphName="CLOSE" size="20" text="" />
                </graphic>
             </Button>
+            <Label layoutX="78.0" layoutY="326.0" text="Don't have an account yet?" />
          </children>
       </AnchorPane>
    </right>

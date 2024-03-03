@@ -2,12 +2,19 @@ package ro.ubbcluj.cs.map.socialnetwork.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
+import javafx.util.Pair;
 import ro.ubbcluj.cs.map.socialnetwork.domain.FriendRequest;
 import ro.ubbcluj.cs.map.socialnetwork.domain.Friendship;
 import ro.ubbcluj.cs.map.socialnetwork.domain.Message;
@@ -26,9 +33,10 @@ public class ApplicationController implements Initializable {
     private User userLogged;
 
     private final ObservableList<User> usersObs = FXCollections.observableArrayList();
-    private final ObservableList<Friendship> friendshipsObs = FXCollections.observableArrayList();
+    private final ObservableList<Pair<String, String>> friendshipsObs = FXCollections.observableArrayList();
     private final ObservableList<Friendship> friendRequestsObs = FXCollections.observableArrayList();
     private final ObservableList<Message> messagesObs = FXCollections.observableArrayList();
+    private final ObservableList<String> profilePicturesObs = FXCollections.observableArrayList();
 
 
     // Pagination variables
@@ -62,7 +70,7 @@ public class ApplicationController implements Initializable {
     @FXML
     private Label pageNumberFriendships;
     @FXML
-    private ListView<Friendship> listOfFriendships;
+    private ListView<Pair<String, String>> listOfFriendships;
 
     // Friend Request Window
     @FXML
@@ -104,6 +112,14 @@ public class ApplicationController implements Initializable {
     @FXML
     private TextField showMessagesEmail;
 
+    // Profile
+    @FXML
+    private Circle userImage;
+    @FXML
+    private Label nameLblProfile;
+    @FXML
+    private ComboBox<String> profilePictureCmbBox;
+
 
     public void setService(Service service) {
         this.service = service;
@@ -114,6 +130,9 @@ public class ApplicationController implements Initializable {
     }
 
     public void initApp() {
+        setProfilePicture(userLogged.getProfilePicture());
+        nameLblProfile.setText(userLogged.getFirstName() + " " + userLogged.getLastName());
+
         listOfFriendships.getItems().clear();
         listOfFriendRequests.getItems().clear();
         listOfMessages.getItems().clear();
@@ -137,7 +156,15 @@ public class ApplicationController implements Initializable {
 
 
         for (Friendship friendship : pageFriendships.getElementsOnPage()) {
-            friendshipsObs.add(friendship);
+            if (friendship.getUser1Id() != userLogged.getId().longValue()) {
+                User u = service.findUser(friendship.getUser1Id().toString());
+
+                friendshipsObs.add(new Pair<String, String>(u.getFirstName() + " " + u.getLastName() + " ", u.getEmail()));
+            } else if (friendship.getUser2Id() != userLogged.getId().longValue()) {
+                User u = service.findUser(friendship.getUser2Id().toString());
+
+                friendshipsObs.add(new Pair<>(u.getFirstName() + " " + u.getLastName() + " ", u.getEmail()));
+            }
         }
         listOfFriendships.setItems(friendshipsObs);
 
@@ -148,7 +175,7 @@ public class ApplicationController implements Initializable {
 
         int maxPageFriendRequests = (int) Math.ceil((double) pageFriendRequests.getTotalElementCount() / pageSizeFriendRequests) - 1;
         if (maxPageFriendRequests == -1) maxPageFriendRequests = 0;
-        if (currentPageFriendRequests > maxPageFriendRequests ) {
+        if (currentPageFriendRequests > maxPageFriendRequests) {
             currentPageFriendRequests = maxPageFriendRequests;
             pageFriendRequests = service.findAllFriendRequests(new Pageable(currentPageFriendRequests, pageSizeFriendRequests));
         }
@@ -197,8 +224,9 @@ public class ApplicationController implements Initializable {
 
     public void deleteFriendship(MouseEvent mouseEvent) {
         if (listOfFriendships.getSelectionModel().getSelectedItem() != null) {
-            Friendship friendship = listOfFriendships.getSelectionModel().getSelectedItem();
-            service.getFriendshipRepo().delete(friendship.getId());
+            Pair<String, String> user = listOfFriendships.getSelectionModel().getSelectedItem();
+
+            service.deleteFriendship(userLogged.getEmail(), user.getValue());
             initApp();
         }
     }
@@ -239,8 +267,41 @@ public class ApplicationController implements Initializable {
         }
     }
 
+    @FXML
+    void changeProfilePicture(ActionEvent event) {
+        String profilePicture = profilePictureCmbBox.getValue();
+        setProfilePicture(profilePicture);
+
+        service.updateUser(userLogged.getId().toString(), userLogged.getFirstName(), userLogged.getLastName(), userLogged.getEmail(), profilePicture);
+    }
+
+    public void setProfilePicture(String profilePicture) {
+        if (profilePicture.equals("default")) {
+            Image img = new Image(getClass().getResource("/ro/ubbcluj/cs/map/socialnetwork/images/default.jpg").toExternalForm());
+            userImage.setFill(new ImagePattern(img));
+        } else if (profilePicture.equals("Aang")) {
+            Image img = new Image(getClass().getResource("/ro/ubbcluj/cs/map/socialnetwork/images/aang.jpg").toExternalForm());
+            userImage.setFill(new ImagePattern(img));
+        } else if (profilePicture.equals("Sokka")) {
+            Image img = new Image(getClass().getResource("/ro/ubbcluj/cs/map/socialnetwork/images/sokka.png").toExternalForm());
+            userImage.setFill(new ImagePattern(img));
+        } else if (profilePicture.equals("Katara")) {
+            Image img = new Image(getClass().getResource("/ro/ubbcluj/cs/map/socialnetwork/images/katara.jpg").toExternalForm());
+            userImage.setFill(new ImagePattern(img));
+        } else if (profilePicture.equals("Zoko")) {
+            Image img = new Image(getClass().getResource("/ro/ubbcluj/cs/map/socialnetwork/images/zuko.jpg").toExternalForm());
+            userImage.setFill(new ImagePattern(img));
+        } else if (profilePicture.equals("Toph")) {
+            Image img = new Image(getClass().getResource("/ro/ubbcluj/cs/map/socialnetwork/images/toph.jpg").toExternalForm());
+            userImage.setFill(new ImagePattern(img));
+        }
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        profilePicturesObs.addAll("Aang", "Sokka", "Katara", "Zoko", "Toph");
+        profilePictureCmbBox.setItems(profilePicturesObs);
+
         listOfFriendships.setItems(friendshipsObs);
         listOfFriendRequests.setItems(friendRequestsObs);
     }
@@ -248,7 +309,7 @@ public class ApplicationController implements Initializable {
     public void createFriendRequest(MouseEvent mouseEvent) {
         String email = friendRequestEmail.getText();
 
-        if (!service.createFriendRequest(email, this.userLogged.getEmail())) {
+        if (!service.createFriendRequest(this.userLogged.getEmail(), email)) {
             Alert errorAlert = new Alert(Alert.AlertType.WARNING);
             errorAlert.setHeaderText("!!!");
             errorAlert.setContentText("Something went wrong");
@@ -262,7 +323,7 @@ public class ApplicationController implements Initializable {
     public void acceptFriendRequest(MouseEvent mouseEvent) {
         if (listOfFriendRequests.getSelectionModel().getSelectedItem() != null) {
             Friendship friendship = listOfFriendRequests.getSelectionModel().getSelectedItem();
-            if (!Objects.equals(friendship.getUser1Id(), this.userLogged.getId())) {
+            if (friendship.getUser1Id() != this.userLogged.getId().longValue()) {
                 service.respondFriendRequest(friendship, FriendRequest.ACCEPTED);
                 initApp();
             }

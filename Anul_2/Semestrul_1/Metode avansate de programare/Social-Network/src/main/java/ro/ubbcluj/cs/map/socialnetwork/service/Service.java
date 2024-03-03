@@ -37,7 +37,7 @@ public class Service implements ServiceI {
             if (getUserByEmail(email) != null)
                 throw new Exception("The email already exist");
 
-            User u = new User(firstName, lastName, email);
+            User u = new User(firstName, lastName, email, "default");
             u.setPassword(password);
             userRepo.save(u);
             return true;
@@ -359,13 +359,13 @@ public class Service implements ServiceI {
     }
 
     @Override
-    public boolean updateUser(String id, String firstName, String lastName, String email) {
+    public boolean updateUser(String id, String firstName, String lastName, String email, String profilePicture) {
         try {
             Long ID = Long.parseLong(id);
             if (!userRepo.findOne(ID).isPresent()) {
                 throw new Exception("ID not found");
             }
-            User u = new User(firstName, lastName, email);
+            User u = new User(firstName, lastName, email, profilePicture);
             u.setId(ID);
 
             userRepo.update(u);

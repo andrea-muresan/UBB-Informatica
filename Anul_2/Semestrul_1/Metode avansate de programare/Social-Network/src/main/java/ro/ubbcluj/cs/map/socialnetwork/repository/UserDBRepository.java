@@ -36,7 +36,8 @@ public class UserDBRepository implements PagingRepository<Long, User> {
                 String lastName = resultSet.getString("last_name");
                 String email = resultSet.getString("email");
                 String password = resultSet.getString("password");
-                User u = new User(firstName, lastName, email);
+                String profilePicture = resultSet.getString("profile_picture");
+                User u = new User(firstName, lastName, email, profilePicture);
                 u.setId(longID);
                 u.setPassword(password);
                 u.setPassword(u.decryptPassword());
@@ -62,7 +63,8 @@ public class UserDBRepository implements PagingRepository<Long, User> {
                 String firstName = resultSet.getString("first_name");
                 String lastName = resultSet.getString("last_name");
                 String email = resultSet.getString("email");
-                User user = new User(firstName, lastName, email);
+                String profile_picture = resultSet.getString("profile_picture");
+                User user = new User(firstName, lastName, email, profile_picture);
                 user.setId(id);
                 users.add(user);
             }
@@ -121,12 +123,13 @@ public class UserDBRepository implements PagingRepository<Long, User> {
     public Optional<User> update(User entity) {
         validator.validate(entity);
         try(Connection connection = DriverManager.getConnection(url,user,password);
-            PreparedStatement statement  = connection.prepareStatement("UPDATE users SET first_name = ?, last_name = ?, email = ? WHERE id = ?");)
+            PreparedStatement statement  = connection.prepareStatement("UPDATE users SET first_name = ?, last_name = ?, email = ?, profile_picture=? WHERE id = ?");)
         {
             statement.setString(1,entity.getFirstName());
             statement.setString(2,entity.getLastName());
             statement.setString(3,entity.getEmail());
-            statement.setLong(4,entity.getId());
+            statement.setString(4,entity.getProfilePicture());
+            statement.setLong(5,entity.getId());
             int affectedRows = statement.executeUpdate();
             return affectedRows!=0? Optional.empty():Optional.of(entity);
         } catch (SQLException e) {
@@ -154,7 +157,8 @@ public class UserDBRepository implements PagingRepository<Long, User> {
                     String firstName = pageResultSet.getString("first_name");
                     String lastName = pageResultSet.getString("last_name");
                     String email = pageResultSet.getString("email");
-                    User user = new User(firstName, lastName, email);
+                    String profile_picture = pageResultSet.getString("profile_picture");
+                    User user = new User(firstName, lastName, email, profile_picture);
                     user.setId(id);
                     userList.add(user);
                 }

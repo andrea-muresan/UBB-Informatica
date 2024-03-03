@@ -8,10 +8,13 @@ public class User extends Entity<Long>{
     private String email;
     private String password;
 
-    public User(String firstName, String lastName, String email) {
+    private String profilePicture;
+
+    public User(String firstName, String lastName, String email, String profilePicture) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.profilePicture = profilePicture;
     }
 
     public String getFirstName() {
@@ -44,6 +47,14 @@ public class User extends Entity<Long>{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
     }
 
     public String encryptPassword() {
