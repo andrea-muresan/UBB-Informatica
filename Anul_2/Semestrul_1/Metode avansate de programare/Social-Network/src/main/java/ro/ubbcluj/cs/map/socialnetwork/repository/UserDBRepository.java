@@ -79,12 +79,13 @@ public class UserDBRepository implements PagingRepository<Long, User> {
     public Optional<User> save(User entity) {
         validator.validate(entity);
         try(Connection connection = DriverManager.getConnection(url,user,password);
-            PreparedStatement statement  = connection.prepareStatement("INSERT INTO users(first_name,last_name,email) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement  = connection.prepareStatement("INSERT INTO users(first_name,last_name,email,profile_picture) VALUES (?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             PreparedStatement passwordStatement = connection.prepareStatement("INSERT INTO passwords(id, password) VALUES (?, ?)"))
         {
             statement.setString(1,entity.getFirstName());
             statement.setString(2,entity.getLastName());
             statement.setString(3,entity.getEmail());
+            statement.setString(4,entity.getProfilePicture());
             int affectedRows = statement.executeUpdate();
 
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {

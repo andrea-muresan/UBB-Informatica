@@ -5,21 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4fb59df0-bafc-4b1c-9821-c51be9a00078" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../Lab2/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/socialnetwork/MainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/socialnetwork/MainApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/socialnetwork/controller/ApplicationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/socialnetwork/controller/ApplicationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/socialnetwork/controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/socialnetwork/controller/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/socialnetwork/controller/LogInController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/socialnetwork/controller/LogInController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/socialnetwork/controller/SignUpController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/socialnetwork/controller/SignUpController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/socialnetwork/domain/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/socialnetwork/domain/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/socialnetwork/domain/validators/UserValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/socialnetwork/domain/validators/UserValidator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/socialnetwork/repository/UserDBRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/socialnetwork/repository/UserDBRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/socialnetwork/service/Service.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/socialnetwork/service/Service.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/socialnetwork/service/ServiceI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/socialnetwork/service/ServiceI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/ro/ubbcluj/cs/map/socialnetwork/application.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/ro/ubbcluj/cs/map/socialnetwork/application.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/ro/ubbcluj/cs/map/socialnetwork/logIn.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/ro/ubbcluj/cs/map/socialnetwork/logIn.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/ro/ubbcluj/cs/map/socialnetwork/signUp.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/ro/ubbcluj/cs/map/socialnetwork/signUp.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -49,7 +41,7 @@
     "Gradle.Social-Network [:MainApplication.main()].executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "MAP",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/Lenovo/Desktop/Github/UBB-Informatica/Anul_2/Semestrul_1/Metode avansate de programare/Social-Network/src/main/resources/ro/ubbcluj/cs/map/socialnetwork/images",
     "node.js.detected.package.eslint": "true",
@@ -104,6 +96,7 @@
       <workItem from="1709403524108" duration="321000" />
       <workItem from="1709406303356" duration="12288000" />
       <workItem from="1709462484397" duration="10411000" />
+      <workItem from="1709631430483" duration="6024000" />
     </task>
     <servers />
   </component>
@@ -115,13 +108,8 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/socialnetwork/controller/ApplicationController.java</url>
-          <line>274</line>
+          <line>326</line>
           <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/ro/ubbcluj/cs/map/socialnetwork/controller/ApplicationController.java</url>
-          <line>325</line>
-          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

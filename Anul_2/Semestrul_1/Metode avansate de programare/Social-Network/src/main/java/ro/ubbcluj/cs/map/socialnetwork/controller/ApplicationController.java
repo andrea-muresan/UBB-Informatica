@@ -4,16 +4,19 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.stage.Stage;
 import javafx.util.Pair;
 import ro.ubbcluj.cs.map.socialnetwork.domain.FriendRequest;
 import ro.ubbcluj.cs.map.socialnetwork.domain.Friendship;
@@ -41,16 +44,19 @@ public class ApplicationController implements Initializable {
 
     // Pagination variables
     private int currentPageUsers = 0;
-    private int pageSizeUsers = 5;
+    private int pageSizeUsers = 10;
 
     private int currentPageFriendships = 0;
-    private int pageSizeFriendships = 5;
+    private int pageSizeFriendships = 10;
 
     private int currentPageFriendRequests = 0;
-    private int pageSizeFriendRequests = 5;
+    private int pageSizeFriendRequests = 10;
 
     private int currentPageMessages = 0;
-    private int pageSizeMessages = 5;
+    private int pageSizeMessages = 10;
+
+    private int currentPageAllUsers = 0;
+    private int pageSizeAllUsers = 10;
 
 
     private String emailTo = "";
@@ -112,13 +118,32 @@ public class ApplicationController implements Initializable {
     @FXML
     private TextField showMessagesEmail;
 
-    // Profile
+    // Profile Window
     @FXML
     private Circle userImage;
     @FXML
     private Label nameLblProfile;
     @FXML
     private ComboBox<String> profilePictureCmbBox;
+    @FXML
+    private Button logOutBtn;
+
+    // AllUsers Window
+     @FXML
+        private Button nextBtnAllUsers;
+        @FXML
+        private Button previousBtnAllUsers;
+        @FXML
+        private Button lastPageBtnAllUsers;
+        @FXML
+        private Button firstPageBtnAllUsers;
+        @FXML
+        private TextField noElementsOnPageAllUsers;
+        @FXML
+        private Label pageNumberAllUsers;
+        @FXML
+        private ListView<User> listOfAllUsers;
+
 
 
     public void setService(Service service) {
@@ -219,6 +244,33 @@ public class ApplicationController implements Initializable {
             listOfMessages.setItems(messagesObs);
 
             pageNumberMessages.setText((currentPageMessages + 1) + "/" + (maxPageMessages + 1));
+        }
+
+        // AllUsers
+        Page<User> pageAllUsers = service.findAllUsers(new Pageable(currentPageAllUsers, pageSizeAllUsers));
+
+        if (pageAllUsers.getTotalElementCount() != 0) {
+            int maxPageAllUsers = (int) Math.ceil((double) pageAllUsers.getTotalElementCount() / pageSizeAllUsers) - 1;
+            if (maxPageAllUsers == -1) maxPageAllUsers = 0;
+            if (currentPageAllUsers > maxPageAllUsers) {
+                currentPageAllUsers = maxPageAllUsers;
+                pageAllUsers = service.findAllUsers(new Pageable(currentPageAllUsers, pageSizeAllUsers));
+            }
+            int totalNumberOfElementsAllUsers = pageAllUsers.getTotalElementCount();
+
+            previousBtnAllUsers.setDisable(currentPageAllUsers == 0);
+            firstPageBtnAllUsers.setDisable(currentPageAllUsers == 0);
+            nextBtnAllUsers.setDisable((currentPageAllUsers + 1) * pageSizeAllUsers >= totalNumberOfElementsAllUsers);
+            lastPageBtnAllUsers.setDisable((currentPageAllUsers + 1) * pageSizeAllUsers >= totalNumberOfElementsAllUsers);
+
+            usersObs.clear();
+            for (User user : pageAllUsers.getElementsOnPage()) {
+                usersObs.add(user);
+            }
+
+            listOfAllUsers.setItems(usersObs);
+
+            pageNumberAllUsers.setText((currentPageAllUsers + 1) + "/" + (maxPageAllUsers + 1));
         }
     }
 
@@ -492,5 +544,62 @@ public class ApplicationController implements Initializable {
         }
 
         listOfMessages.setItems(messagesObs);
+    }
+
+    @FXML
+    void logOut(MouseEvent event) {
+        try {
+            FXMLLoader stageLoader = new FXMLLoader();
+            stageLoader.setLocation(getClass().getResource("/ro/ubbcluj/cs/map/socialnetwork/logIn.fxml"));
+            Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+
+            BorderPane singUpLayout = stageLoader.load();
+            Scene scene = new Scene(singUpLayout);
+            stage.setScene(scene);
+
+            LogInController logInController = stageLoader.getController();
+            logInController.setService(this.service);
+
+            stage.show();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());;
+        }
+    }
+
+    public void onPreviousAllUsers(MouseEvent mouseEvent) {
+        currentPageAllUsers--;
+        initApp();
+    }
+
+    public void onNextAllUsers(MouseEvent mouseEvent) {
+        currentPageAllUsers++;
+        initApp();
+    }
+
+    public void onFirstAllUsers(MouseEvent mouseEvent) {
+        currentPageAllUsers = 0;
+        initApp();
+    }
+
+    public void onLastAllUsers(MouseEvent mouseEvent) {
+        Page<User> pageAllUsers = service.findAllUsers(new Pageable(currentPageAllUsers, pageSizeAllUsers));
+        currentPageAllUsers = (int) Math.ceil((double) pageAllUsers.getTotalElementCount() / pageSizeAllUsers) - 1;
+        initApp();
+    }
+
+    public void setNoElementsOnPageAllUsers(KeyEvent key) {
+        if (key.getCode().equals(KeyCode.ENTER)) {
+            try {
+                if (!Objects.equals(noElementsOnPageAllUsers.getText(), "0"))
+                    pageSizeAllUsers = Integer.parseInt(noElementsOnPageAllUsers.getText());
+            } catch (Exception e) {
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setHeaderText("!!!");
+                errorAlert.setContentText("Something wrong");
+                errorAlert.showAndWait();
+            }
+            initApp();
+        }
     }
 }
