@@ -17,7 +17,6 @@ import ro.ubbcluj.cs.map.socialnetwork.service.Service;
 import java.io.IOException;
 
 public class MainApplication extends Application {
-
     private static String url;
     private static String username;
     private static String password;

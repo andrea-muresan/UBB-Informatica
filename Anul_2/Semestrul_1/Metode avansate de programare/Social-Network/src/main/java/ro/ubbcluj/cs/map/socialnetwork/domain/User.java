@@ -8,10 +8,13 @@ public class User extends Entity<Long>{
     private String email;
     private String password;
 
-    public User(String firstName, String lastName, String email) {
+    private String profilePicture;
+
+    public User(String firstName, String lastName, String email, String profilePicture) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.profilePicture = profilePicture;
     }
 
     public String getFirstName() {
@@ -46,6 +49,14 @@ public class User extends Entity<Long>{
         this.password = password;
     }
 
+    public String getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
+    }
+
     public String encryptPassword() {
         StringBuilder result = new StringBuilder();
         for (Character c : this.password.toCharArray()) {
@@ -78,9 +89,7 @@ public class User extends Entity<Long>{
 
     @Override
     public String toString() {
-        return  "id='" + id + '\'' +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
+        return  "Name='" + firstName + " " + lastName + '\'' +
                 ", email='" + email + '\'';
     }
 

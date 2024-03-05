@@ -2,21 +2,32 @@ package ro.ubbcluj.cs.map.socialnetwork.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import ro.ubbcluj.cs.map.socialnetwork.domain.User;
 import ro.ubbcluj.cs.map.socialnetwork.service.Service;
 
-public class SignUpController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class SignUpController implements Initializable {
 
     private Service service;
+
+    @FXML
+    private Circle defaultProfileImage;
+
     @FXML
     private PasswordField checkPasswordTxtField;
 
@@ -50,25 +61,27 @@ public class SignUpController {
         if (!password.equals(checkPassword)) {
             System.out.println("parola nu coincide");
         } else {
-            service.addUser(firstName, lastName, email, password);
-            try {
-                FXMLLoader stageLoader = new FXMLLoader();
-                stageLoader.setLocation(getClass().getResource("/ro/ubbcluj/cs/map/socialnetwork/application.fxml"));
+            if (service.addUser(firstName, lastName, email, password) == true)
+            {
+                try {
+                    FXMLLoader stageLoader = new FXMLLoader();
+                    stageLoader.setLocation(getClass().getResource("/ro/ubbcluj/cs/map/socialnetwork/application.fxml"));
 
-                Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+                    Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 
-                TabPane appLayout = stageLoader.load();
-                Scene scene = new Scene(appLayout);
-                stage.setScene(scene);
+                    TabPane appLayout = stageLoader.load();
+                    Scene scene = new Scene(appLayout);
+                    stage.setScene(scene);
 
-                ApplicationController appController = stageLoader.getController();
-                appController.setService(this.service);
-                appController.setUserLogged(service.getUserByEmail(email));
+                    ApplicationController appController = stageLoader.getController();
+                    appController.setService(this.service);
+                    appController.setUserLogged(service.getUserByEmail(email));
+                    appController.initApp();
+                    stage.show();
 
-                stage.show();
-
-            } catch (Exception e) {
-                System.out.println(e.getMessage());;
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());;
+                }
             }
         }
     }
@@ -83,13 +96,19 @@ public class SignUpController {
             Scene scene = new Scene(singUpLayout);
             stage.setScene(scene);
 
-            SignUpController signUpController = stageLoader.getController();
-            signUpController.setService(this.service);
+            LogInController logInController = stageLoader.getController();
+            logInController.setService(this.service);
 
             stage.show();
 
         } catch (Exception e) {
             System.out.println(e.getMessage());;
         }
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        Image img = new Image(getClass().getResource("/ro/ubbcluj/cs/map/socialnetwork/images/default.jpg").toExternalForm());
+        defaultProfileImage.setFill(new ImagePattern(img));
     }
 }

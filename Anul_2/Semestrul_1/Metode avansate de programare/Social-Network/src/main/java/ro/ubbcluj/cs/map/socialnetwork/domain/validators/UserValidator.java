@@ -24,7 +24,7 @@ public class UserValidator implements Validator<User> {
             throw new ValidationException("Invalid name - first name is empty; ");
         else if (name.length() > 50) // Check if it is too long
             throw new ValidationException("Invalid name - first name is too long; ");
-        else if (!name.matches("[a-zA-Z]+"))
+        else if (!name.matches("[a-zA-Z -]+"))
             throw new ValidationException("Invalid name - first name must contain only letters");
     }
 
@@ -52,7 +52,7 @@ public class UserValidator implements Validator<User> {
             throw new ValidationException("Invalid email - it is too long; ");
         else if (email.length() < 3) // Check if it is too long
             throw new ValidationException("Invalid email - it is too short; ");
-        else if (!email.matches("^[a-zA-Z0-9-_]+@[a-zA-Z0-9-_]+\\.[a-zA-Z0-9-_]+$"))
+        else if (!email.matches("^[a-zA-Z0-9-_.]+@[a-zA-Z0-9-_.]+\\.[a-zA-Z0-9-_]+$"))
             throw new ValidationException("Invalid email syntax - special characters accepted - and _");
     }
 

@@ -135,7 +135,7 @@ public interface ServiceI {
 
     User findUser(String id);
 
-    boolean updateUser(String id, String firstName, String lastName, String email);
+    boolean updateUser(String id, String firstName, String lastName, String email, String profilePicture);
 
     /**
      * Add a message in the messageRepo

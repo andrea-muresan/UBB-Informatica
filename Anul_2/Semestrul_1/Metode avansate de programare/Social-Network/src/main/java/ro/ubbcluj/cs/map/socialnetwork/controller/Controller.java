@@ -316,7 +316,7 @@ public class Controller implements Initializable {
         String lastName = lastNameAdd.getText();
         String email = emailAdd.getText();
 
-        if (!service.updateUser(id, firstName, lastName, email)) {
+        if (!service.updateUser(id, firstName, lastName, email, "default")) {
             Alert errorAlert = new Alert(Alert.AlertType.WARNING);
             errorAlert.setHeaderText("!!!");
             errorAlert.setContentText("Something went wrong");

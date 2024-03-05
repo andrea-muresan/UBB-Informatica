@@ -94,7 +94,7 @@ public class LogInController {
                 stage.show();
 
             } catch (Exception e) {
-                System.out.println(e.getMessage());;
+                System.out.println(e.getMessage());
             }
         } else {
             System.out.println("nope");
