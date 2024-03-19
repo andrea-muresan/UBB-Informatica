@@ -1,6 +1,6 @@
 package ro.mpp.domain;
 
-public class User extends Entity<Long>{
+public class User extends Entity<Integer>{
     private String username;
     private String password;
 

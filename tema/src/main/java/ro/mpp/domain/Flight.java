@@ -3,19 +3,19 @@ package ro.mpp.domain;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class Flight extends Entity<Long>{
+public class Flight extends Entity<Integer>{
     private String destination;
     private LocalDate date;
     private LocalTime hour;
     private String airport;
-    private int no_seats;
+    private int NoSeats;
 
     public Flight(String destination, LocalDate date, LocalTime hour, String airport, int no_seats) {
         this.destination = destination;
         this.date = date;
         this.hour = hour;
         this.airport = airport;
-        this.no_seats = no_seats;
+        this.NoSeats = no_seats;
     }
 
     public String getDestination() {
@@ -50,11 +50,11 @@ public class Flight extends Entity<Long>{
         this.airport = airport;
     }
 
-    public int getNo_seats() {
-        return no_seats;
+    public int getNoSeats() {
+        return NoSeats;
     }
 
-    public void setNo_seats(int no_seats) {
-        this.no_seats = no_seats;
+    public void setNoSeats(int noSeats) {
+        this.NoSeats = noSeats;
     }
 }

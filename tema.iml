@@ -6,7 +6,7 @@
       <excludeFolder url="file://$MODULE_DIR$/tema/.gradle" />
       <excludeFolder url="file://$MODULE_DIR$/tema/build" />
     </content>
-    <orderEntry type="jdk" jdkName="openjdk-21" jdkType="JavaSDK" />
+    <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>

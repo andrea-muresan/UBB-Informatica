@@ -1,24 +1,35 @@
 package ro.mpp.domain;
 
-public class Ticket extends Entity<Long>{
-    private int flightId;
+public class Ticket extends Entity<Integer>{
+    private Flight flight;
     private String clientName;
     private String clientAddress;
     private String touristsNames;
 
-    public Ticket(int flightId, String clientName, String clientAddress, String touristsNames) {
-        this.flightId = flightId;
+    private int noSeats;
+
+    public Ticket(Flight flight, String clientName, String clientAddress, String touristsNames, int noSeats) {
+        this.flight = flight;
         this.clientName = clientName;
         this.clientAddress = clientAddress;
         this.touristsNames = touristsNames;
+        this.noSeats = noSeats;
     }
 
-    public int getFlightId() {
-        return flightId;
+    public int getNoSeats() {
+        return noSeats;
     }
 
-    public void setFlightId(int flightId) {
-        this.flightId = flightId;
+    public void setNoSeats(int noSeats) {
+        this.noSeats = noSeats;
+    }
+
+    public Flight getFlight() {
+        return flight;
+    }
+
+    public void setFlight(Flight flight) {
+        this.flight = flight;
     }
 
     public String getClientName() {
