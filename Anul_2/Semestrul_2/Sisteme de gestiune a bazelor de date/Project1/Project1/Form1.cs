@@ -93,6 +93,8 @@ namespace Project1
                     ds.Tables["image"].Clear();
                     childAdapter.Fill(ds, "image");
 
+                    ClearInputFields();
+
                 }
             }
             catch (Exception exception)
@@ -176,7 +178,9 @@ namespace Project1
                     childAdapter.SelectCommand.Connection = conn;
                     ds.Tables["image"].Clear();
                     childAdapter.Fill(ds, "image");
-                    
+
+                    ClearInputFields();
+
                 }
             }
             catch (Exception exception)
