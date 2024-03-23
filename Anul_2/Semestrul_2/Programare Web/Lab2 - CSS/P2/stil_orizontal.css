@@ -1,0 +1,24 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    justify-content: space-between;
+}
+
+li {
+    width: 18%;
+    border-right: 2px solid;
+    float: left;
+    padding: 1vh;
+}
+
+#meniu {
+    justify-content: space-between;
+}

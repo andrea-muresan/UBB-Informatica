@@ -1,0 +1,30 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#continut {
+    display: flex;
+}
+
+#meniu {
+    width: 20%;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    justify-content: space-between;
+}
+
+li {
+    border-bottom: 2px solid;
+}
+
+main {
+    width: 80%;
+    height: 60vh;
+}
