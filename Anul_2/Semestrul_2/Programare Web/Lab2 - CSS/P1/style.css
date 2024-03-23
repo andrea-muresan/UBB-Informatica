@@ -1,0 +1,24 @@
+#divParent {
+			width: 400px;
+			border-style: solid;
+			border-width: 2px;
+			display: flex;
+			overflow: auto;
+		}
+
+		#divLeftChild {
+			width: 200px;
+			margin: auto;
+			float: left;
+		}
+
+		#divRightChild {
+			width: 200px;
+			margin: auto;
+			float: left;
+		}
+
+		#pizzaImage {
+			max-width: 200px;
+			vertical-align: middle;
+		}

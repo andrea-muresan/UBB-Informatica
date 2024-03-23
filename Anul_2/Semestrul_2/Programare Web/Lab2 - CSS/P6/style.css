@@ -1,0 +1,23 @@
+#nume, #prenume{
+    background-image: url("http://3.bp.blogspot.com/-4oAWWCcNNz4/Tjr3nKNyVUI/AAAAAAAAPLU/Pouua-pNsEY/s1600/sq.gif");    
+    width: 394px;
+    height: 18px;
+    background-size: 20px;
+    border: none;
+    font-family: monospace;
+    font-size: 13px;
+    padding-left: 5px;
+    letter-spacing: 13px;
+}
+
+#cnp{
+    background-image: url("http://3.bp.blogspot.com/-4oAWWCcNNz4/Tjr3nKNyVUI/AAAAAAAAPLU/Pouua-pNsEY/s1600/sq.gif");    
+    width: 254px;
+    height: 18px;
+    background-size: 20px;
+    border: none;
+    font-family: monospace;
+    font-size: 13px;
+    padding-left: 5px;
+    letter-spacing: 13px;
+}
