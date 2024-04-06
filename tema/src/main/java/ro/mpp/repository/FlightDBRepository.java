@@ -7,6 +7,9 @@ import ro.mpp.domain.Flight;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,16 +28,16 @@ public class FlightDBRepository implements FlightRepository{
         logger.traceEntry();
         List<Flight> flights =  new ArrayList<>();
         Connection con=dbUtils.getConnection();
-        try (PreparedStatement preStmt=con.prepareStatement("select * from flights where destination=? and STRFTIME('%Y-%m-%d', time) = ?")) {
+        try (PreparedStatement preStmt=con.prepareStatement("select * from flights where destination LIKE ? and date LIKE ?")) {
             preStmt.setString(1, destination);
             preStmt.setString(2, String.valueOf(date));
             try (ResultSet result = preStmt.executeQuery()) {
                 while (result.next()) {
                     Integer id = result.getInt("id");
-                    LocalDateTime time = result.getTimestamp("time").toLocalDateTime();
+                    LocalTime time = LocalTime.parse(result.getString("time"));
                     String airport = result.getString("airport");
                     int noSeats = result.getInt("no_seats");
-                    Flight flight =  new Flight(destination, date, time.toLocalTime(), airport, noSeats);
+                    Flight flight =  new Flight(destination, date, time, airport, noSeats);
                     flight.setId(id);
                     flights.add(flight);
                 }
@@ -63,10 +66,11 @@ public class FlightDBRepository implements FlightRepository{
                 while (result.next()) {
                     Integer id = result.getInt("id");
                     String destination = result.getString("destination");
-                    LocalDateTime time = result.getTimestamp("time").toLocalDateTime();
+                    LocalDate date = LocalDate.parse(result.getString("date"));
+                    LocalTime time = LocalTime.parse(result.getString("time"));
                     String airport = result.getString("airport");
                     int noSeats = result.getInt("no_seats");
-                    Flight flight = new Flight(destination, time.toLocalDate(), time.toLocalTime(), airport, noSeats);
+                    Flight flight = new Flight(destination, date, time, airport, noSeats);
                     flight.setId(id);
                     flights.add(flight);
                 }
@@ -90,21 +94,23 @@ public class FlightDBRepository implements FlightRepository{
     }
 
     @Override
-    public void update(Flight entity) {
+    public void update(Flight entity) throws SQLException {
         logger.traceEntry( "saving task {}",entity);
         Connection con=dbUtils.getConnection();
-        try(PreparedStatement preStmt=con.prepareStatement("update flights set destination=?, time=?, airport=?, no_seats=?")) {
+        try(PreparedStatement preStmt=con.prepareStatement("update flights set destination=?, date=?, time=?, airport=?, no_seats=? where id=?")) {
             preStmt.setString(1,entity.getDestination());
-            LocalDateTime dateTime = LocalDateTime.of(entity.getDate(), entity.getHour());
-            preStmt.setTimestamp(2, Timestamp.valueOf(dateTime));
-            preStmt.setString(3, entity.getAirport());
-            preStmt.setInt(4, entity.getNoSeats());
+            preStmt.setString(2, entity.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+            preStmt.setString(3, entity.getHour().format(DateTimeFormatter.ofPattern("hh:mm:ss")));
+            preStmt.setString(4, entity.getAirport());
+            preStmt.setInt(5, entity.getNoSeats());
+            preStmt.setInt(6, entity.getId());
             int result=preStmt.executeUpdate();
             logger.trace("Update () instances", result);
         }catch (SQLException ex) {
             logger.error(ex);
             System.err.println("Error DB " + ex);
             logger.traceExit();
+            throw ex;
         }
     }
 }

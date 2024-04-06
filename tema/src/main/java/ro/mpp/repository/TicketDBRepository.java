@@ -29,10 +29,10 @@ public class TicketDBRepository implements TicketRepository{
     }
 
     @Override
-    public void save(Ticket entity) {
+    public void save(Ticket entity) throws SQLException {
         logger.traceEntry( "saving task {}",entity);
         Connection con=dbUtils.getConnection();
-        try(PreparedStatement preStmt=con.prepareStatement("insert into tickets (flight_id, client_name, client_address, tourists_name, no_seats) values (?,?,?,?,?)")) {
+        try(PreparedStatement preStmt=con.prepareStatement("insert into tickets (flight_id, client_name, client_address, tourists_names, no_seats) values (?,?,?,?,?)")) {
             preStmt.setInt(1,entity.getFlight().getId());
             preStmt.setString(2,entity.getClientName());
             preStmt.setString(3,entity.getClientAddress());
@@ -44,6 +44,8 @@ public class TicketDBRepository implements TicketRepository{
             logger.error(ex);
             System.err.println("Error DB " + ex);
             logger.traceExit();
+            throw ex;
+
         }
     }
 

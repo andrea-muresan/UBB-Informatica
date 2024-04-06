@@ -4,6 +4,7 @@ import ro.mpp.domain.User;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ro.mpp.utils.PassEncTech1;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,11 +18,13 @@ import java.util.Properties;
 public class UserDBRepository implements UserRepository {
 
     private JdbcUtils dbUtils;
+    private PassEncTech1 encrypt;
 
     private static final Logger logger= LogManager.getLogger();
 
     public UserDBRepository(Properties props) {
         this.dbUtils = new JdbcUtils(props);
+        encrypt = new PassEncTech1();
     }
 
     @Override
@@ -59,8 +62,8 @@ public class UserDBRepository implements UserRepository {
         logger.traceEntry( "saving task {}",entity);
         Connection con=dbUtils.getConnection();
         try(PreparedStatement preStmt=con.prepareStatement("insert into users (username, password) values (?,?)")) {
-            preStmt.setString(1,entity.getUsername());
-            preStmt.setString(2,entity.getPassword());
+            preStmt.setString(1, entity.getUsername());
+            preStmt.setString(2, encrypt.encrypt(entity.getPassword()));
             int result=preStmt.executeUpdate();
             logger.trace("Saved () instances", result);
         }catch (SQLException ex) {
