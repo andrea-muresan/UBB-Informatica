@@ -1,0 +1,20 @@
+plugins {
+    id 'java'
+}
+
+group = 'app'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation project (':Model')
+    implementation project (':Services')
+    compileOnly 'org.apache.tomcat:annotations-api:6.0.53' // necessary for Java 9+
+}
+
+test {
+    useJUnitPlatform()
+}

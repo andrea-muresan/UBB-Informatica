@@ -1,0 +1,8 @@
+rootProject.name = 'TravelAgency'
+include 'Model'
+include 'Persistence'
+include 'Services'
+include 'Networking'
+include 'Server'
+include 'Client'
+
