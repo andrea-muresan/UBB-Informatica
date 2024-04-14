@@ -1,4 +1,4 @@
-package ro.mpp.domain;
+package app.model;
 
 public class Ticket extends Entity<Integer>{
     private Flight flight;

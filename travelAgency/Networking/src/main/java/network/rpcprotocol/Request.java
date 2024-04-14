@@ -1,4 +1,4 @@
-package app.network.rpcprotocol;
+package network.rpcprotocol;
 
 import java.io.Serializable;
 
@@ -25,6 +25,7 @@ public class Request implements Serializable {
                 '}';
     }
 
+
     public static class Builder {
         private Request request = new Request();
 
@@ -50,4 +51,7 @@ public class Request implements Serializable {
     private void type(RequestType type) {
         this.type = type;
     }
+
+
+
 }

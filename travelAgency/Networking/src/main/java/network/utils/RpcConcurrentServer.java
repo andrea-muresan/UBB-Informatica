@@ -1,25 +1,26 @@
-package app.network.utils;
+package network.utils;
 
-import app.network.rpcprotocol.ClientRpcReflectionWorker;
-import app.services.IServices;
-
+import network.rpcprotocol.ClientRpcReflectionWorker;
+import services.IServices;
 
 import java.net.Socket;
 
 public class RpcConcurrentServer extends AbsConcurrentServer {
 
-    private IServices server;
-
+    private IServices chatServer;
     public RpcConcurrentServer(int port, IServices chatServer) {
         super(port);
-        this.server = chatServer;
-        System.out.println("App - RpcConcurrentServer");
+        this.chatServer = chatServer;
+        System.out.println("Chat- ChatRpcConcurrentServer");
     }
 
     @Override
-    protected Thread createWorker(Socket socket) {
-        ClientRpcReflectionWorker worker = new ClientRpcReflectionWorker(server, socket);
-        return new Thread(worker);
+    protected Thread createWorker(Socket client) {
+        // ChatClientRpcWorker worker=new ChatClientRpcWorker(chatServer, client);
+        ClientRpcReflectionWorker worker=new ClientRpcReflectionWorker(chatServer, client);
+
+        Thread tw=new Thread(worker);
+        return tw;
     }
 
     @Override

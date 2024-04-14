@@ -1,10 +1,10 @@
-package app.persistence.repository;
+package persistence.repository;
 
+import app.model.Flight;
 import app.model.Ticket;
-import app.persistence.TicketRepository;
+import persistence.TicketRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,8 +21,8 @@ public class TicketDBRepository implements TicketRepository {
         this.dbUtils = new JdbcUtils(props);
     }
     @Override
-    public Optional<Ticket> findOne(Integer integer) {
-        return Optional.empty();
+    public Flight findOne(Integer integer) {
+        return null;
     }
 
     @Override

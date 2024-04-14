@@ -1,10 +1,10 @@
-package app.persistence.repository;
+package persistence.repository;
 
 import app.model.Flight;
-import app.persistence.FlightRepository;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
+import persistence.FlightRepository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -55,8 +55,8 @@ public class FlightDBRepository implements FlightRepository {
     }
 
     @Override
-    public Optional<Flight> findOne(Integer integer) {
-        return Optional.empty();
+    public Flight findOne(Integer integer) {
+        return null;
     }
 
     @Override

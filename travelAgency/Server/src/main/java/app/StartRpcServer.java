@@ -16,32 +16,31 @@ import java.rmi.ServerException;
 import java.util.Properties;
 
 public class StartRpcServer {
-    private static final int defaultPort=55555;
+    private static int defaultPort=55555;
     public static void main(String[] args) {
         // UserRepository userRepo=new UserRepositoryMock();
         Properties serverProps=new Properties();
         try {
-            serverProps.load(StartRpcServer.class.getResourceAsStream("/chatserver.properties"));
+            serverProps.load(StartRpcServer.class.getResourceAsStream("/server.properties"));
             System.out.println("Server properties set. ");
             serverProps.list(System.out);
         } catch (IOException e) {
-            System.err.println("Cannot find chatserver.properties "+e);
+            System.err.println("Cannot find server.properties "+e);
             return;
         }
         UserRepository userRepo=new UserDBRepository(serverProps);
         FlightRepository flightRepo=new FlightDBRepository(serverProps);
         TicketRepository ticketRepo=new TicketDBRepository(serverProps);
-
-        IServices service = new Service(userRepo, flightRepo, ticketRepo);
-        int serverPort = defaultPort;
+        IServices ServerImpl=new Service(userRepo, flightRepo, ticketRepo);
+        int ServerPort =defaultPort;
         try {
-            serverPort = Integer.parseInt(serverProps.getProperty("server.port"));
+            ServerPort = Integer.parseInt(serverProps.getProperty("server.port"));
         }catch (NumberFormatException nef){
-            System.err.println("Wrong  Port Number" + nef.getMessage());
-            System.err.println("Using default port " + defaultPort);
+            System.err.println("Wrong  Port Number"+nef.getMessage());
+            System.err.println("Using default port "+defaultPort);
         }
-        System.out.println("Starting server on port: " + serverPort);
-        AbstractServer server = new RpcConcurrentServer(serverPort, service);
+        System.out.println("Starting server on port: "+ ServerPort);
+        AbstractServer server = new RpcConcurrentServer(ServerPort, ServerImpl);
         try {
             server.start();
         } catch (ServerException e) {
@@ -50,7 +49,7 @@ public class StartRpcServer {
             try {
                 server.stop();
             }catch(ServerException e){
-                System.err.println("Error stopping server " + e.getMessage());
+                System.err.println("Error stopping server "+e.getMessage());
             }
         }
     }

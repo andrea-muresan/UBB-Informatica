@@ -1,4 +1,4 @@
-package app.network.rpcprotocol;
+package network.rpcprotocol;
 
 import java.io.Serializable;
 
@@ -49,6 +49,7 @@ public class Response implements Serializable {
         public Response build() {
             return response;
         }
+
     }
 
 }

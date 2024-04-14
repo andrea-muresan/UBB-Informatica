@@ -1,4 +1,4 @@
-package ro.mpp.domain;
+package app.model;
 
 public class User extends Entity<Integer>{
     private String username;

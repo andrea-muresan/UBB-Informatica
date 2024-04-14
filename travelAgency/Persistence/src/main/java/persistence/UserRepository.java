@@ -1,4 +1,4 @@
-package app.persistence;
+package persistence;
 
 import app.model.User;
 

@@ -1,27 +1,36 @@
-package ro.mpp.controller;
+package app.controller;
 
+import app.model.Flight;
+import app.model.User;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import ro.mpp.domain.Flight;
-import ro.mpp.service.ServiceApp;
-import ro.mpp.service.ServiceLogIn;
+import services.IObserver;
+import services.IServices;
+import services.MyException;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Iterator;
+import java.util.Objects;
 
-public class AppController {
+public class AppController implements IObserver {
 
-    private ServiceApp service;
+    private IServices service;
+
+    private User userLogged;
 
     private final ObservableList<Flight> flightsObs = FXCollections.observableArrayList();
     private final ObservableList<Flight> searchFlightsObs = FXCollections.observableArrayList();
 
-    public void setService(ServiceApp service) {
+    public void setService(IServices service) {
         this.service = service;
     }
 
@@ -69,7 +78,7 @@ public class AppController {
     }
 
     @FXML
-    void buyTicket(MouseEvent event) {
+    void buyTicket(MouseEvent event) throws MyException, SQLException {
         String name = clientNameTxtField.getText();
         String address = clientAddressTxtField.getText();
         String tourists = touristsNamesTxtField.getText();
@@ -77,15 +86,14 @@ public class AppController {
 
         Flight flight = searchView.getSelectionModel().getSelectedItem();
         if (flight != null) {
-            String endString = service.buyTicket(flight, name, address, tourists, noSeats);
+            try {
+                service.buyTicket(flight, name, address, tourists, noSeats);
 
-            if (endString.equals("Success")) {
                 showAlert(Alert.AlertType.CONFIRMATION, "Confirmation", "The tickets are bought");
-                setFlightsView();
-                setSearchView(flight.getDestination(), flight.getDate());
-            }
-            else {
-                showAlert(Alert.AlertType.WARNING, "Error", endString);
+//                setFlightsView();
+//                setSearchView(flight.getDestination(), flight.getDate());
+            } catch (MyException e) {
+                showAlert(Alert.AlertType.WARNING, "Error", "Something went wrong");
             }
         } else {
             showAlert(Alert.AlertType.WARNING, "Error", "No flight selected");
@@ -96,7 +104,17 @@ public class AppController {
 
     @FXML
     void logOut(MouseEvent event) {
-        stage.close();
+        logout();
+        ((Node)(event.getSource())).getScene().getWindow().hide();
+    }
+
+    void logout() {
+        try {
+            service.logOut(userLogged, this);
+        } catch (Exception e) {
+            System.out.println("Logout error " + e);
+        }
+
     }
 
     @FXML
@@ -104,29 +122,44 @@ public class AppController {
         String dest = destinationTxtField.getText();
         LocalDate date = datePicker.getValue();
 
-        setSearchView(dest, date);
+        try {
+            setSearchView(dest, date);
+        } catch (MyException e) {
+            showAlert(Alert.AlertType.WARNING, "Error", "Something went wrong");
+        }
+
     }
 
     private void setFlightsView() {
-        flightsObs.clear();
-        for (Flight flight : service.getAllFlights()) {
-            if (flight.getNoSeats() != 0)
-                flightsObs.add(flight);
+
+        try {
+            flightsObs.clear();
+            for (Flight flight : service.getAllFlights()) {
+                if (flight.getNoSeats() != 0)
+                    flightsObs.add(flight);
+            }
+
+            flightsView.setItems(flightsObs);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            showAlert(Alert.AlertType.ERROR, "Error", e.getMessage());
         }
 
-        flightsView.setItems(flightsObs);
 
     }
 
-    private void setSearchView(String dest, LocalDate date) {
-        searchFlightsObs.clear();
-        for (Flight flight : service.getFlightsByDestinationDate(dest, date)) {
-            if (flight.getNoSeats() != 0)
-                searchFlightsObs.add(flight);
+    private void setSearchView(String dest, LocalDate date) throws MyException {
+        try {
+            searchFlightsObs.clear();
+            for (Flight flight : service.getFlightsByDestinationDate(dest, date)) {
+                if (flight.getNoSeats() != 0)
+                    searchFlightsObs.add(flight);
+            }
+
+            searchView.setItems(searchFlightsObs);
+        } catch (Exception e){
+           throw e;
         }
-
-        searchView.setItems(searchFlightsObs);
-
     }
 
     public void initFlightsView() {
@@ -190,5 +223,34 @@ public class AppController {
     public void initApp() {
         initFlightsView();
         initSearchView();
+    }
+
+    public void setUserLogged(User crtUser) {
+        this.userLogged = crtUser;
+    }
+
+    @Override
+    public void updateFlight(Flight flight) {
+        Platform.runLater(()->{
+            setFlightsView();
+            try {
+                int ok = 0;
+                Iterator<Flight> flightIter = searchFlightsObs.iterator();
+                while (flightIter.hasNext()) {
+                    Flight fl = flightIter.next();
+                    if (Objects.equals(fl.getId(), flight.getId())) ok = 1;
+                }
+                if (ok == 1)
+                    setSearchView(flight.getDestination(), flight.getDate());
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                showAlert(Alert.AlertType.ERROR, "Error", e.getMessage());
+            }
+
+        });
+    }
+
+    public void logOut2() {
+        stage.close();
     }
 }

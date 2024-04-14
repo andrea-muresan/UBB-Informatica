@@ -1,10 +1,10 @@
-package app.persistence.repository;
+package persistence.repository;
 
+import app.model.Flight;
 import app.model.User;
-import app.persistence.UserRepository;
+import persistence.UserRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,8 +27,8 @@ public class UserDBRepository implements UserRepository {
     }
 
     @Override
-    public Optional<User> findOne(Integer integer) {
-        return Optional.empty();
+    public Flight findOne(Integer integer) {
+        return null;
     }
 
     @Override

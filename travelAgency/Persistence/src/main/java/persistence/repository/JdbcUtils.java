@@ -1,4 +1,4 @@
-package app.persistence.repository;
+package persistence.repository;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

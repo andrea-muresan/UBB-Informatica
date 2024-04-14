@@ -1,4 +1,4 @@
-package ro.mpp.domain;
+package app.model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

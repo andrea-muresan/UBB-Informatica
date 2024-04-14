@@ -1,4 +1,4 @@
-package app.services;
+package services;
 
 public class MyException extends Exception{
     public MyException(){}

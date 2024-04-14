@@ -1,8 +1,8 @@
-package app.network.rpcprotocol;
+package network.rpcprotocol;
 
 public enum ResponseType {
     OK,
     ERROR,
-    GET_GAMES,
-    GAME
+    GET_FLIGHTS,
+    GET_FLIGHTS_DEST_DATE, FLIGHT
 }

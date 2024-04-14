@@ -1,8 +1,8 @@
-package app.network.rpcprotocol;
+package network.rpcprotocol;
 
 public enum RequestType {
     LOGIN,
     LOGOUT,
-    GET_GAMES,
-    PURCHASE
+    GET_FLIGHTS,
+    GET_FLIGHTS_DEST_DATE, PURCHASE
 }

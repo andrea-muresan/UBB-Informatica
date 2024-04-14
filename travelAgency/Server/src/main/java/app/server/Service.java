@@ -11,6 +11,7 @@ import services.MyException;
 import app.utils.PassEncTech1;
 import services.IServices;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Map;
@@ -40,14 +41,21 @@ public class Service implements IServices {
     @Override
     public void findUserByCredentials(String username, String password, IObserver userObs) throws MyException {
         User user = userRepo.findByUsername(username);
-
-        if (user != null) {
-            if (user.getPassword().equals(encTech1.encrypt(password))) {
-                loggedUsers.put(user.getId(), userObs);
+        if (!loggedUsers.containsKey(user.getId()))
+        {
+            if (user != null) {
+                if (user.getPassword().equals(password)) {
+                    loggedUsers.put(user.getId(), userObs);
+                } else {
+                    throw new MyException("Wrong password");
+                }
+            } else {
+                throw new MyException("Authentication failed.");
             }
+        } else {
+            throw new MyException("Already connected");
         }
 
-        throw new MyException("Authentication failed.");
     }
 
     @Override
@@ -75,7 +83,7 @@ public class Service implements IServices {
     }
 
     @Override
-    public void buyTicket(Flight flight, String client, String address, String tourists, String noSeats) throws MyException{
+    public synchronized void buyTicket(Flight flight, String client, String address, String tourists, String noSeats) throws MyException{
         int noSeatsInt = Integer.parseInt(noSeats);
 
 
@@ -85,6 +93,10 @@ public class Service implements IServices {
         }
         if (noSeatsInt > flight.getNoSeats()) {
             throw new MyException("There are not enough seats");
+        }
+
+        if (noSeatsInt < 1) {
+            throw new MyException("Enter at list one seat");
         }
 
         try {
@@ -99,19 +111,23 @@ public class Service implements IServices {
     }
 
     @Override
-    public synchronized void logOut(User user, IObserver userObs) throws MyException {
+    public void logOut(User user, IObserver userObs) throws MyException {
         User usr = userRepo.findByUsername(user.getUsername());
-        IObserver user1 = loggedUsers.remove(usr.getId());
-        if (user1 == null)
+        if (usr == null)
             throw new MyException("User " + user.getUsername() + "is not logged in!");
+        IObserver user1 = loggedUsers.remove(usr.getId());
     }
 
     private void notifyUsers(Flight flight) {
         ExecutorService executor = Executors.newFixedThreadPool(defaultThreadsNo);
         for (IObserver user : loggedUsers.values()) {
             executor.execute(() -> {
-                System.out.println("Game update in ServiceImpl" + flight + " " + user);
-                user.updateFlight(flight);
+                System.out.println("Flight update in Service" + flight + " " + user);
+                try {
+                    user.updateFlight(flight);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             });
         }
     }
