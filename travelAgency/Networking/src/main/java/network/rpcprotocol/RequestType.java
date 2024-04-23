@@ -4,5 +4,6 @@ public enum RequestType {
     LOGIN,
     LOGOUT,
     GET_FLIGHTS,
-    GET_FLIGHTS_DEST_DATE, PURCHASE
+    GET_FLIGHTS_DEST_DATE,
+    PURCHASE
 }

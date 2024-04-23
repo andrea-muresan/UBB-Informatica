@@ -5,4 +5,5 @@ include 'Services'
 include 'Networking'
 include 'Server'
 include 'Client'
+include 'NetworkingProtobuff'
 

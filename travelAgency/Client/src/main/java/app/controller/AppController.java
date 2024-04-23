@@ -90,10 +90,8 @@ public class AppController implements IObserver {
                 service.buyTicket(flight, name, address, tourists, noSeats);
 
                 showAlert(Alert.AlertType.CONFIRMATION, "Confirmation", "The tickets are bought");
-//                setFlightsView();
-//                setSearchView(flight.getDestination(), flight.getDate());
             } catch (MyException e) {
-                showAlert(Alert.AlertType.WARNING, "Error", "Something went wrong");
+                showAlert(Alert.AlertType.WARNING, "Error", e.getMessage());
             }
         } else {
             showAlert(Alert.AlertType.WARNING, "Error", "No flight selected");

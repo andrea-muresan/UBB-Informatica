@@ -154,7 +154,6 @@ public class LogInController {
             appController.initApp();
         }
         catch(Exception e){
-
             showAlert(Alert.AlertType.ERROR, "Error", e.getMessage());
         }
 
