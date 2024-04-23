@@ -28,5 +28,5 @@ dependencies {
     implementation "de.jensd:fontawesomefx-fontawesome:4.7.0-9.1.2"
 }
 application{
-    mainClass='app.StartRpcClient'
+    mainClass='app.StartProtobuffClient'
 }
