@@ -1,0 +1,344 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Înscriere tabără de vară</title>
+</head>
+
+
+<body>
+
+    <h1>Înscriere tabără de vară</h1>
+    <hr>
+    <div><br><br></div>
+
+    <form action="#" id="register">
+        <fieldset>
+            <legend><strong>Date profesor îndrumător</strong></legend>
+            
+            <label>Prenume:</label> <div><br></div>
+            <input type="text" id="fname_teacher" name="fname_teacher"><div><br></div>
+            
+            <label>Nume:</label> <div><br></div>
+            <input type="text" id ="lname_teacher" name="lname_teacher"><div><br></div>
+            
+            <label>Telefon:</label> <div><br></div>
+            <input type="text" id="phone_teacher" name="phone_teacher" maxlength="10" ><div><br></div>
+            
+            <label>Adresă:</label> <div><br></div>
+            <input type="text" id="address_teacher" name="address_teacher"><div><br></div>
+        </fieldset>
+        <div><br><br></div>
+
+
+        <fieldset>
+            <legend><strong>Date instituție de învățământ</strong></legend>
+
+            <label>Liceu:</label><div><br></div>
+            <input type="text" id="name_highschool" name="name_highschool" size="50"><div><br></div>
+
+            <label>Oraș:</label><div><br></div>
+            <input type="text" id="city_highschool" name="city_highschool" value="Cluj-Napoca" readonly><div><br></div>
+
+            <label>Județ:</label><br>
+            <input type="text" name="county_highschool" value="CJ" disabled><div><br></div>
+
+            <label>Telefon:</label><br>
+            <input type="text" name="phone_highschool" maxlength="10"><div><br></div>
+        </fieldset>
+        <div><br><br></div>
+
+        <fieldset>
+            <legend><strong>Date elevi</strong></legend>
+            <table>
+                <tr>
+                    <th></th>
+                    <th>Nume</th>
+                    <th>Prenume</th>
+                    <th>Gen</th>
+                    <th>Alergii</th>
+                </tr>
+                <tr>
+                    <th>1.</th>
+                    <th><input type="text" id="student1_lname" name="student1_lname"></th>
+                    <th><input type="text" id="student1_fname" name="student1_fname"></th>
+                    <th>
+                        <select id="stud1_gender" name="stud1_gender">
+                            <option value="female" selected>f</option>
+                            <option value="male">m</option>
+                        </select>
+                    </th>
+                    <th>
+                        <textarea name="stud1_allergies" rows="3" cols="20"></textarea>
+                    </th>
+                </tr>
+                <tr>
+                    <th>2.</th>
+                    <th><input type="text" id="student2_lname" name="student2_lname"></th>
+                    <th><input type="text" id="student2_fname" name="student2_fname"></th>
+                    <th>
+                        <select id="stud2_gender" name="stud2_gender">
+                            <option value="female">f</option>
+                            <option value="male" selected>m</option>
+                        </select>
+                    </th>
+                    <th>
+                        <textarea name="stud2_allergies" rows="3" cols="20"></textarea>
+                    </th>
+                </tr>
+                <tr>
+                    <th>3.</th>
+                    <th><input type="text" id="student3_lname" name="student3_lname"></th>
+                    <th><input type="text" id="student3_fname" name="student3_fname"></th>
+                    <th>
+                        <select id="stud3_gender" name="stud3_gender">
+                            <option value="female">f</option>
+                            <option value="male">m</option>
+                        </select>
+                    </th>
+                    <th>
+                        <textarea name="stud3_allergies" rows="3" cols="20"></textarea>
+                    </th>
+                </tr>
+            </table>
+
+        </fieldset>
+        <div><br><br></div>
+    
+        
+        <hr>
+        <!-- Meniu -->
+        <div>
+            <h3>Meniu</h3>
+            <table border="5">
+                <tr>
+                    <th rowspan="3">Ziua 1</th>
+                    <td>Mic dejun</td>
+                    <td>
+                        <table>
+                            <tr>
+                                <th colspan="2">Meniu</th>
+                            </tr>
+                            <tr>
+                                <th>Standard</th>
+                                <th>Vegetarian</th>
+                            </tr>
+                            <tr>
+                                <td>Ompletă cu șuncă și cașcaval</td>
+                                <td>Ouă poșate cu rucola și quinoa</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Prânz</td>
+                    <td>
+                        <table>
+                            <tr>
+                                <th colspan="2">Meniu</th>
+                            </tr>
+                            <tr>
+                                <th>Standard</th>
+                                <th>Vegetarian</th>
+                            </tr>
+                            <tr>
+                                <td>Supă de păstăi <br> Pireu de cartofi cu pipotă <br> Brioșe cu ciocolată</td>
+                                <td>Supă de păstăi <br> Pireu de cartofi cu cașcaval pane<br> Brioșe cu ciocolată</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Cină</td>
+                    <td>
+                        <table>
+                            <tr>
+                                <th colspan="2">Meniu</th>
+                            </tr>
+                            <tr>
+                                <th>Standard</th>
+                                <th>Vegetarian</th>
+                            </tr>
+                            <tr>
+                                <td>Orez cu legume și pește la grătar</td>
+                                <td>Orez cu legume și ciuperci la grătar</td>
+                            </tr>
+                        </table>
+                        
+                    </td>
+                </tr>
+
+                <tr>
+                    <th rowspan="3">Ziua 2</th>
+                    <td>Mic dejun</td>
+                    <td>
+                        <table>
+                            <tr>
+                                <th colspan="2">Meniu</th>
+                            </tr>
+                            <tr>
+                                <th>Standard</th>
+                                <th>Vegetarian</th>
+                            </tr>
+                            <tr>
+                                <td>Ompletă simplă, caș pane, cabanos, gem, unt, lapte, cereale, pâine prăjită</td>
+                                <td>Ompletă simplă, caș pane, gem, unt, lapte, cereale, pâine prăjită</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Prânz</td>
+                    <td>
+                        <table>
+                            <tr>
+                                <th colspan="2">Meniu</th>
+                            </tr>
+                            <tr>
+                                <th>Standard</th>
+                                <th>Vegetarian</th>
+                            </tr>
+                            <tr>
+                                <td>Supă cremă de legume <br> Mamăliguță cu tochitură <br> Clătite cu brânză sau ciocolată</td>
+                                <td>Supă cremă de legume <br> Mămăliguță cu brânză de vaci <br> Clătite cu brânză sau ciocolată</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Cină</td>
+                    <td>
+                        <table>
+                            <tr>
+                                <th colspan="2">Meniu</th>
+                            </tr>
+                            <tr>
+                                <th>Standard</th>
+                                <th>Vegetarian</th>
+                            </tr>
+                            <tr>
+                                <td>Cartofi copți cu cordon bleu</td>
+                                <td>Cartofi copți cu brânză tofu</td>
+                            </tr>
+                        </table>
+                        
+                    </td>
+                </tr>   
+            </table>
+
+            <div><br><br></div>
+            <p>Număr meniuri vegetariene:</p>
+            <input type="text" name="veg_quantity" value="0">
+        </div>
+
+        <div><br><br><br></div>
+        <hr>
+
+        <!-- Detalii tabără -->
+        <div>
+            <h3>Detalii tabără</h3>
+            <table>
+                <tr>
+                    <td valign="top">
+                        <b>Activități</b>
+                        <ol>
+                            <li>Sportive
+                                <ol type="A">
+                                    <li>Caiac-Canoe</li>
+                                    <li>Tir cu arcul</li>
+                                    <li>Înot</li>
+                                    <li>Volei</li>
+                                </ol>
+                            </li>
+                            <li>Artistice
+                                <ol type="A">
+                                    <li>Pictură</li>
+                                    <li>Muzică</li>
+                                    <li>Teatru</li>
+                                </ol>
+                            </li>
+                        </ol>
+                    </td>
+                    <td valign="top">
+                        <b>Cursuri</b>
+                        <ol type="I">
+                            <li>Robotică - Arduino
+                                <ol type="a">
+                                    <li>Mecanică</li>
+                                    <li>Programare</li>
+                                    <li>Printare 3D</li>
+                                </ol>
+                            </li>
+                            <li>Limbi străine
+                                <ol type="a">
+                                    <li>Engleză</li>
+                                    <li>Franceză</li>
+                                    <li>Spaniolă</li>
+                                </ol>
+                            </li>
+                        </ol>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div><br><br></div>
+        <div><img src="https://www.mangalia.tv/wp-content/uploads/2019/07/04.jpg" alt="Tabara_de_vara" width="500" height="350"></div>
+
+        <hr>
+        <div><br><br></div>
+
+        <fieldset>
+            <legend><strong>Alege data tabără:</strong></legend>
+
+            <input type="radio" name="camp_date" value="fisrt_date">
+            <label>2024-06-1 -> 2024-06-8</label><br>
+
+            <input type="radio" name="camp_date" value="second_date">
+            <label>2024-07-1 -> 2024-07-8</label><br>
+
+            <input type="radio" name="camp_date" value="third_date">
+            <label>2024-08-1 -> 2024-08-8</label><br>
+        </fieldset>
+
+        <div><br><br></div>
+
+        <fieldset>
+            <legend><strong>De acord cu:</strong></legend>
+            
+            <input type="checkbox" name="agree_with" value="camp_rules">
+            <label>* <a href="https://www.scribd.com/document/430354182/Anexa-2-Regulament-Tabara-Vara" >Regulamentul taberei</a></label><br>
+
+            <input type="checkbox" name="agree_with" value="data_processing">
+            <label>* Procesarea de date</label><br>
+
+            <input type="checkbox" name="agree_with" value="image_processing">
+            <label>Procesarea și utilizarea imaginilor fotografice</label><br>
+
+        </fieldset>
+
+        <p>
+            <label>Opțiuni de deplasare:</label>
+            <select id="travel_options" name="travel_options" multiple size="2">
+                    <option value="train" selected>train</option>
+                    <option value="bus">bus</option>
+                    <option value="car">car</option>
+                </select>
+        </p>
+
+        <div><br><br></div>
+
+        <div><input type="submit" value="Submit"></div>
+
+    </form>
+    
+
+    
+
+
+
+</body>
+
+</html>

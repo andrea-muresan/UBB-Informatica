@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pb3</title>
+    <script src="script.js"></script>
+    <style>
+        table{
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        td{
+            -webkit-user-select: none;
+            font-size: 50px;
+            text-align: center;
+            width: 150px;
+            height: 150px;
+            border: 1px solid black;
+        }
+        .covered {
+            color: transparent;
+        }
+        .uncovered {
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div style="width: 200px;">
+        <label for="noRows">No rows: <input id="noRows" type="number"></label>
+        <br><br>
+        <label for="noCols">No cols: <input id="noCols" type="number"></label>
+        <br><br>
+        <input type="button" value="Start game!" onclick="initMatrix()">
+    </div>
+</body>
+</html>
