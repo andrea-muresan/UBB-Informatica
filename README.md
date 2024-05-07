@@ -2,4 +2,5 @@
 2. Folderul repository : implementarea claselor din repository folosind baze de date relationale
 3. Adaugarea folderelor service(implementare parte de servicii) si controller(implementare interfata grafica)
 4. Proiect avand folderele: Model(clasele din model), Persistence(partea re repository), Services(interfata service si observer), Networking(comunicare Server-Client, Server-BD), Server, Client
-5. Adauga folder proto(fisierul proto si ce se genereaza in urma acestuia) + modificare Networking pentru Protocol Buffers
+5. Adauga folder proto(fisierul proto si ce se genereaza in urma acestuia) + modificare Networking pentru Protocol Buffers - partea de Client
+   
