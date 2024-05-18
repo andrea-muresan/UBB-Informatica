@@ -1,8 +1,10 @@
 package app.server;
 
+
 import app.model.Flight;
 import app.model.Ticket;
 import app.model.User;
+//import persistence.FlightRepository;
 import persistence.FlightRepository;
 import persistence.TicketRepository;
 import persistence.UserRepository;
@@ -61,12 +63,7 @@ public class Service implements IServices {
     @Override
     public boolean signUp(String username, String password) {
         if (!Objects.equals(username, "") && !Objects.equals(password, "")) {
-            try {
-                userRepo.save(new User(username, encTech1.encrypt(password)));
-            } catch (SQLException e) {
-                System.err.println(e.getMessage());
-                return false;
-            }
+            userRepo.save(new User(username, encTech1.encrypt(password)));
             return true;
         }
         return false;
@@ -100,7 +97,7 @@ public class Service implements IServices {
         }
 
         try {
-            ticketRepo.save(new Ticket(flight, client, address, tourists, noSeatsInt));
+            ticketRepo.save(new Ticket(flight.getId(), client, address, tourists, noSeatsInt));
             flight.setNoSeats(flight.getNoSeats() - noSeatsInt);
             flightRepo.update(flight);
             notifyUsers(flight);

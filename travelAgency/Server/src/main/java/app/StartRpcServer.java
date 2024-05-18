@@ -1,12 +1,13 @@
 package app;
 
+import app.model.Ticket;
 import network.utils.AbstractServer;
 import network.utils.RpcConcurrentServer;
 import persistence.FlightRepository;
+import persistence.hibernate.ticket.TicketHibernateRepository;
 import persistence.TicketRepository;
 import persistence.UserRepository;
 import persistence.repository.FlightDBRepository;
-import persistence.repository.TicketDBRepository;
 import persistence.repository.UserDBRepository;
 import app.server.Service;
 import services.IServices;
@@ -30,8 +31,9 @@ public class StartRpcServer {
         }
         UserRepository userRepo=new UserDBRepository(serverProps);
         FlightRepository flightRepo=new FlightDBRepository(serverProps);
-        TicketRepository ticketRepo=new TicketDBRepository(serverProps);
+        TicketRepository ticketRepo=new TicketHibernateRepository();
         IServices ServerImpl=new Service(userRepo, flightRepo, ticketRepo);
+
         int ServerPort =defaultPort;
         try {
             ServerPort = Integer.parseInt(serverProps.getProperty("server.port"));

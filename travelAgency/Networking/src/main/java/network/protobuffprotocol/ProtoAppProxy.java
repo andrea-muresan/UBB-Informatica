@@ -1,6 +1,7 @@
 package network.protobuffprotocol;
 
 import app.model.Flight;
+
 import app.model.User;
 import services.IObserver;
 import services.IServices;

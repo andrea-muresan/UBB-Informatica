@@ -4,6 +4,7 @@ import app.model.Flight;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Component;
 import persistence.FlightRepository;
 
 import java.sql.Connection;
@@ -97,7 +98,7 @@ public class FlightDBRepository implements FlightRepository {
     }
 
     @Override
-    public void update(Flight entity) throws SQLException {
+    public void update(Flight entity){
         logger.traceEntry( "saving task {}",entity);
         Connection con=dbUtils.getConnection();
         try(PreparedStatement preStmt=con.prepareStatement("update flights set destination=?, date=?, time=?, airport=?, no_seats=? where id=?")) {
@@ -113,7 +114,7 @@ public class FlightDBRepository implements FlightRepository {
             logger.error(ex);
             System.err.println("Error DB " + ex);
             logger.traceExit();
-            throw ex;
+            ex.printStackTrace();
         }
     }
 }

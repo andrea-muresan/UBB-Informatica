@@ -1,6 +1,6 @@
-package persistence.hibernate.flight;
+package persistence.hibernate.ticket;
 
-import app.model.Flight;
+
 import app.model.Ticket;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -17,7 +17,7 @@ public class HibernateUtils {
 
     private static  SessionFactory createNewSessionFactory(){
         sessionFactory = new Configuration()
-                .addAnnotatedClass(Flight.class)
+                .addAnnotatedClass(Ticket.class)
                 .buildSessionFactory();
         return sessionFactory;
     }

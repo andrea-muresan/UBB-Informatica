@@ -17,6 +17,19 @@ dependencies {
 
     implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.14.0'
     implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.14.0'
+
+    // https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-core
+    implementation 'org.hibernate.orm:hibernate-core:6.4.4.Final'
+
+    // Hibernate Validator
+    implementation 'org.hibernate.validator:hibernate-validator:8.0.0.Final'
+    implementation 'org.glassfish:jakarta.el:4.0.2'
+
+    // https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-community-dialects
+    implementation 'org.hibernate.orm:hibernate-community-dialects:6.4.4.Final'
+
+    //
+    implementation 'org.springframework:spring-context:4.3.8.RELEASE'
 }
 
 test {

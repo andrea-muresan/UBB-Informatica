@@ -27,7 +27,7 @@ public class UserDBRepository implements UserRepository {
     }
 
     @Override
-    public Flight findOne(Integer integer) {
+    public User findOne(Integer integer) {
         return null;
     }
 

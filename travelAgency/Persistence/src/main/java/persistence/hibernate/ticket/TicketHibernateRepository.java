@@ -1,17 +1,12 @@
-package persistence.hibernate.flight;
+package persistence.hibernate.ticket;
 
 
-import app.model.Flight;
 import app.model.Ticket;
 import org.hibernate.Session;
-import persistence.FlightRepository;
 import persistence.TicketRepository;
 
 
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Objects;
 
 public class TicketHibernateRepository implements TicketRepository {
 
@@ -23,11 +18,13 @@ public class TicketHibernateRepository implements TicketRepository {
 
     @Override
     public Iterable<Ticket> findAll() {
-        return null;
+        try( Session session=HibernateUtils.getSessionFactory().openSession()) {
+            return session.createQuery("from Ticket ", Ticket.class).getResultList();
+        }
     }
 
     @Override
-    public void save(Ticket entity) throws SQLException {
+    public void save(Ticket entity) {
         HibernateUtils.getSessionFactory().inTransaction(session -> session.persist(entity));
     }
 
@@ -37,7 +34,7 @@ public class TicketHibernateRepository implements TicketRepository {
     }
 
     @Override
-    public void update(Ticket entity) throws SQLException {
+    public void update(Ticket entity)  {
 
     }
 }
