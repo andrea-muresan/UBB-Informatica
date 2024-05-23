@@ -14,11 +14,31 @@ public class BookDBRepository implements IBookRepository {
     }
 
     @Override
+    public Book findOne(Integer id) {
+        return null;
+    }
+
+    @Override
+    public Book save(Book entity) {
+        return null;
+    }
+
+    @Override
+    public Book update(Book entity) {
+        return null;
+    }
+
+    @Override
+    public Book delete(Integer id) {
+        return null;
+    }
+
+    @Override
     public List<Book> getAll() {
         List<Book> books = new ArrayList<>();
         try {
             Connection con = DriverManager.getConnection("jdbc:sqlite:library.db");
-            try (PreparedStatement preStmt = con.prepareStatement("select *, count(ISBN) AS noC from book group by ISBN")) {
+            try (PreparedStatement preStmt = con.prepareStatement("select * from book")) {
                 try (ResultSet result = preStmt.executeQuery()) {
                     while (result.next()) {
                         Integer id = result.getInt("id");
@@ -27,12 +47,10 @@ public class BookDBRepository implements IBookRepository {
                         String ISBN = result.getString("ISBN");
                         String genre = result.getString("genre");
                         String language = result.getString("language");
-                        Integer noCopies = result.getInt("noC");
+                        Integer available = result.getInt("available");
 
-                        Book book = new Book(name, author, ISBN, genre, language);
+                        Book book = new Book(name, author, ISBN, genre, language, available);
                         book.setId(id);
-                        book.setNoCopies(noCopies);
-                        books.add(book);
                     }
                 }
             }

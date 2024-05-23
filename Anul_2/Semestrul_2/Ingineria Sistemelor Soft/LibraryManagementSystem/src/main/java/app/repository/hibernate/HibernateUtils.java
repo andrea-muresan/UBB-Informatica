@@ -1,10 +1,8 @@
 package app.repository.hibernate;
 
 
-import app.domain.Book;
+import app.domain.*;
 
-import app.domain.Client;
-import app.domain.Librarian;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
@@ -23,6 +21,8 @@ public class HibernateUtils {
                 .addAnnotatedClass(Book.class)
                 .addAnnotatedClass(Client.class)
                 .addAnnotatedClass(Librarian.class)
+                .addAnnotatedClass(BookSet.class)
+                .addAnnotatedClass(BookRental.class)
                 .buildSessionFactory();
         return sessionFactory;
     }

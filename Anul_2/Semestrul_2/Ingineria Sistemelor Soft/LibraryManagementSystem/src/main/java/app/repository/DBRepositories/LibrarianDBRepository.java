@@ -35,6 +35,26 @@ public class LibrarianDBRepository implements ILibrarianRepository {
     }
 
     @Override
+    public Librarian findOne(Integer id) {
+        return null;
+    }
+
+    @Override
+    public Librarian save(Librarian entity) {
+        return null;
+    }
+
+    @Override
+    public Librarian update(Librarian entity) {
+        return null;
+    }
+
+    @Override
+    public Librarian delete(Integer id) {
+        return null;
+    }
+
+    @Override
     public List<Librarian> getAll() {
         return null;
     }

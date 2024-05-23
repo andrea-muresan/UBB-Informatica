@@ -16,17 +16,16 @@ public class Book extends Entity{
     private String genre;
     @Column(name = "language")
     private String language;
-    @Transient
-    private Integer noCopies;
+    @Column(name = "availabe")
+    private Integer available;
 
-
-    public Book(String name, String author, String ISBN, String genre, String language) {
+    public Book(String name, String author, String ISBN, String genre, String language, Integer available) {
         this.name = name;
         this.author = author;
         this.ISBN = ISBN;
         this.genre = genre;
         this.language = language;
-        this.noCopies = 1;
+        this.available = available;
     }
 
     public Book() {
@@ -53,9 +52,6 @@ public class Book extends Entity{
         return language;
     }
 
-    public Integer getNoCopies() {
-        return noCopies;
-    }
     public void setName(String name) {
         this.name = name;
     }
@@ -76,8 +72,12 @@ public class Book extends Entity{
         this.language = language;
     }
 
-    public void setNoCopies(Integer noCopies) {
-        this.noCopies = noCopies;
+    public Integer getAvailable() {
+        return available;
+    }
+
+    public void setAvailable(Integer available) {
+        this.available = available;
     }
 
     @Override
@@ -88,7 +88,7 @@ public class Book extends Entity{
                 ", ISBN='" + ISBN + '\'' +
                 ", genre='" + genre + '\'' +
                 ", language='" + language + '\'' +
-                ", noCopies=" + noCopies +
+                ", available='" + available + '\'' +
                 '}';
     }
 }

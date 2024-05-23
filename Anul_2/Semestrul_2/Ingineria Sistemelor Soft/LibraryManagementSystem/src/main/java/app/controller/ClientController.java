@@ -1,9 +1,6 @@
 package app.controller;
 
-import app.domain.Book;
-import app.domain.Client;
-import app.domain.Librarian;
-import app.domain.User;
+import app.domain.*;
 import app.service.Service;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,7 +21,7 @@ public class ClientController implements Initializable {
     private Service service;
     private User client;
 
-    private final ObservableList<Book> booksObs = FXCollections.observableArrayList();
+    private final ObservableList<BookSet> bookSetObs = FXCollections.observableArrayList();
 
     public ClientController() {
 
@@ -40,7 +37,7 @@ public class ClientController implements Initializable {
     }
 
     @FXML
-    private TableView<Book> booksView;
+    private TableView<BookSet> booksView;
 
     private void showAlert(Alert.AlertType type, String title, String content) {
         Alert alert = new Alert(type);
@@ -71,25 +68,31 @@ public class ClientController implements Initializable {
         languageCol.setCellValueFactory(
                 new PropertyValueFactory<Book, String>("language"));
 
-        var noCopiesCol = new TableColumn("NR. EXEMPLARE");
-        noCopiesCol.setMinWidth(100);
-        noCopiesCol.setCellValueFactory(
+        var noAvailableCopiesCol = new TableColumn("DISPONIBILE");
+        noAvailableCopiesCol.setMinWidth(100);
+        noAvailableCopiesCol.setCellValueFactory(
                 new PropertyValueFactory<Book, Integer>("noCopies"));
 
+        var noCopiesCol = new TableColumn("TOTAL");
+        noCopiesCol.setMinWidth(100);
+        noCopiesCol.setCellValueFactory(
+                new PropertyValueFactory<Book, Integer>("noCopiesAvailable"));
 
 
-        booksView.getColumns().addAll(titleCol, authorCol, genreCol, languageCol, noCopiesCol);
+
+
+        booksView.getColumns().addAll(titleCol, authorCol, genreCol, languageCol, noAvailableCopiesCol, noCopiesCol);
         setBooksView();
     }
 
     private void setBooksView() {
         try {
-            booksObs.clear();
-            for (Book book : service.findAllBooks()) {
-                booksObs.add(book);
+            bookSetObs.clear();
+            for (BookSet book : service.findAllBooks()) {
+                bookSetObs.add(book);
             }
 
-            booksView.setItems(booksObs);
+            booksView.setItems(bookSetObs);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             showAlert(Alert.AlertType.ERROR, "Error", e.getMessage());

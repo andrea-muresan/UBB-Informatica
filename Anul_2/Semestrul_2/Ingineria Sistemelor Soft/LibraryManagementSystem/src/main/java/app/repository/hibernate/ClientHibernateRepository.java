@@ -18,6 +18,26 @@ public class ClientHibernateRepository implements IClientRepository {
     }
 
     @Override
+    public Client findOne(Integer id) {
+        return null;
+    }
+
+    @Override
+    public Client save(Client entity) {
+        return null;
+    }
+
+    @Override
+    public Client update(Client entity) {
+        return null;
+    }
+
+    @Override
+    public Client delete(Integer id) {
+        return null;
+    }
+
+    @Override
     public List<Client> getAll() {
         try( Session session= HibernateUtils.getSessionFactory().openSession()) {
             return session.createQuery("from Client ", Client.class).getResultList();

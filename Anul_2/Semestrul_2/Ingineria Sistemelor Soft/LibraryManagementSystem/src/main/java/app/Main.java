@@ -1,17 +1,14 @@
 package app;
 
 import app.controller.LogInController;
+import app.domain.BookRental;
 import app.domain.Librarian;
+import app.repository.*;
 import app.repository.DBRepositories.BookDBRepository;
 import app.repository.DBRepositories.ClientDBRepository;
 import app.repository.DBRepositories.LibrarianDBRepository;
-import app.repository.IBookRepository;
-import app.repository.IClientRepository;
-import app.repository.ILibrarianRepository;
 
-import app.repository.hibernate.BookHibernateRepository;
-import app.repository.hibernate.ClientHibernateRepository;
-import app.repository.hibernate.LibrarianHibernateRepository;
+import app.repository.hibernate.*;
 import app.service.Service;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -35,10 +32,12 @@ public class Main extends Application {
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
 
         IBookRepository br = new BookHibernateRepository();
+        IBookSetRepository bsr = new BookSetHibernateRepository();
+        IBookRentalRepository brr = new BookRentalHibernateRepository();
         ILibrarianRepository lr = new LibrarianHibernateRepository();
         IClientRepository cr = new ClientHibernateRepository();
 
-        Service srv = new Service(br, lr, cr);
+        Service srv = new Service(br, bsr, brr, lr, cr);
 
         LogInController logInController = fxmlLoader.getController();
         logInController.setService(srv);
