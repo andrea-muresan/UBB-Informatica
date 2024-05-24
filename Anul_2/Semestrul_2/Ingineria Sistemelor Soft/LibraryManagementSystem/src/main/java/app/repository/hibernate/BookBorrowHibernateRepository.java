@@ -1,5 +1,6 @@
 package app.repository.hibernate;
 
+import app.domain.Book;
 import app.domain.BookBorrow;
 import app.repository.IBookBorrowRepository;
 import org.hibernate.Session;
@@ -19,14 +20,16 @@ public class BookBorrowHibernateRepository implements IBookBorrowRepository {
 
     @Override
     public BookBorrow save(BookBorrow entity) {
-        return null;
+        HibernateUtils.getSessionFactory().inTransaction(session -> session.persist(entity));
+        // nu actualizeaza id-ul
+        return entity;
     }
 
     @Override
     public BookBorrow update(BookBorrow entity) {
         HibernateUtils.getSessionFactory().inTransaction(session -> {
             if (!Objects.isNull(session.find(BookBorrow.class, entity.getId()))) {
-                System.out.println("In update, am gasit mesajul cu id-ul "+entity.getId());
+                System.out.println("In update, am gasit cartea cu id-ul "+entity.getId());
                 session.merge(entity);
                 session.flush();
             }
@@ -36,6 +39,15 @@ public class BookBorrowHibernateRepository implements IBookBorrowRepository {
 
     @Override
     public BookBorrow delete(Integer id) {
+        HibernateUtils.getSessionFactory().inTransaction(session -> {
+            BookBorrow book=session.createQuery("from BookBorrow where bookId=?1",BookBorrow.class).
+                    setParameter(1,id).uniqueResult();
+            System.out.println("In delete am gasit imprumuturile " + book);
+            if (book!=null) {
+                session.remove(book);
+                session.flush();
+            }
+        });
         return null;
     }
 
@@ -43,9 +55,6 @@ public class BookBorrowHibernateRepository implements IBookBorrowRepository {
     public List<BookBorrow> getAll() {
         return null;
     }
-
-
-
 
     @Override
     public List<BookBorrow> getAllNotReturned() {

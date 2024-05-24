@@ -94,6 +94,7 @@ public class Service implements Observable {
     public void deleteBook(String id){
         Integer idNr = Integer.parseInt(id);
 
+        bookBorrowRepo.delete(idNr);
         bookRepo.delete(idNr);
         notifyUsers();
     }

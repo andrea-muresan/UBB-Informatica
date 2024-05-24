@@ -21,9 +21,7 @@ public class BookDBRepository implements IBookRepository {
 
     @Override
     public Book save(Book entity) {
-        HibernateUtils.getSessionFactory().inTransaction(session -> session.persist(entity));
-        // nu actualizeaza id-ul
-        return entity;
+        return null;
     }
 
     @Override
