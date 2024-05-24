@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -242,5 +243,12 @@ public class LibrarianController implements Initializable, Observer {
     public void update() {
         setBooksView();
         setLandingsView();
+    }
+
+    @FXML
+    void logOut(MouseEvent event) {
+        service.removeObserver(this);
+        service.logOut(librarian.getId());
+        ((Node)(event.getSource())).getScene().getWindow().hide();
     }
 }

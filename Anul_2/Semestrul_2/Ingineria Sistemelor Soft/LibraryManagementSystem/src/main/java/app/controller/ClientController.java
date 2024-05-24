@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -170,5 +171,12 @@ public class ClientController implements Initializable, Observer {
     public void update() {
         setBooksView();
         setBorrowsView();
+    }
+
+    @FXML
+    void logOut(MouseEvent event) {
+        service.removeObserver(this);
+        service.logOut(client.getId());
+        ((Node)(event.getSource())).getScene().getWindow().hide();
     }
 }

@@ -19,6 +19,7 @@ public class Service implements Observable {
     private IClientRepository clientRepo;
 
     private List<Observer> observers = new ArrayList<>();
+    private List<Integer> loggedUsers = new ArrayList<>();
 
 
     public Service(IBookRepository bookRepo, IBookSetRepository bookSetRepo, IBookBorrowRepository bookBorrowRepo, ILibrarianRepository librarianRepo, IClientRepository clientRepo) {
@@ -32,21 +33,29 @@ public class Service implements Observable {
     public User findByCredentials(String u, String p) throws Exception {
         Client cl = clientRepo.findByCredentials(u, p);
 
-        if (cl != null) return cl;
-        else {
+        if (cl != null) {
+            if (loggedUsers.contains(cl.getId())) throw new Exception("Utilizatorul este deja logat");
+            loggedUsers.add(cl.getId());
+            return cl;
+        } else {
             Librarian lb = librarianRepo.findByCredentials(u, p);
 
-            if (lb != null) return lb;
-            else throw new Exception("User not found");
+            if (lb != null) {
+                if (loggedUsers.contains(lb.getId())) throw new Exception("Utilizatorul este deja logat");
+                loggedUsers.add(lb.getId());
+                return lb;
+            }
+            else throw new Exception("Utilizatorul nu a fost gasit");
         }
     }
-    public List<BookSet> findAllBooks()  {
+
+    public List<BookSet> findAllBooks() {
         return bookSetRepo.getAll();
     }
 
     public List<BorrowDto> findAllLandings() {
         List<BorrowDto> borrows = new ArrayList<>();
-        for (BookBorrow bkBr: bookBorrowRepo.getAllNotReturned()) {
+        for (BookBorrow bkBr : bookBorrowRepo.getAllNotReturned()) {
             // Find the book
             Book bk = bookRepo.findOne(bkBr.getBookId());
             Client cl = clientRepo.findOne(bkBr.getUserId());
@@ -56,9 +65,9 @@ public class Service implements Observable {
         return borrows;
     }
 
-    public List<BorrowDto> findAllBorrowsClient(Client client){
+    public List<BorrowDto> findAllBorrowsClient(Client client) {
         List<BorrowDto> borrows = new ArrayList<>();
-        for (BookBorrow bkBr: bookBorrowRepo.getAllClient(client.getId())) {
+        for (BookBorrow bkBr : bookBorrowRepo.getAllClient(client.getId())) {
             // Find the book
             Book bk = bookRepo.findOne(bkBr.getBookId());
             borrows.add(new BorrowDto(client, bk, bkBr.getDateStart(), bkBr.getDateEnd()));
@@ -91,7 +100,7 @@ public class Service implements Observable {
         }
     }
 
-    public void deleteBook(String id){
+    public void deleteBook(String id) {
         Integer idNr = Integer.parseInt(id);
 
         bookBorrowRepo.delete(idNr);
@@ -126,4 +135,9 @@ public class Service implements Observable {
     public void notifyUsers() {
         observers.forEach(Observer::update);
     }
+
+    public void logOut(Integer id){
+        loggedUsers.remove(Integer.valueOf(id));
+    }
+
 }
