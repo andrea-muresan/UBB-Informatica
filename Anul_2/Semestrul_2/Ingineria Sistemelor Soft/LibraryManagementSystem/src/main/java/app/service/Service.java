@@ -3,18 +3,23 @@ package app.service;
 import app.domain.*;
 import app.domain.dto.BorrowDto;
 import app.repository.*;
+import app.service.utils.Observable;
+import app.service.utils.Observer;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Service {
+public class Service implements Observable {
     private IBookRepository bookRepo;
     private IBookSetRepository bookSetRepo;
 
     private IBookBorrowRepository bookBorrowRepo;
     private ILibrarianRepository librarianRepo;
     private IClientRepository clientRepo;
+
+    private List<Observer> observers = new ArrayList<>();
+
 
     public Service(IBookRepository bookRepo, IBookSetRepository bookSetRepo, IBookBorrowRepository bookBorrowRepo, ILibrarianRepository librarianRepo, IClientRepository clientRepo) {
         this.bookRepo = bookRepo;
@@ -73,6 +78,7 @@ public class Service {
             // set the book as unavailable
             book.setAvailable(0);
             bookRepo.update(book);
+            notifyUsers();
         }
     }
 
@@ -81,14 +87,15 @@ public class Service {
             throw new Exception("Nu sunt permise campurile goale!");
         else {
             bookRepo.save(new Book(name, author, ISBN, genre, language, 1));
+            notifyUsers();
         }
     }
 
     public void deleteBook(String id){
         Integer idNr = Integer.parseInt(id);
 
-        System.out.println(bookRepo.delete(idNr));
-
+        bookRepo.delete(idNr);
+        notifyUsers();
     }
 
     public void returnBook(String bookId) {
@@ -101,5 +108,21 @@ public class Service {
         Book book = bookRepo.findOne(landing.getBookId());
         book.setAvailable(1);
         bookRepo.update(book);
+        notifyUsers();
+    }
+
+    @Override
+    public void addObserver(Observer o) {
+        observers.add(o);
+    }
+
+    @Override
+    public void removeObserver(Observer o) {
+        observers.remove(o);
+    }
+
+    @Override
+    public void notifyUsers() {
+        observers.forEach(Observer::update);
     }
 }

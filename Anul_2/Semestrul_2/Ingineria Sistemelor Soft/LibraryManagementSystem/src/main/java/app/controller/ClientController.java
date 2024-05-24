@@ -3,6 +3,7 @@ package app.controller;
 import app.domain.*;
 import app.domain.dto.BorrowDto;
 import app.service.Service;
+import app.service.utils.Observer;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,7 +22,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class ClientController implements Initializable {
+public class ClientController implements Initializable, Observer {
     private Service service;
     private User client;
 
@@ -34,6 +35,7 @@ public class ClientController implements Initializable {
 
     public void setService(Service service) {
         this.service = service;
+        service.addObserver(this);
         // initBooksView();
     }
 
@@ -162,5 +164,11 @@ public class ClientController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
         executor.schedule(this::initView, 1, TimeUnit.SECONDS);
+    }
+
+    @Override
+    public void update() {
+        setBooksView();
+        setBorrowsView();
     }
 }
