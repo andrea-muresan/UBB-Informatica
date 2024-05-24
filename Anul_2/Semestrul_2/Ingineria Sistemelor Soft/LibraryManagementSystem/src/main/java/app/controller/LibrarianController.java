@@ -1,9 +1,9 @@
 package app.controller;
 
-import app.domain.Book;
-import app.domain.BookSet;
-import app.domain.User;
+import app.domain.*;
+import app.domain.dto.BorrowDto;
 import app.service.Service;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -11,7 +11,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -24,6 +26,7 @@ public class LibrarianController implements Initializable {
     private User librarian;
 
     private final ObservableList<BookSet> bookSetObs = FXCollections.observableArrayList();
+    private final ObservableList<BorrowDto> landingsObs = FXCollections.observableArrayList();
 
     public LibrarianController() {
 
@@ -41,6 +44,95 @@ public class LibrarianController implements Initializable {
     @FXML
     private TableView<BookSet> booksView;
 
+    @FXML
+    private TextField genreTxt;
+
+    @FXML
+    private TextField idTxt;
+
+    @FXML
+    private TextField authorTxt;
+
+    @FXML
+    private TextField isbnTxt;
+
+    @FXML
+    private TextField titleTxt;
+
+    @FXML
+    private TextField languageTxt;
+
+    @FXML
+    private TextField idLandingTxt;
+
+    @FXML
+    private TableView<BorrowDto> landingsView;
+
+    @FXML
+    void returnBook(MouseEvent event) {
+        String id = idLandingTxt.getText();
+        try {
+            service.returnBook(id);
+            setLandingsView();
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR, "Error", e.getMessage());
+        }
+    }
+
+    @FXML
+    void addBook(MouseEvent event) {
+        String title = titleTxt.getText();
+        String author = authorTxt.getText();
+        String genre = genreTxt.getText();
+        String isbn = isbnTxt.getText();
+        String language = languageTxt.getText();
+
+        try {
+            service.addBook(title, author, genre, isbn, language);
+            setBooksView();
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR, "Error", e.getMessage());
+        }
+    }
+
+    @FXML
+    void deleteBook(MouseEvent event) {
+        String id = idTxt.getText();
+        try {
+            service.deleteBook(id);
+            setBooksView();
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR, "Error", e.getMessage());
+        }
+    }
+
+    @FXML
+    void getBookDetailsTable(MouseEvent event) {
+        BookSet bkSet = booksView.getSelectionModel().getSelectedItem();
+        if (bkSet != null) {
+            titleTxt.setText(bkSet.getName());
+            authorTxt.setText(bkSet.getAuthor());
+            isbnTxt.setText(bkSet.getISBN());
+            genreTxt.setText(bkSet.getGenre());
+            languageTxt.setText(bkSet.getLanguage());
+
+            idTxt.setText(bkSet.getId().toString());
+        }
+
+    }
+
+    @FXML
+    void clearFields(MouseEvent event) {
+        titleTxt.clear();
+        authorTxt.clear();
+        isbnTxt.clear();
+        genreTxt.clear();
+        languageTxt.clear();
+
+        idTxt.clear();
+    }
+
+
     private void showAlert(Alert.AlertType type, String title, String content) {
         Alert alert = new Alert(type);
         alert.setTitle(title);
@@ -49,44 +141,67 @@ public class LibrarianController implements Initializable {
         alert.showAndWait();
     }
 
+    public void initView() {
+        initBooksView();
+        initLandingsView();
+    }
+
+    public void initLandingsView() {
+        var clientCol = new TableColumn<BorrowDto, String>("CLIENT");
+        clientCol.setMinWidth(150);
+        clientCol.setCellValueFactory(bkS -> {
+            Client cl = bkS.getValue().getClient();
+            return new SimpleStringProperty(
+                "ID: " + cl.getId() + "; NUME: " + cl.getFirstName() + " " + cl.getLastName()
+            );
+        });
+
+        var bookCol = new TableColumn<BorrowDto, String>("CARTE");
+        bookCol.setMinWidth(300);
+        bookCol.setCellValueFactory(bkS -> {
+            Book bk = bkS.getValue().getBook();
+            return new SimpleStringProperty(
+                    "ID: " +bk.getId() + "; CARTE: " + bk.getName() + "; AUTOR: " + bk.getAuthor()
+            );
+        });
+
+        landingsView.getColumns().addAll(clientCol, bookCol);
+    }
 
     private void initBooksView() {
-        var titleCol = new TableColumn("TITLU");
+        var titleCol = new TableColumn<BookSet, String>("TITLU");
         titleCol.setMinWidth(100);
         titleCol.setCellValueFactory(
-                new PropertyValueFactory<Book, String>("name"));
+                new PropertyValueFactory<>("name"));
 
-        var authorCol = new TableColumn("AUTOR");
+        var authorCol = new TableColumn<BookSet, String>("AUTOR");
         authorCol.setMinWidth(100);
         authorCol.setCellValueFactory(
-                new PropertyValueFactory<Book, String>("author"));
+                new PropertyValueFactory<>("author"));
 
-        var genreCol = new TableColumn("GEN");
+        var genreCol = new TableColumn<BookSet, String>("GEN");
         genreCol.setMinWidth(100);
         genreCol.setCellValueFactory(
-                new PropertyValueFactory<Book, String>("genre"));
+                new PropertyValueFactory<>("genre"));
 
-        var languageCol = new TableColumn("LIMBA");
+        var languageCol = new TableColumn<BookSet, String>("LIMBA");
         languageCol.setMinWidth(100);
         languageCol.setCellValueFactory(
-                new PropertyValueFactory<Book, String>("language"));
+                new PropertyValueFactory<>("language"));
 
-        var noAvailableCopiesCol = new TableColumn("DISPONIBILE");
+        var noAvailableCopiesCol = new TableColumn<BookSet, Integer>("DISPONIBILE");
         noAvailableCopiesCol.setMinWidth(100);
         noAvailableCopiesCol.setCellValueFactory(
-                new PropertyValueFactory<Book, Integer>("noCopies"));
+                new PropertyValueFactory<>("noCopiesAvailable"));
 
-        var noCopiesCol = new TableColumn("TOTAL");
+        var noCopiesCol = new TableColumn<BookSet, Integer>("TOTAL");
         noCopiesCol.setMinWidth(100);
         noCopiesCol.setCellValueFactory(
-                new PropertyValueFactory<Book, Integer>("noCopiesAvailable"));
-
-
+                new PropertyValueFactory<>("noCopies"));
 
         booksView.getColumns().addAll(titleCol, authorCol, genreCol, languageCol, noAvailableCopiesCol, noCopiesCol);
         setBooksView();
     }
-
     private void setBooksView() {
         try {
             bookSetObs.clear();
@@ -99,11 +214,25 @@ public class LibrarianController implements Initializable {
             System.out.println(e.getMessage());
             showAlert(Alert.AlertType.ERROR, "Error", e.getMessage());
         }
+
+        setLandingsView();
+    }
+
+    private void setLandingsView() {
+        try {
+            landingsObs.clear();
+            landingsObs.addAll(service.findAllLandings());
+
+            landingsView.setItems(landingsObs);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            showAlert(Alert.AlertType.ERROR, "Error", e.getMessage());
+        }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
-        executor.schedule(this::initBooksView, 1, TimeUnit.SECONDS);
+        executor.schedule(this::initView, 1, TimeUnit.SECONDS);
     }
 }

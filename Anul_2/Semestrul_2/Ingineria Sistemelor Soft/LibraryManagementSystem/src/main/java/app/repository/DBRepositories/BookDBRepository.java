@@ -3,6 +3,7 @@ package app.repository.DBRepositories;
 import app.domain.Book;
 import app.domain.Client;
 import app.repository.IBookRepository;
+import app.repository.hibernate.HibernateUtils;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -20,7 +21,9 @@ public class BookDBRepository implements IBookRepository {
 
     @Override
     public Book save(Book entity) {
-        return null;
+        HibernateUtils.getSessionFactory().inTransaction(session -> session.persist(entity));
+        // nu actualizeaza id-ul
+        return entity;
     }
 
     @Override
@@ -58,5 +61,10 @@ public class BookDBRepository implements IBookRepository {
             e.printStackTrace();
         }
         return books;
+    }
+
+    @Override
+    public Book findBookAvailableISBN(String isbn) {
+        return null;
     }
 }

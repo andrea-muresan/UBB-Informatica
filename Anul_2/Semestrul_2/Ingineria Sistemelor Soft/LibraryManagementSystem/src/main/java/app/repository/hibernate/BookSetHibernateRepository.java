@@ -38,7 +38,7 @@ public class BookSetHibernateRepository implements IBookSetRepository {
         List<BookSet> books = new ArrayList<>();
 
         try (Session session= HibernateUtils.getSessionFactory().openSession()) {
-            String hql = "SELECT b.name, b.author, b.ISBN, b.genre, b.language " +
+            String hql = "SELECT b.id, b.name, b.author, b.ISBN, b.genre, b.language " +
                     "FROM BookSet b GROUP BY b.ISBN";
 
             Query<Object[]> query = session.createQuery(hql, Object[].class);
@@ -80,11 +80,12 @@ public class BookSetHibernateRepository implements IBookSetRepository {
     }
 
     private static BookSet getBook(Object[] row) {
-        String name = (String) row[0];
-        String author = (String) row[1];
-        String ISBN = (String) row[2];
-        String genre = (String) row[3];
-        String language = (String) row[4];
+        Integer id = (Integer) row[0];
+        String name = (String) row[1];
+        String author = (String) row[2];
+        String ISBN = (String) row[3];
+        String genre = (String) row[4];
+        String language = (String) row[5];
 
         BookSet book = new BookSet();
         book.setName(name);
@@ -92,6 +93,7 @@ public class BookSetHibernateRepository implements IBookSetRepository {
         book.setISBN(ISBN);
         book.setGenre(genre);
         book.setLanguage(language);
+        book.setId(id);
         return book;
     }
 

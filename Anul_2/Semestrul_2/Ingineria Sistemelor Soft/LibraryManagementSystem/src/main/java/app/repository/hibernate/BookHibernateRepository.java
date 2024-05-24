@@ -25,7 +25,9 @@ public class BookHibernateRepository implements IBookRepository {
 
     @Override
     public Book save(Book entity) {
-        return null;
+        HibernateUtils.getSessionFactory().inTransaction(session -> session.persist(entity));
+        // nu actualizeaza id-ul
+        return entity;
     }
 
     @Override
@@ -43,6 +45,15 @@ public class BookHibernateRepository implements IBookRepository {
 
     @Override
     public Book delete(Integer id) {
+        HibernateUtils.getSessionFactory().inTransaction(session -> {
+            Book book=session.createQuery("from Book where id=?1",Book.class).
+                    setParameter(1,id).uniqueResult();
+            System.out.println("In delete am gasit cartea "+book);
+            if (book!=null) {
+                session.remove(book);
+                session.flush();
+            }
+        });
         return null;
     }
 
@@ -86,5 +97,15 @@ public class BookHibernateRepository implements IBookRepository {
         book.setLanguage(language);
         book.setAvailable(available);
         return book;
+    }
+
+    @Override
+    public Book findBookAvailableISBN(String isbn) {
+        try (Session session = HibernateUtils.getSessionFactory().openSession()) {
+            return session.createSelectionQuery("from Book where ISBN=:isbn and available=1", Book.class)
+                    .setParameter("isbn", isbn)
+                    .setMaxResults(1)
+                    .getSingleResultOrNull();
+        }
     }
 }

@@ -14,12 +14,16 @@
                     <children>
                         <TableView fx:id="booksView" layoutX="14.0" layoutY="24.0" prefHeight="333.0" prefWidth="404.0" />
                         <Button layoutX="430.0" layoutY="332.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="157.0" text="LogOut" />
+                  <Button fx:id="borrowBook" layoutX="482.0" layoutY="178.0" mnemonicParsing="false" onMouseClicked="#borrowBook" text="Imprumuta" />
                     </children></AnchorPane>
             </content>
         </Tab>
         <Tab text="Imprumuturi">
             <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TableView fx:id="borrowsView" layoutX="14.0" layoutY="24.0" prefHeight="333.0" prefWidth="404.0" />
+               </children></AnchorPane>
             </content>
         </Tab>
     </tabs>

@@ -1,15 +1,19 @@
 package app.controller;
 
 import app.domain.*;
+import app.domain.dto.BorrowDto;
 import app.service.Service;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -22,6 +26,7 @@ public class ClientController implements Initializable {
     private User client;
 
     private final ObservableList<BookSet> bookSetObs = FXCollections.observableArrayList();
+    private final ObservableList<BorrowDto> bookBorrowsObs = FXCollections.observableArrayList();
 
     public ClientController() {
 
@@ -37,6 +42,24 @@ public class ClientController implements Initializable {
     }
 
     @FXML
+    private Button borrowBook;
+
+    @FXML
+    private TableView<BorrowDto> borrowsView;
+
+    @FXML
+    void borrowBook(MouseEvent event) {
+        BookSet book = booksView.getSelectionModel().getSelectedItem();
+        try {
+            service.borrowBook(client.getId(), book);
+            setBooksView();
+            setBorrowsView();
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR, "Error", e.getMessage());
+        }
+    }
+
+    @FXML
     private TableView<BookSet> booksView;
 
     private void showAlert(Alert.AlertType type, String title, String content) {
@@ -47,52 +70,88 @@ public class ClientController implements Initializable {
         alert.showAndWait();
     }
 
+    public void initView() {
+        initBooksView();
+        initBorrowsView();
+    }
+
     private void initBooksView() {
-        var titleCol = new TableColumn("TITLU");
+        var titleCol = new TableColumn<BookSet, String>("TITLU");
         titleCol.setMinWidth(100);
         titleCol.setCellValueFactory(
-                new PropertyValueFactory<Book, String>("name"));
+                new PropertyValueFactory<>("name"));
 
-        var authorCol = new TableColumn("AUTOR");
+        var authorCol = new TableColumn<BookSet, String>("AUTOR");
         authorCol.setMinWidth(100);
         authorCol.setCellValueFactory(
-                new PropertyValueFactory<Book, String>("author"));
+                new PropertyValueFactory<>("author"));
 
-        var genreCol = new TableColumn("GEN");
+        var genreCol = new TableColumn<BookSet, String>("GEN");
         genreCol.setMinWidth(100);
         genreCol.setCellValueFactory(
-                new PropertyValueFactory<Book, String>("genre"));
+                new PropertyValueFactory<>("genre"));
 
-        var languageCol = new TableColumn("LIMBA");
+        var languageCol = new TableColumn<BookSet, String>("LIMBA");
         languageCol.setMinWidth(100);
         languageCol.setCellValueFactory(
-                new PropertyValueFactory<Book, String>("language"));
+                new PropertyValueFactory<>("language"));
 
-        var noAvailableCopiesCol = new TableColumn("DISPONIBILE");
+        var noAvailableCopiesCol = new TableColumn<BookSet, Integer>("DISPONIBILE");
         noAvailableCopiesCol.setMinWidth(100);
         noAvailableCopiesCol.setCellValueFactory(
-                new PropertyValueFactory<Book, Integer>("noCopies"));
+                new PropertyValueFactory<>("noCopiesAvailable"));
 
-        var noCopiesCol = new TableColumn("TOTAL");
+        var noCopiesCol = new TableColumn<BookSet, Integer>("TOTAL");
         noCopiesCol.setMinWidth(100);
         noCopiesCol.setCellValueFactory(
-                new PropertyValueFactory<Book, Integer>("noCopiesAvailable"));
-
-
-
+                new PropertyValueFactory<>("noCopies"));
 
         booksView.getColumns().addAll(titleCol, authorCol, genreCol, languageCol, noAvailableCopiesCol, noCopiesCol);
         setBooksView();
     }
 
+    public void initBorrowsView() {
+        var titleCol = new TableColumn<BorrowDto, String>("TITLU");
+        titleCol.setMinWidth(100);
+        titleCol.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getBookTitle()));
+
+        var authorCol = new TableColumn<BorrowDto, String>("AUTOR");
+        authorCol.setMinWidth(100);
+        authorCol.setCellValueFactory(
+                new PropertyValueFactory<>("author"));
+
+        var startDateCol = new TableColumn<BorrowDto, String>("DE LA");
+        startDateCol.setMinWidth(100);
+        startDateCol.setCellValueFactory(
+                new PropertyValueFactory<>("dateStart"));
+
+        var endDateCol = new TableColumn<BorrowDto, String>("PANA LA");
+        endDateCol.setMinWidth(100);
+        endDateCol.setCellValueFactory(
+                new PropertyValueFactory<>("dateEnd"));
+
+        borrowsView.getColumns().addAll(titleCol, authorCol, startDateCol, endDateCol);
+        setBorrowsView();
+    }
+
     private void setBooksView() {
         try {
             bookSetObs.clear();
-            for (BookSet book : service.findAllBooks()) {
-                bookSetObs.add(book);
-            }
+            bookSetObs.addAll(service.findAllBooks());
 
             booksView.setItems(bookSetObs);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            showAlert(Alert.AlertType.ERROR, "Error", e.getMessage());
+        }
+    }
+
+    private void setBorrowsView() {
+        try {
+            bookBorrowsObs.clear();
+            bookBorrowsObs.addAll(service.findAllBorrowsClient((Client) client));
+
+            borrowsView.setItems(bookBorrowsObs);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             showAlert(Alert.AlertType.ERROR, "Error", e.getMessage());
@@ -102,6 +161,6 @@ public class ClientController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
-        executor.schedule(this::initBooksView, 1, TimeUnit.SECONDS);
+        executor.schedule(this::initView, 1, TimeUnit.SECONDS);
     }
 }

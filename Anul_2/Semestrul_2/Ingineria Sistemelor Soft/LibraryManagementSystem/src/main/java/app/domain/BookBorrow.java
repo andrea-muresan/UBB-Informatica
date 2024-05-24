@@ -3,11 +3,9 @@ package app.domain;
 import jakarta.persistence.Column;
 import jakarta.persistence.Table;
 
-import java.time.LocalDate;
-
 @jakarta.persistence.Entity
 @Table( name = "book_rental" )
-public class BookRental extends Entity{
+public class BookBorrow extends Entity{
     @Column(name = "user_id")
     private int userId;
     @Column(name = "book_id")
@@ -20,12 +18,12 @@ public class BookRental extends Entity{
     @Column(name = "returned")
     private int returned;
 
-    public BookRental(int userId, int bookId) {
+    public BookBorrow(int userId, int bookId) {
         this.userId = userId;
         this.bookId = bookId;
     }
 
-    public BookRental(int userId, int bookId, String dateStart, String dateEnd, int returned) {
+    public BookBorrow(int userId, int bookId, String dateStart, String dateEnd, int returned) {
         this.userId = userId;
         this.bookId = bookId;
         this.dateStart = dateStart;
@@ -33,7 +31,7 @@ public class BookRental extends Entity{
         this.returned = returned;
     }
 
-    public BookRental() {
+    public BookBorrow() {
     }
 
     public int getUserId() {

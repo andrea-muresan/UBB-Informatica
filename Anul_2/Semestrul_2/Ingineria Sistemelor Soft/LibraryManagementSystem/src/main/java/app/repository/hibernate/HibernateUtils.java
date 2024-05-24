@@ -22,7 +22,7 @@ public class HibernateUtils {
                 .addAnnotatedClass(Client.class)
                 .addAnnotatedClass(Librarian.class)
                 .addAnnotatedClass(BookSet.class)
-                .addAnnotatedClass(BookRental.class)
+                .addAnnotatedClass(BookBorrow.class)
                 .buildSessionFactory();
         return sessionFactory;
     }

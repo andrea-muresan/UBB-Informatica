@@ -1,24 +1,25 @@
 package app.service;
 
 import app.domain.*;
+import app.domain.dto.BorrowDto;
 import app.repository.*;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Service {
     private IBookRepository bookRepo;
     private IBookSetRepository bookSetRepo;
 
-    private IBookRentalRepository bookRentalRepo;
+    private IBookBorrowRepository bookBorrowRepo;
     private ILibrarianRepository librarianRepo;
     private IClientRepository clientRepo;
 
-    public Service(IBookRepository bookRepo, IBookSetRepository bookSetRepo, IBookRentalRepository bookRentalRepo, ILibrarianRepository librarianRepo, IClientRepository clientRepo) {
+    public Service(IBookRepository bookRepo, IBookSetRepository bookSetRepo, IBookBorrowRepository bookBorrowRepo, ILibrarianRepository librarianRepo, IClientRepository clientRepo) {
         this.bookRepo = bookRepo;
         this.bookSetRepo = bookSetRepo;
-        this.bookRentalRepo = bookRentalRepo;
+        this.bookBorrowRepo = bookBorrowRepo;
         this.librarianRepo = librarianRepo;
         this.clientRepo = clientRepo;
     }
@@ -38,21 +39,66 @@ public class Service {
         return bookSetRepo.getAll();
     }
 
-    public void rentBook(int user_id, int book_id) {
-        // Add book rental
-        bookRentalRepo.save(new BookRental(user_id, book_id, LocalDate.now().toString(), LocalDate.now().plusDays(14).toString(), 0));
-        //Find the book that was rented & set it as unavailable
-        Book book = bookRepo.findOne(book_id);
-        book.setAvailable(0);
-        bookRepo.update(book);
+    public List<BorrowDto> findAllLandings() {
+        List<BorrowDto> borrows = new ArrayList<>();
+        for (BookBorrow bkBr: bookBorrowRepo.getAllNotReturned()) {
+            // Find the book
+            Book bk = bookRepo.findOne(bkBr.getBookId());
+            Client cl = clientRepo.findOne(bkBr.getUserId());
+            borrows.add(new BorrowDto(cl, bk, bkBr.getDateStart(), bkBr.getDateEnd()));
+        }
+
+        return borrows;
     }
 
-    public void returnBook(BookRental bkRental) {
+    public List<BorrowDto> findAllBorrowsClient(Client client){
+        List<BorrowDto> borrows = new ArrayList<>();
+        for (BookBorrow bkBr: bookBorrowRepo.getAllClient(client.getId())) {
+            // Find the book
+            Book bk = bookRepo.findOne(bkBr.getBookId());
+            borrows.add(new BorrowDto(client, bk, bkBr.getDateStart(), bkBr.getDateEnd()));
+        }
+
+        return borrows;
+    }
+
+    public void borrowBook(int user_id, BookSet bookSet) throws Exception {
+        if (bookSet.getNoCopiesAvailable() == 0)
+            throw new Exception("Carte indisponibila!");
+        else {
+            // Find an available book
+            Book book = bookRepo.findBookAvailableISBN(bookSet.getISBN());
+            // Add book borrow
+            bookBorrowRepo.save(new BookBorrow(user_id, book.getId(), LocalDate.now().toString(), LocalDate.now().plusDays(14).toString(), 0));
+            // set the book as unavailable
+            book.setAvailable(0);
+            bookRepo.update(book);
+        }
+    }
+
+    public void addBook(String name, String author, String genre, String ISBN, String language) throws Exception {
+        if (name.isEmpty() || author.isEmpty() || genre.isEmpty() || ISBN.isEmpty())
+            throw new Exception("Nu sunt permise campurile goale!");
+        else {
+            bookRepo.save(new Book(name, author, ISBN, genre, language, 1));
+        }
+    }
+
+    public void deleteBook(String id){
+        Integer idNr = Integer.parseInt(id);
+
+        System.out.println(bookRepo.delete(idNr));
+
+    }
+
+    public void returnBook(String bookId) {
+        Integer bkId = Integer.parseInt(bookId);
+        BookBorrow landing = bookBorrowRepo.findByBook(bkId);
         // Mark the book as returned
-        bkRental.setReturned(1);
-        bookRentalRepo.update(bkRental);
-        //Find the book that was rented & set it as available
-        Book book = bookRepo.findOne(bkRental.getBookId());
+        landing.setReturned(1);
+        bookBorrowRepo.update(landing);
+        //Find the book that was borrowed & set it as available
+        Book book = bookRepo.findOne(landing.getBookId());
         book.setAvailable(1);
         bookRepo.update(book);
     }

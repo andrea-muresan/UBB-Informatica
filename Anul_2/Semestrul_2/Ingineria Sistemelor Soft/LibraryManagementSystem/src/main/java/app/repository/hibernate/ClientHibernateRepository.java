@@ -1,5 +1,6 @@
 package app.repository.hibernate;
 
+import app.domain.Book;
 import app.domain.Client;
 import app.repository.IClientRepository;
 import org.hibernate.Session;
@@ -19,7 +20,11 @@ public class ClientHibernateRepository implements IClientRepository {
 
     @Override
     public Client findOne(Integer id) {
-        return null;
+        try (Session session = HibernateUtils.getSessionFactory().openSession()) {
+            return session.createSelectionQuery("from Client where id=:id ", Client.class)
+                    .setParameter("id", id)
+                    .getSingleResultOrNull();
+        }
     }
 
     @Override
