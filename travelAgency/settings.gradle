@@ -8,4 +8,5 @@ include 'Client'
 include 'NetworkingProtobuff'
 include 'RestServices'
 include 'RestServices'
+include 'Rest-web-client'
 
