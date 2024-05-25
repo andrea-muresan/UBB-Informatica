@@ -2,6 +2,7 @@ package app.model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class Flight extends Entity<Integer>{
     private String destination;
@@ -16,6 +17,25 @@ public class Flight extends Entity<Integer>{
         this.hour = hour;
         this.airport = airport;
         this.NoSeats = no_seats;
+    }
+
+    public Flight(){
+        this.destination = null;
+        this.date = null;
+        this.hour = null;
+        this.airport = null;
+        this.NoSeats = 0;
+    }
+
+    public Flight(String destination, String date, String time, String airport, int noSeats) {
+        this.destination = destination;
+        // Define the formatter with the expected input format
+        DateTimeFormatter formatterD = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        this.date = LocalDate.parse(date, formatterD);
+        DateTimeFormatter formatterT = DateTimeFormatter.ofPattern("HH:mm:ss");
+        this.hour = LocalTime.parse(time, formatterT);
+        this.airport = airport;
+        this.NoSeats = noSeats;
     }
 
     public String getDestination() {
@@ -56,5 +76,13 @@ public class Flight extends Entity<Integer>{
 
     public void setNoSeats(int noSeats) {
         this.NoSeats = noSeats;
+    }
+
+    @Override
+    public String toString() {
+        return "Flight{" +
+                id + " " + destination + " " + date + " " +
+                hour + " " + airport + " " +  NoSeats +
+                '}';
     }
 }

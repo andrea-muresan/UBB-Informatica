@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 
@@ -29,7 +30,7 @@ public class TicketDBRepository implements TicketRepository {
     }
 
     @Override
-    public void save(Ticket entity) {
+    public Ticket save(Ticket entity) {
         logger.traceEntry( "saving task {}",entity);
         Connection con=dbUtils.getConnection();
         try(PreparedStatement preStmt=con.prepareStatement("insert into tickets (flight_id, client_name, client_address, tourists_names, no_seats) values (?,?,?,?,?)")) {
@@ -39,14 +40,18 @@ public class TicketDBRepository implements TicketRepository {
             preStmt.setString(4,entity.getTourists_names());
             preStmt.setInt(5,entity.getNo_seats());
             int result=preStmt.executeUpdate();
+
+
+
             logger.trace("Saved () instances", result);
+
         }catch (SQLException ex) {
             logger.error(ex);
             System.err.println("Error DB " + ex);
             logger.traceExit();
             ex.printStackTrace();
-
         }
+        return entity;
     }
 
     @Override

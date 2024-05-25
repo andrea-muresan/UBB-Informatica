@@ -97,7 +97,6 @@ public class AppController implements IObserver {
             showAlert(Alert.AlertType.WARNING, "Error", "No flight selected");
         }
 
-
     }
 
     @FXML
@@ -112,7 +111,6 @@ public class AppController implements IObserver {
         } catch (Exception e) {
             System.out.println("Logout error " + e);
         }
-
     }
 
     @FXML

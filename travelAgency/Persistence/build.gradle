@@ -29,7 +29,7 @@ dependencies {
     implementation 'org.hibernate.orm:hibernate-community-dialects:6.4.4.Final'
 
     //
-    implementation 'org.springframework:spring-context:4.3.8.RELEASE'
+    implementation 'org.springframework:spring-context:6.1.1'
 }
 
 test {

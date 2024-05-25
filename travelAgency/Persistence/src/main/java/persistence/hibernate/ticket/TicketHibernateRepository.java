@@ -24,8 +24,9 @@ public class TicketHibernateRepository implements TicketRepository {
     }
 
     @Override
-    public void save(Ticket entity) {
+    public Ticket save(Ticket entity) {
         HibernateUtils.getSessionFactory().inTransaction(session -> session.persist(entity));
+        return entity;
     }
 
     @Override

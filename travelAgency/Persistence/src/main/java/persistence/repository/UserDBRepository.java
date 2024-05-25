@@ -57,7 +57,7 @@ public class UserDBRepository implements UserRepository {
     }
 
     @Override
-    public void save(User entity) {
+    public User save(User entity) {
         logger.traceEntry( "saving task {}",entity);
         try {
             Connection con=dbUtils.getConnection();
@@ -76,6 +76,8 @@ public class UserDBRepository implements UserRepository {
             System.err.println("Error DB " + ex);
             logger.traceExit();
         }
+
+        return entity;
     }
 
     @Override
