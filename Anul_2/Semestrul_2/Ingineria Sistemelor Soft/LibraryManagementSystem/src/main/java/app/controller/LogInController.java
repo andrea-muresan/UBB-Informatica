@@ -6,9 +6,11 @@ import app.service.Service;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class LogInController {
@@ -48,7 +50,26 @@ public class LogInController {
 
     @FXML
     void signUpWindow(ActionEvent event) {
+        try {
+            FXMLLoader stageLoader = new FXMLLoader();
 
+            stageLoader.setLocation(getClass().getResource("/signUp.fxml"));
+
+            Stage stage = new Stage();
+
+            BorderPane singUpLayout = stageLoader.load();
+            Scene scene = new Scene(singUpLayout);
+            stage.setScene(scene);
+
+            SignUpController signUpController = stageLoader.getController();
+            signUpController.setService(this.service);
+            // signUpController.setMessageService(messageService);
+
+            stage.show();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());;
+        }
     }
 
     @FXML

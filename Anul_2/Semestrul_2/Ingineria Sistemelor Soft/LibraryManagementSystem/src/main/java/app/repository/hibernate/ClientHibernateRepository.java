@@ -29,7 +29,9 @@ public class ClientHibernateRepository implements IClientRepository {
 
     @Override
     public Client save(Client entity) {
-        return null;
+        HibernateUtils.getSessionFactory().inTransaction(session -> session.persist(entity));
+        // nu actualizeaza id-ul
+        return entity;
     }
 
     @Override

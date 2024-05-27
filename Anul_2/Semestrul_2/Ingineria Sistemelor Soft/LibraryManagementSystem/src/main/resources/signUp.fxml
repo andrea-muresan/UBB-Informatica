@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.SignUpController">
+    <top>
+        <AnchorPane prefHeight="70.0" prefWidth="600.0" style="-fx-background-color: #166678;" BorderPane.alignment="CENTER">
+            <children>
+                <Label layoutX="94.0" layoutY="20.0" text="Register Form" textFill="WHITE">
+                    <font>
+                        <Font size="20.0" />
+                    </font>
+                </Label>
+                <FontAwesomeIconView fill="WHITE" glyphName="USERS" layoutX="33.0" layoutY="49.0" size="40" wrappingWidth="41.52379894256592" />
+            </children>
+        </AnchorPane>
+    </top>
+   <bottom>
+        <AnchorPane prefHeight="330.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+            <children>
+                <Button fx:id="signUpBtn" layoutX="463.0" layoutY="253.0" mnemonicParsing="false" onMouseClicked="#signUp" prefHeight="26.0" prefWidth="62.0" style="-fx-background-color: #166678;" text="Sign Up" textAlignment="CENTER" textFill="WHITE" />
+                <TextField fx:id="firstNameTxtField" layoutX="58.0" layoutY="71.0" promptText="first name" />
+                <TextField fx:id="lastNameTxtField" layoutX="58.0" layoutY="127.0" promptText="last name" />
+                <Label layoutX="58.0" layoutY="49.0" prefHeight="17.0" prefWidth="58.0" text="First name" textFill="#166678" />
+                <Label layoutX="60.0" layoutY="110.0" text="Last name" textFill="#166678" />
+                <TextField fx:id="addressTxtField" layoutX="59.0" layoutY="240.0" prefHeight="25.0" prefWidth="147.0" promptText="address" />
+                <Label layoutX="60.0" layoutY="222.0" prefHeight="17.0" prefWidth="58.0" text="Address" textFill="#166678" />
+                <PasswordField fx:id="passwordTxtField" layoutX="345.0" layoutY="149.0" prefHeight="25.0" prefWidth="180.0" promptText="password" />
+                <Label layoutX="345.0" layoutY="131.0" prefHeight="17.0" prefWidth="58.0" text="Password" textFill="#166678" />
+                <PasswordField fx:id="checkPasswordTxtField" layoutX="345.0" layoutY="206.0" prefHeight="25.0" prefWidth="180.0" promptText="password" />
+                <Label layoutX="345.0" layoutY="188.0" prefHeight="17.0" prefWidth="91.0" text="Check password" textFill="#166678" />
+            <TextField fx:id="usernameTxtField" layoutX="345.0" layoutY="85.0" prefHeight="25.0" prefWidth="180.0" promptText="username" />
+            <Label layoutX="345.0" layoutY="67.0" prefHeight="17.0" prefWidth="58.0" text="Username" textFill="#166678" />
+            <TextField fx:id="cnpTxtField" layoutX="58.0" layoutY="184.0" prefHeight="25.0" prefWidth="149.0" promptText="CNP" />
+            <Label layoutX="58.0" layoutY="165.0" prefHeight="17.0" prefWidth="58.0" text="CNP" textFill="#166678" />
+            </children>
+        </AnchorPane>
+   </bottom>
+</BorderPane>
