@@ -1,0 +1,7 @@
+C:\Users\Lenovo\Desktop\Facultate\SGBD\Project4\Project4\bin\Debug\Project4.exe
+C:\Users\Lenovo\Desktop\Facultate\SGBD\Project4\Project4\bin\Debug\Project4.pdb
+C:\Users\Lenovo\Desktop\Facultate\SGBD\Project4\Project4\obj\Debug\Project4.csproj.AssemblyReference.cache
+C:\Users\Lenovo\Desktop\Facultate\SGBD\Project4\Project4\obj\Debug\Project4.csproj.SuggestedBindingRedirects.cache
+C:\Users\Lenovo\Desktop\Facultate\SGBD\Project4\Project4\obj\Debug\Project4.csproj.CoreCompileInputs.cache
+C:\Users\Lenovo\Desktop\Facultate\SGBD\Project4\Project4\obj\Debug\Project4.exe
+C:\Users\Lenovo\Desktop\Facultate\SGBD\Project4\Project4\obj\Debug\Project4.pdb
