@@ -19,6 +19,24 @@ public class ClientHibernateRepository implements IClientRepository {
     }
 
     @Override
+    public Client findByUsername(String username) {
+        try (Session session = HibernateUtils.getSessionFactory().openSession()) {
+            return session.createSelectionQuery("from Client where username=:username", Client.class)
+                    .setParameter("username", username)
+                    .getSingleResultOrNull();
+        }
+    }
+
+    @Override
+    public Client findByCNP(String CNP) {
+        try (Session session = HibernateUtils.getSessionFactory().openSession()) {
+            return session.createSelectionQuery("from Client where CNP=:cnp", Client.class)
+                    .setParameter("cnp", CNP)
+                    .getSingleResultOrNull();
+        }
+    }
+
+    @Override
     public Client findOne(Integer id) {
         try (Session session = HibernateUtils.getSessionFactory().openSession()) {
             return session.createSelectionQuery("from Client where id=:id ", Client.class)

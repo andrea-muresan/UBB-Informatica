@@ -97,13 +97,4 @@ public class BookSetHibernateRepository implements IBookSetRepository {
         return book;
     }
 
-    @Override
-    public void MoveBookToUnavailable() {
-
-    }
-
-    @Override
-    public void moveBookToAvailable() {
-
-    }
 }

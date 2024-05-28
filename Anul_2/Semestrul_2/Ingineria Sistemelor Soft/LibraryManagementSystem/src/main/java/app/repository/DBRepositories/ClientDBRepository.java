@@ -41,6 +41,16 @@ public class ClientDBRepository implements IClientRepository {
     }
 
     @Override
+    public Client findByUsername(String username) {
+        return null;
+    }
+
+    @Override
+    public Client findByCNP(String CNP) {
+        return null;
+    }
+
+    @Override
     public Client findOne(Integer id) {
         return null;
     }

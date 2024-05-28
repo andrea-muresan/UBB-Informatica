@@ -70,9 +70,12 @@ public class SignUpController{
         if (!password.equals(checkPassword)) {
             showAlert(Alert.AlertType.ERROR, "Error!", "Parolele nu coincide");
         } else {
-            service.addUser(username, password, firstName, lastName, cnp, address);
-            showAlert(Alert.AlertType.CONFIRMATION, "Confirmation", "cont creat cu succes! \n Mergi inapoi la LogIn");
+            try {
+                service.addUser(username, password, firstName, lastName, cnp, address);
+                showAlert(Alert.AlertType.CONFIRMATION, "Confirmation", "cont creat cu succes! \n Mergi inapoi la LogIn");
+            } catch (Exception e) {
+                showAlert(Alert.AlertType.ERROR, "Error!", e.getMessage());
+            }
         }
     }
-
 }

@@ -140,7 +140,11 @@ public class Service implements Observable {
         loggedUsers.remove(Integer.valueOf(id));
     }
 
-    public void addUser(String username, String password, String firstName, String lastName, String CNP, String address) {
+    public void addUser(String username, String password, String firstName, String lastName, String CNP, String address) throws Exception {
+        if (clientRepo.findByUsername(username) != null)
+            throw new Exception("Username deja folosit");
+        if (clientRepo.findByCNP(CNP)!= null)
+            throw new Exception("CNP deja folosit");
         clientRepo.save(new Client(username, password, firstName, lastName, CNP, address));
     }
 }
