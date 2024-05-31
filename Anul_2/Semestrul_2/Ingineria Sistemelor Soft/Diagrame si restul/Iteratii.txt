@@ -1,0 +1,21 @@
+Iterația 1:
+	1) crearea claselor din domeniu
+	2) crearea bazei de date a sistemului și popularea acesteia cu date
+	3) crearea funcțiilor necesare în repository și service pentru:
+		a) vizualizarea catalogului de cărți
+		b) autentificarea utilizatorului
+	4) Creare GUI pentru pagina de LogIn și vizualizarea cărților 
+
+Iterația 2:
+	1) Adăugarea funcționalitățiilor necesare în repo și service pentru:
+		a) împrumutarea unei cărți de către abonat
+		b) vizualizarea împrumuturilor
+		c) SignUp
+	3) Cuprinderea în GUI a functionalităților noi
+
+Iterația 3:
+	1) Adăugarea funcționalitățiilor necesare în repo și service pentru:
+		a) returnarea unei cărți de către bibliotecar
+		b) vizualizarea tuturor împrumuturilor
+	2) Cuprinderea în GUI a noilor funcționalități
+
