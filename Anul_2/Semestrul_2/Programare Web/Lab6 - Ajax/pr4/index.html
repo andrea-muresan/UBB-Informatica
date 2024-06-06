@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pb 4</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="script.js"></script>
+    <style>
+        #container {
+            display: flex;
+            flex-direction: row;
+        }
+        p{
+            margin: 20px;
+        }
+        #result {
+            color: coral;
+        }
+        td{
+            width: 100px;
+            height: 100px;
+            border: 1px solid black;
+            text-align: center;
+            font-size: 50px;
+        }
+        table{
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <table id="table">
+        <tr>
+            <td id="td0"></td>
+            <td id="td1"></td>
+            <td id="td2"></td>
+        </tr>
+        <tr>
+            <td id="td3"></td>
+            <td id="td4"></td>
+            <td id="td5"></td>
+        </tr>
+        <tr>
+            <td id="td6"></td>
+            <td id="td7"></td>
+            <td id="td8"></td>
+        </tr>
+    </table>
+    <div id="container2">
+        <p>
+            <b>Legend:</b><br>
+            X - you<br>
+            0 - computer
+        </p>
+        <p id="result"></p>
+    </div>
+
+</div>
+</body>
+</html>

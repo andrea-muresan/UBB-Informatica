@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<!--    horizontally sau vertical-->
+    <title>Pb4 - horizontally</title>
+    <style>
+        table, td, th {
+            border: 1px solid black;
+        }
+        table {
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+        td, th {
+            width: 200px;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        let arr = [];
+
+        let sorted = false;
+        let col = 0;
+
+        window.onload = function() {
+            arr.push({nume: "Salajan", prenume: "Carmen", varsta: 20, salariu: 8320.20});
+            arr.push({nume: "Frunza", prenume: "Alin", varsta: 45, salariu: 2700.70});
+            arr.push({nume: "Munteanu", prenume: "Iris", varsta: 27, salariu: 5080.60});
+            arr.push({nume: "Muresan", prenume: "Andrea", varsta: 20, salariu: 6530.10});
+            if(document.title === "Pb4 - horizontally")
+                wrapperHorizontally(0);
+            else
+                wrapperVertical(0);
+        };
+
+        function wrapperHorizontally(index){
+            sortByColumn(index)
+            displayContentHorizontally()
+        }
+
+        function wrapperVertical(colIndex){
+            sortByColumn(colIndex)
+            displayContentVertical()
+        }
+
+        function sortByColumn(colIndex){
+            const keys = Object.keys(arr[0]);
+            arr = arr.sort((a, b) => {
+                const x = a[keys[colIndex]];
+                const y = b[keys[colIndex]];
+                if(typeof x == "string")
+                    return x.localeCompare(y);
+                else if(typeof x == "number")
+                    return x - y;
+                else
+                    return 0;
+            });
+
+            if (colIndex === col) {
+                if (sorted) {  // inainte era sortat crescator dupa aceeasi coloana
+                    arr = arr.reverse();
+                    sorted = false;
+                }
+                else{ // inainte era sortat crescator dupa aceeasi coloana
+                    sorted = true;
+                }
+            }
+            else{ // era sortat dupa alta coloana
+                col = colIndex;
+                sorted = true;
+            }
+            console.log(arr);
+            console.log("sortedAsc = " + sorted);
+            console.log("byCol = " + col);
+        }
+
+        function displayContentHorizontally(){
+            const keys = Object.keys(arr[0]);
+            const table = $("#table");
+            table.empty();
+            for(let i = 0; i < keys.length; i++){
+                const tr = $("<tr></tr>").attr("id", "row" + i);
+                table.append(tr);
+            }
+
+            for(let i = 0; i < keys.length; i++){
+                const id = "row" + i;
+                const key = keys[i];
+                const tr = $("#" + id);
+                tr.append(
+                    $("<th></th>")
+                        .text(key.charAt(0).toUpperCase() + key.slice(1))
+                        .click(() => {
+                            wrapperHorizontally(i);
+                        })
+                );
+                for(let j = 0; j < arr.length; j++){
+                    tr.append(
+                        $("<td></td>").text(arr[j][key])
+                    );
+                }
+                table.append(tr);
+            }
+        }
+
+        function displayContentVertical(){
+            const keys = Object.keys(arr[0]);
+            const table = $("#table");
+            table.empty();
+
+            for(let i=0; i <= arr.length; i++){
+                table.append(
+                    $("<tr></tr>").attr("id", "row" + i)
+                );
+            }
+
+            for(let i = 0; i < keys.length; i++){
+                $("#row0").append(
+                    $("<th></th>")
+                        .text(keys[i].charAt(0).toUpperCase() + keys[i].slice(1))
+                        .click(() => {
+                            wrapperVertical(i);
+                        })
+                );
+            }
+
+            for(let i = 0; i < arr.length; i++){
+                const id = "#row" + (i + 1);
+                $(id).empty();
+                for(let j = 0; j < keys.length; j++){
+                     $(id).append(
+                        $("<td></td>").text(arr[i][keys[j]])
+                     );
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <table id="table"></table>
+</body>
+</html>

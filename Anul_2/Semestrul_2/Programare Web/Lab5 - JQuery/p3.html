@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+div#board{
+	background: transparent;
+    border: #999 1px solid;
+    width: 500px;
+    height: 500px;
+    padding: 24px;
+    margin: 3em;
+}
+div#board > div{
+	border:black 1px solid;
+	width:100px;
+	height:100px;
+	float:left;
+	margin:5px;
+	padding:5px;
+	font-size:60px;
+	cursor:pointer;
+	text-align:center;
+}
+
+.tile img {
+    width: 100px;
+    height: 100px;
+}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+<!-- <script>
+	$(document).ready(function(){
+
+		var valori = [];
+		var tile_ids = [];
+		var flipped = 0;
+		var variabile = ['1','1','2','2','3','3','4','4','5','5','6','6','7','7','8','8'];
+		var ids = '';
+		Array.prototype.tile_shuffle = function(){
+			var i = this.length, j, temp;
+			while(--i > 0){
+				j = Math.floor(Math.random() * (i+1));
+				temp = this[j];
+				this[j] = this[i];
+				this[i] = temp;
+			}
+		}
+
+		newPatrat();
+
+		function newPatrat(){
+			flipped = 0;
+			var output = '';
+			variabile.tile_shuffle();
+			for(var i = 0; i < variabile.length; i++)
+			{
+				output += `<div id="tile_${i}"></div>`;
+				if(i!= variabile.length - 1){
+					ids +=`#tile_${i}, `;
+				}
+				else{
+					ids +=`#tile_${i}`;
+				}
+			}
+			$('#board').append(output);
+		}
+
+		$('#board').children('div').click( function(){
+			var idTile = $(this).attr('id');
+			var tile = $(this);
+
+			var nr = idTile.split('_')[1];
+			var val = variabile[nr];
+
+			if(tile.text()=="" && valori.length < 2){
+				tile.css("background-color", '#FFF').text(variabile[nr])
+				if(valori.length == 0){
+					valori.push(val);
+					tile_ids.push(idTile);
+				} else 
+					if(valori.length == 1){
+						valori.push(val);
+						tile_ids.push(idTile);
+						if(valori[0] == valori[1]){
+							flipped += 2;
+							valori = [];
+							tile_ids = [];
+							if(flipped == variabile.length){
+								alert("Congrats!");
+								$('#board').text() = "";
+								newBoard();
+							}
+						} else {
+							function reIntoarcere(){
+								var tile_1 = $(`#${tile_ids[0]}`);
+								var tile_2 = $(`#${tile_ids[1]}`);
+								tile_1.css("background-color", 'white').text("");
+								tile_2.css("background-color", 'white').text("");
+								valori = [];
+								tile_ids = [];
+							}
+							setTimeout(reIntoarcere, 500);
+						}
+					}
+				}
+		});
+		
+});
+	
+</script> -->
+
+<script>
+	$(document).ready(function() {
+    var numbers = []; // Stores the numbers currently flipped
+    var tile_ids = []; // Stores the IDs of the tiles flipped
+    var flipped = 0; // Counts the number of flipped pairs
+    var pairs = [
+        "https://media.timeout.com/images/105641908/1024/768/image.webp",
+        "https://media.timeout.com/images/105641906/1024/768/image.webp",
+        "https://media.timeout.com/images/105827873/1024/576/image.webp",
+        "https://media.timeout.com/images/105641903/1024/768/image.webp",
+        "https://media.timeout.com/images/105641909/1024/768/image.webp",
+        "https://media.timeout.com/images/105641910/1024/768/image.webp",
+        "https://media.timeout.com/images/105641915/1024/768/image.webp",
+        "https://media.timeout.com/images/105641911/1024/768/image.webp"
+    ];
+    // Duplicate each image URL in the pairs array
+    pairs = pairs.flatMap(imageUrl => [imageUrl, imageUrl]);
+
+    var flipCount = 0; // Variable to store the number of flips
+
+    // Shuffle function to randomly shuffle the array
+    function shuffleArray(array) {
+        for (var i = array.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+        }
+        return array;
+    }
+
+    // Function to flip a tile when clicked
+    function flipTile(tile, val) {
+        var $tile = $(tile);
+        if ($tile.html() === "" && $('.flipped').length < 2) {
+            $tile.css('background', 'white');
+            // Create an img element and set its src attribute
+            var $img = $('<img>').attr('src', val).attr('alt', 'Image');
+            // Append the img element to the tile
+            $tile.append($img).addClass('flipped');
+            if ($('.flipped').length === 2) {
+                setTimeout(checkPair, 700);
+            }
+        }
+    }
+
+    // Function to check if two flipped tiles form a pair
+    function checkPair() {
+        var $flippedTiles = $('.flipped');
+        var values = $flippedTiles.map(function() {
+            return $(this).find('img').attr('src');
+        }).get();
+        if (values[0] === values[1]) {
+            $flippedTiles.removeClass('flipped').addClass('matched');
+            flipped += 2;
+            if (flipped === pairs.length) {
+                setTimeout(function() {
+                    alert("Congratulations! You've finished the game!");
+                    $('#board').empty();
+                    createGameBoard();
+                }, 1200);
+            }
+        } else {
+            setTimeout(function() {
+                $flippedTiles.css('background', 'white').html('').removeClass('flipped');
+            }, 300);
+        }
+    }
+
+    // Function to create the game board
+    function createGameBoard() {
+        flipped = 0;
+        var output = ''; // Initialize the output variable to store the HTML content of the game board
+        var flipCount = 0;
+        $('#flip-count').text("Flips: " + flipCount);
+
+        pairs = shuffleArray(pairs);
+        for (var i = 0; i < pairs.length; i++) {
+            output += '<div id="tile_' + i + '" class="tile"></div>';
+        }
+        $('#board').html(output);
+
+        // Attach click event handler to dynamically created tiles
+        $('#board').on('click', '.tile', function() {
+            var index = $(this).index();
+            flipTile(this, pairs[index]);
+        });
+    }
+
+    // Initialize the game board
+    createGameBoard();
+	});
+</script> 
+<title>Problema 3</title>
+</head>
+<body>
+
+<div id="board"></div>
+
+</body>
+</html>
