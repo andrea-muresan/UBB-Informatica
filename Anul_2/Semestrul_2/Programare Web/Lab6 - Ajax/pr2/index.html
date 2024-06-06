@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pb 2</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="script.js"></script>
+    <style>
+        table {
+            border: 1px solid black;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        td, th {
+            border: 1px solid black;
+            width: 150px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <table id="table"></table>
+        <button disabled id="previous" onclick="previous()">Previous</button>
+        <button id="next" onclick="next()">Next</button>
+    </div>
+</body>
+</html>

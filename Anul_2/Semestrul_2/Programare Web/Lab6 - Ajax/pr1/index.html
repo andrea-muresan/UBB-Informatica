@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pb 1</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="script.js"></script>
+    <style>
+        div{
+            display: flex;
+            flex-direction: column;
+        }
+        select{
+            width : 200px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div>
+    <label for="departureList">Departure</label>
+    <select id="departureList"  onchange="getArrivalStations();"></select>
+    <label for="arrivalList">Arrival</label>
+    <select id="arrivalList"></select>
+</div>
+
+</body>
+</html>
