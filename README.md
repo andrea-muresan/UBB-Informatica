@@ -6,7 +6,7 @@
 * ***First semester***
   * ➕ Algebra
   * 📉 Analysis
-  * 🤔 [Computational Logic](https://github.com/andrea-muresan/UBB-Informatica/tree/main/Anul_1/Semestrul_1/Logica%20computationala/Tema%20Facultativa)
+  * 🤔 [Computational Logic](https://github.com/andrea-muresan/UBB-Informatica/tree/main/Anul_1/Semestrul_1/Logica%20computationala)
   * 🔧 [Computer Architecture](https://github.com/andrea-muresan/UBB-Informatica/tree/main/Anul_1/Semestrul_1/Arhitectura%20sistemelor%20de%20calcul)
   * 👨‍💻 [Programming Fundamentals](https://github.com/andrea-muresan/UBB-Informatica/tree/main/Anul_1/Semestrul_1/Fundamentele%20programarii)
 * ***Second semester***
@@ -21,10 +21,10 @@
 * ***First semester***
   * 💂‍♂️ English
   * 🗃️ [Databases](https://github.com/andrea-muresan/UBB-Informatica/tree/main/Anul_2/Semestrul_1/Baze%20de%20date)
-  * 🌐 [Computer Networks](https://github.com/andrea-muresan/UBB-Informatica/tree/main/Anul_2/Semestrul_1/Metode%20avansate%20de%20programare)
+  * 🌐 [Computer Networks](https://github.com/andrea-muresan/UBB-Informatica/tree/main/Anul_2/Semestrul_1/Retele%20de%20calculatoare)
   * 🎲 [Probability and Statistics](https://github.com/andrea-muresan/UBB-Informatica/tree/main/Anul_2/Semestrul_1/Probabilitati%20si%20Statistica)
   * 🧠 [Functional and Logic Programming](https://github.com/andrea-muresan/UBB-Informatica/tree/main/Anul_2/Semestrul_1/Programare%20logica%20si%20functionala)
-  * 🔥 Advanced Methods of Programming
+  * 🔥 [Advanced Methods of Programming](https://github.com/andrea-muresan/UBB-Informatica/tree/main/Anul_2/Semestrul_1/Metode%20avansate%20de%20programare)
 * ***Second Semester***
   * 💂‍♂️ English
   * 🧩 [Web Programming](https://github.com/andrea-muresan/UBB-Informatica/tree/main/Anul_2/Semestrul_2/Programare%20Web)
