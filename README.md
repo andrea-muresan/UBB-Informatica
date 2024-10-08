@@ -30,7 +30,7 @@
   * 🧩 [Web Programming](https://github.com/andrea-muresan/UBB-Informatica/tree/main/Anul_2/Semestrul_2/Programare%20Web)
   * 🛠️ [Software Engineering](https://github.com/andrea-muresan/UBB-Informatica/tree/main/Anul_2/Semestrul_2/Ingineria%20Sistemelor%20Soft)
   * 🤖 [Artificial Intelligence](https://github.com/andrea-muresan/UBB-Informatica/tree/main/Anul_2/Semestrul_2/Inteligenta%20arificiala)
-  * 🔍 Systems for Design and Implementation
+  * 🔍 [Systems for Design and Implementation](https://github.com/andrea-muresan/UBB-Informatica/tree/main/Anul_2/Semestrul_2/Medii%20de%20proiectare%20si%20programare)
   * 💾 [Database Management Systems](https://github.com/andrea-muresan/UBB-Informatica/tree/main/Anul_2/Semestrul_2/Sisteme%20de%20gestiune%20a%20bazelor%20de%20date)
 
 ## Third year
