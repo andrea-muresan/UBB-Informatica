@@ -1,0 +1,54 @@
+syntax="proto3";
+
+option java_package = "network.protobuffprotocol";
+option java_outer_classname = "AppProtobuffs";
+
+message User {
+  string username = 1;
+  string password = 2;
+}
+
+message Flight {
+  int32 id = 1;
+  string destination = 2;
+  string date = 3;
+  string time = 4;
+  string airport = 5;
+  int32 noSeats = 6;
+}
+
+message SearchFlights {
+  string destination = 1;
+  string date = 2;
+}
+
+message TicketPurchase {
+  Flight flight = 1;
+  string clientName = 2;
+  string clientAddress = 3;
+  string touristsNames = 4;
+  string noOfTickets = 5;
+}
+
+message Request {
+  enum Type {UNKNOWN = 0; LOGIN = 1; LOGOUT = 2; GET_FLIGHTS = 3;  GET_FLIGHTS_DEST_DATE = 4; PURCHASE = 5;}
+
+  Type type = 1;
+
+  oneof payload{
+    User user = 2;
+    TicketPurchase ticket = 3;
+    SearchFlights searchFlights = 4;
+  }
+}
+
+message Response {
+  enum Type {UNKNOWN = 0; OK = 1; ERROR = 2;  GET_FLIGHTS = 3;
+      GET_FLIGHTS_DEST_DATE=4; FLIGHT=5;}
+
+  Type type = 1;
+
+  string error = 2;
+  repeated Flight flights = 3;
+  Flight flight = 4;
+}

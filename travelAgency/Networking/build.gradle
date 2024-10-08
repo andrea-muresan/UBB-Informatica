@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+    // id 'com.google.protobuf'
+}
+
+group = 'app'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation project (':Model')
+    implementation project (':Services')
+    implementation 'com.google.protobuf:protobuf-java:4.26.1'
+    compileOnly 'org.apache.tomcat:annotations-api:6.0.53' // necessary for Java 9+
+}
+
+//protobuf {
+//    protoc {
+//        artifact = "com.google.protobuf:protoc:4.26.1"
+//    }
+//    generatedFilesBaseDir = "$projectDir/src"
+//}
+
+test {
+    useJUnitPlatform()
+}
