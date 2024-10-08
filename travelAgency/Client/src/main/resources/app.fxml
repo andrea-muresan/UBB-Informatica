@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.AppController">
+   <children>
+      <TableView fx:id="flightsView" layoutX="14.0" layoutY="27.0" prefHeight="175.0" prefWidth="385.0" />
+      <TableView fx:id="searchView" layoutX="14.0" layoutY="216.0" prefHeight="175.0" prefWidth="385.0" />
+      <TextField fx:id="destinationTxtField" layoutX="423.0" layoutY="27.0" prefHeight="25.0" prefWidth="149.0" promptText="destination" />
+      <DatePicker fx:id="datePicker" layoutX="425.0" layoutY="63.0" prefHeight="25.0" prefWidth="149.0" promptText="date" />
+      <Button fx:id="searchBtn" layoutX="522.0" layoutY="102.0" mnemonicParsing="false" onMouseClicked="#searchFlights" text="Search" />
+      <TextField fx:id="clientNameTxtField" layoutX="424.0" layoutY="150.0" promptText="client name" />
+      <TextField fx:id="clientAddressTxtField" layoutX="424.0" layoutY="182.0" promptText="client address" />
+      <TextField fx:id="touristsNamesTxtField" layoutX="424.0" layoutY="216.0" prefHeight="65.0" prefWidth="149.0" promptText="tourists names" />
+      <TextField fx:id="noSeatsTxtField" layoutX="424.0" layoutY="291.0" promptText="number seats" />
+      <Button layoutX="537.0" layoutY="323.0" mnemonicParsing="false" onMouseClicked="#buyTicket" text="Buy" />
+      <Button layoutX="425.0" layoutY="360.0" mnemonicParsing="false" onMouseClicked="#logOut" prefHeight="25.0" prefWidth="149.0" text="Log Out" />
+   </children>
+</AnchorPane>
