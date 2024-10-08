@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="ea44ec77-9b8d-4416-8f04-5758cfacdbd8" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/travelAgency/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/travelAgency/.idea/.idea.travelAgency/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/travelAgency/.idea/.idea.travelAgency/.idea/projectSettingsUpdater.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/travelAgency/ConnectionUtils/App.config" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/travelAgency/ConnectionUtils/ConnectionFactory.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/travelAgency/ConnectionUtils/ConnectionUtils.csproj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/travelAgency/ConnectionUtils/MySqlConnectionFactory.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/travelAgency/ConnectionUtils/Properties/AssemblyInfo.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/travelAgency/ConnectionUtils/SqliteConnectionFactory.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/travelAgency/ConnectionUtils/packages.config" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/travelAgency/travelAgency.sln" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/travelAgency/travelAgency/App.config" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/travelAgency/travelAgency/Form1.Designer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/travelAgency/travelAgency/Form1.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/travelAgency/travelAgency/Form1.resx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/travelAgency/travelAgency/GUI/App.Designer.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/travelAgency/travelAgency/GUI/App.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/travelAgency/travelAgency/GUI/App.resx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/travelAgency/travelAgency/Program.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/travelAgency/travelAgency/domain/Entity.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/travelAgency/travelAgency/domain/Flight.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/travelAgency/travelAgency/domain/Ticket.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/travelAgency/travelAgency/domain/User.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/travelAgency/travelAgency/log4net.config" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/travelAgency/travelAgency/packages.config" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/travelAgency/travelAgency/repository/DBUtils.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/travelAgency/travelAgency/repository/FlightDBRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/travelAgency/travelAgency/repository/ICrudRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/travelAgency/travelAgency/repository/IFlightRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/travelAgency/travelAgency/repository/ITicketRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/travelAgency/travelAgency/repository/IUserRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/travelAgency/travelAgency/repository/TicketDBRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/travelAgency/travelAgency/repository/UserDBRepository.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/travelAgency/travelAgency/service/ServiceApp.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/travelAgency/travelAgency/service/ServiceLogIn.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/travelAgency/travelAgency/travelAgency.csproj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/travelAgency/travelAgency/travelAgency.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.mpp-proiect-csharp-andrea-muresan.dir/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.mpp-proiect-csharp-andrea-muresan.dir/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/travelAgency/.idea/.idea.travelAgency/.idea/indexLayout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.mpp-proiect-csharp-andrea-muresan.dir/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/travelAgency/.idea/.idea.travelAgency/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Folder.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/travelAgency/travelAgency/travelAgency.csproj.DotSettings" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WindowsFormsApp1/App.config" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/WindowsFormsApp1/Form1.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/WindowsFormsApp1/Form1.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/WindowsFormsApp1/Program.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/WindowsFormsApp1/Properties/AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/travelAgency/travelAgency/Properties/AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WindowsFormsApp1/Properties/Resources.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/travelAgency/travelAgency/Properties/Resources.Designer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WindowsFormsApp1/Properties/Resources.resx" beforeDir="false" afterPath="$PROJECT_DIR$/travelAgency/travelAgency/Properties/Resources.resx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WindowsFormsApp1/Properties/Settings.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/travelAgency/travelAgency/Properties/Settings.Designer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WindowsFormsApp1/Properties/Settings.settings" beforeDir="false" afterPath="$PROJECT_DIR$/travelAgency/travelAgency/Properties/Settings.settings" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WindowsFormsApp1/WindowsFormsApp1.csproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/WindowsFormsApp1/bin/Debug/WindowsFormsApp1.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/WindowsFormsApp1/bin/Debug/WindowsFormsApp1.exe.config" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/WindowsFormsApp1/bin/Debug/WindowsFormsApp1.pdb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/WindowsFormsApp1/domain/Entity.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/WindowsFormsApp1/domain/Flight.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/WindowsFormsApp1/domain/Ticket.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/WindowsFormsApp1/domain/User.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/WindowsFormsApp1/obj/Debug/.NETFramework,Version=v4.7.1.AssemblyAttributes.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/WindowsFormsApp1/obj/Debug/WindowsFormsApp1.Properties.Resources.resources" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/WindowsFormsApp1/obj/Debug/WindowsFormsApp1.csproj.AssemblyReference.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/WindowsFormsApp1/obj/Debug/WindowsFormsApp1.csproj.CoreCompileInputs.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/WindowsFormsApp1/obj/Debug/WindowsFormsApp1.csproj.FileListAbsolute.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/WindowsFormsApp1/obj/Debug/WindowsFormsApp1.csproj.GenerateResource.cache" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/WindowsFormsApp1/obj/Debug/WindowsFormsApp1.csproj.SuggestedBindingRedirects.cache" beforeDir="false" afterPath="$PROJECT_DIR$/travelAgency/identifier.sqlite" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WindowsFormsApp1/obj/Debug/WindowsFormsApp1.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/WindowsFormsApp1/obj/Debug/WindowsFormsApp1.pdb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/WindowsFormsApp1/repository/IRepository.cs" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 8
+}]]></component>
+  <component name="ProjectId" id="2eP2gqynmrwdN3DiXOpRyeOYpTY" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ea44ec77-9b8d-4416-8f04-5758cfacdbd8" name="Changes" comment="" />
+      <created>1711792006740</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1711792006740</updated>
+      <workItem from="1711792008890" duration="136000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+</project>
