@@ -1,0 +1,20 @@
+#include <iostream>
+using namespace std;
+
+typedef struct ceva {
+    int a;
+};
+
+int main () {
+    int i, j;
+    cin >> i;
+    j = 0
+    if (i > 15) {
+        j = j + 1;
+    }
+    cout << i;
+
+    while (j != i) {
+        j = j + 1;
+    }
+}
