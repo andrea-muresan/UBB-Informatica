@@ -9,7 +9,7 @@ int main () {
     int i, j;
     cin >> i;
     j = 0
-    if (i > 15) {
+    if (i > 6.7) {
         j = j + 1;
     }
     cout << i;

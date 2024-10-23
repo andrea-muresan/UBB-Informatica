@@ -1,6 +1,6 @@
 package org.example;
 
-import java.io.File;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -11,7 +11,10 @@ public class Main {
 
     private static final ArrayList<String> separators = new ArrayList<>(Arrays.asList(";", "(", ")", "{", "}", ","));
     private static final ArrayList<String> firstTable = new ArrayList<>();
-    private static final ArrayList<ArrayList<String>> secondTable = new ArrayList<>();
+    private static final ArrayList<ArrayList<String>> FIP = new ArrayList<>();
+    private static final HashTable TS_ID = new HashTable(15);
+    private static final HashTable TS_CONST = new HashTable(15);
+
     /**
      * Entry point of the program
      */
@@ -27,10 +30,11 @@ public class Main {
                     + ANSI_RESET);
         } finally {
             printFirstTable();
-            printSecondTable();
+            printFIP();
+            printTS();
         }
-    }
 
+    }
 
     /**
      * Reads from file line by line and processes word by word for lexical analysis
@@ -102,39 +106,35 @@ public class Main {
      */
     private static void processAtom(String atom, int lineNumber) throws Exception {
         int indexInFirstTable;
-
-        // First Table
+        int indexInTS = -1;
         if (firstTable.contains(atom)) {
             indexInFirstTable = firstTable.indexOf(atom);
         } else if (MyRegex.isKeyWord(atom) || MyRegex.isOperator(atom) || MyRegex.isSeparator(atom)) {
             firstTable.add(atom);
             indexInFirstTable = firstTable.indexOf(atom);
         } else if (MyRegex.isConstant(atom)) {
+            Object constant;
+            if (atom.contains("."))
+                constant = Float.parseFloat(atom);
+            else constant = Integer.parseInt(atom);
+            TS_CONST.addEntry(constant);
             indexInFirstTable = firstTable.indexOf("CONST");
+            indexInTS = TS_CONST.getEntry(constant);
+            atom = "CONST : " + atom;
         } else if (MyRegex.isId(atom)) {
+            TS_ID.addEntry(atom);
             indexInFirstTable = firstTable.indexOf("ID");
+            indexInTS = TS_ID.getEntry(atom);
+            atom = "ID : " + atom;
         } else {
-            throw new Exception("Something went wrong on line: " + lineNumber + "\n Atom: << " + atom + " >> incorrect");
-        }
-        // add the atom to the Second Table
-        ArrayList<String> lineInSecondTable = new ArrayList<>();
-        lineInSecondTable.add(String.valueOf(indexInFirstTable));
-        lineInSecondTable.add(atom);
-
-        // Second Table
-        if (MyRegex.isKeyWord(atom)) {
-            lineInSecondTable.add("keyword");
-        } else if (MyRegex.isOperator(atom)){
-            lineInSecondTable.add("operator");
-        } else if (MyRegex.isSeparator(atom)){
-            lineInSecondTable.add("separator");
-        } else if (MyRegex.isConstant(atom)){
-            lineInSecondTable.add("CONST");
-        } else if (MyRegex.isId(atom)){
-            lineInSecondTable.add("ID");
+            throw new RuntimeException("Something went wrong on line: " + lineNumber);
         }
 
-        secondTable.add(lineInSecondTable);
+        ArrayList<String> lineInFip = new ArrayList<>();
+        lineInFip.add(String.valueOf(indexInFirstTable));
+        lineInFip.add(atom);
+        if (indexInTS != -1) lineInFip.add(String.valueOf(indexInTS));
+        FIP.add(lineInFip);
     }
 
     /**
@@ -151,15 +151,42 @@ public class Main {
     }
 
     /**
-     * Print Second Table
+     * Print FIP to console
      */
-    private static void printSecondTable() {
-        System.out.println("******* Second Table *******");
-        System.out.println("Cod atom \tAtom ");
-        for (ArrayList<String> line : secondTable) {
-            System.out.println(line.get(0) + "\t" + line.get(1) + "  -  " + line.get(2));
+    private static void printFIP() {
+        try {
+            FileWriter fileWriter = new FileWriter("outputFIP.txt");
+            PrintWriter printWriter = new PrintWriter(fileWriter);
+
+            // Write header to the file
+            printWriter.println("Cod atom \tPoz TS");
+
+            // Write each line from FIP to the file
+            for (ArrayList<String> line : FIP) {
+                if (line.get(0).equals("0") || line.get(0).equals("1")) {
+                    printWriter.println(line.get(0) + "\t\t\t" + line.get(2));
+                } else {
+                    printWriter.println(line.get(0));
+                }
+                printWriter.println("\t\t\t\t\t\t\t\t" + line.get(1));
+            }
+
+            // Close the writer
+            printWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        System.out.println("\n\n\n");
+    }
+
+    /**
+     * Print TS_ID and TS_CONST to console
+     */
+    private static void printTS() {
+//        System.out.println("------- TS_ID -------");
+        TS_ID.printTable("outputTS_ID.txt");
+//        System.out.println("\n");
+//        System.out.println("------- TS_CONST -------");
+        TS_CONST.printTable("outputTS_CONST");
     }
 
 }

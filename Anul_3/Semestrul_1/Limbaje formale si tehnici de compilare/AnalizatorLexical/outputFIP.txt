@@ -1,0 +1,83 @@
+Cod atom 	Poz TS
+2
+								#include
+3
+								<iostream>
+4
+								using
+5
+								namespace
+6
+								std
+7
+								;
+8
+								typedef
+9
+								struct
+0			9
+								ID : ceva
+10
+								{
+11
+								int
+0			7
+								ID : a
+7
+								;
+12
+								}
+7
+								;
+11
+								int
+13
+								main
+14
+								(
+15
+								)
+10
+								{
+11
+								int
+0			0
+								ID : i
+16
+								,
+0			1
+								ID : j
+7
+								;
+17
+								cin
+18
+								>>
+0			0
+								ID : i
+7
+								;
+0			1
+								ID : j
+19
+								=
+1			0
+								CONST : 0
+20
+								if
+14
+								(
+0			0
+								ID : i
+21
+								>
+1			2
+								CONST : 6.7
+15
+								)
+10
+								{
+0			1
+								ID : j
+19
+								=

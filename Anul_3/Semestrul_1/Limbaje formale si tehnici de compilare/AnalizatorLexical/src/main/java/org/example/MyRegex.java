@@ -6,7 +6,7 @@ public class MyRegex {
     private static Pattern pattern;
     private static final String idRegex = "^[a-zA-Z]([a-zA-Z0-9])*$";
     private static final String keywordRegex = "^(#include|<iostream>|using|namespace|std|int|float|main|cin|cout|while|if|typedef|struct)$";
-    private static final String constantRegex = "^(0|[1-9]\\d*)$";
+    private static final String constantRegex = "^(0|[1-9]\\d*$|0\\.\\d*[1-9]|[1-9]\\d*\\.\\d*[1-9])$";
     private static final String operatorRegex = "^(!=|>>|<<|>|<|=|-|\\*|\\+|%|==)$";
     private static final String separatorRegex = "^([;(){},])$";
 
