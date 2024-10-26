@@ -25,5 +25,5 @@ Instrucțiuni pentru instalarea și configurarea OCLE (Object Constraint Languag
   SET JAVA_HOME=C:\Program Files (x86)\Java\jdk1.6.0_24
   ```
 
-  ### 5. Deschideți OCLE
+### 5. Deschideți OCLE
 - După configurarea fișierului, rulați run_windows.bat pentru a deschide și folosi OCLE.
