@@ -39,7 +39,7 @@
   * ⚙️ Parallel and Distributed Programming
   * 📝 Formal Languages and Compiler Design
   * Electives:
-      * 🕵️ CASE Tools
+      * 🕵️ [CASE Tools](https://github.com/andrea-muresan/UBB-Informatica/tree/main/Anul_3/Semestrul_1/Instrumente%20CASE)
       * 💰 Public Finance (FSEGA)
       * 🚀 Designing Innovative Projects
 * ***Second semester***
