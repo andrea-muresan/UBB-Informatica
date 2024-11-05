@@ -1,0 +1,16 @@
+<fișier> ::= <Q> <Sigma> <S> <F> <ListăTranzacții>
+<Q> ::= Q <ListăStări>
+<ListăStări> ::= <Stare> | <Stare> <ListăStări>
+<Stare> ::= "q" <Număr>
+<Număr> ::= <Cifră> | <CifrăNenulă> <ListăCifre>
+<Cifră> ::= 0 | ... | 9
+<CifrăNenulă> ::= 1 | ... | 9
+<ListăCifre> ::= <Cifră> | <Cifră> <ListăCifre>
+<Sigma> ::= Sigma <ListăSimboluri>
+<ListăSimboluri> ::= <Simbol> | <Simbol> <ListăSimboluri>
+<Simbol> ::= Cifră | a | ... | z | A | ... | Z | + | - | U | u | L | l
+<S> ::= "S" <Stare>
+<F> ::= "F" <ListăStări>
+<ListăTranzacții> ::= <Tranzacție> | <Tranzacție> <ListăTranzacții>
+<Tranzacție> ::= <Stare> <ListăSimboluri> <Stare>
+

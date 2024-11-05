@@ -1,0 +1,7 @@
+Q q0 q1 q2
+SIGMA a b
+S q0
+F q2
+q0 a q1
+q0 b q2
+q1 a q0
