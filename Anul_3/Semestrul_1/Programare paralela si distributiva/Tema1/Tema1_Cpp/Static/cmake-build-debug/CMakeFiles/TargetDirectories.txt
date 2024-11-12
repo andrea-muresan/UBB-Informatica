@@ -1,0 +1,3 @@
+C:/Users/Lenovo/Desktop/Github/UBB-Informatica/Anul_3/Semestrul_1/Programare paralela si distributiva/Tema1/Tema1_Cpp/Static/cmake-build-debug/CMakeFiles/Static.dir
+C:/Users/Lenovo/Desktop/Github/UBB-Informatica/Anul_3/Semestrul_1/Programare paralela si distributiva/Tema1/Tema1_Cpp/Static/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Lenovo/Desktop/Github/UBB-Informatica/Anul_3/Semestrul_1/Programare paralela si distributiva/Tema1/Tema1_Cpp/Static/cmake-build-debug/CMakeFiles/rebuild_cache.dir
