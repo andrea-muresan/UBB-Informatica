@@ -156,7 +156,7 @@ void runParallelDynamicLines() {
 	}
 
 	// Wait for all threads to complete
-	for (int i = 0; i < P; i++) {
+	for (int i = 0; i < threadId; i++) {
 		threads[i].join();
 	}
 }
@@ -165,7 +165,8 @@ void runParallelDynamicLines() {
 	Thread function - colums
 */
 void workerColumns(int start, int end) {
-	for (int j = start; j <= end; j++) {
+	for (int j = start; j < end; j++)
+	{
 		for (int i = 0; i < N; i++) {
 			result[i][j] = oneKernel(i, j);
 		}
@@ -176,14 +177,15 @@ void runParallelDynamicColumns() {
 	thread threads[16];
 
 	int threadId = 0;
+
 	int columnsPerThread = M / P;
 	int columnsLeft = M % P;
 
 	for (int k = 0; k < M; k += columnsPerThread) {
 		int start = k;
 		if (columnsLeft > 0) {
-			--columnsLeft;
-			++k;
+			columnsLeft--;
+			k++;
 		}
 		int end = k + columnsPerThread - 1;
 
@@ -192,7 +194,7 @@ void runParallelDynamicColumns() {
 	}
 
 	// Wait for all threads to complete
-	for (int i = 0; i < P; i++) {
+	for (int i = 0; i < threadId; i++) {
 		threads[i].join();
 	}
 }
@@ -217,10 +219,10 @@ Block* slice2d(int i, int j, int n, int m, int p, Block blocks[], int& blockInde
 	}
 
 	if (n - i > m - j) {
-		slice2d(i, j, n / 2, m, p / 2, blocks, blockIndex);
+		slice2d(i, j, (n + m)/ 2, m, p / 2, blocks, blockIndex);
 		slice2d(i + n / 2, j, n - n / 2, m, p / 2 + p % 2, blocks, blockIndex);
 	} else {
-		slice2d(i, j, n, m / 2, p / 2 + p % 2, blocks, blockIndex);
+		slice2d(i, j, n, (m+n) / 2, p / 2 + p % 2, blocks, blockIndex);
 		slice2d(i, j + m / 2, n, m - m / 2, p / 2, blocks, blockIndex);
 	}
 
@@ -244,7 +246,7 @@ void runParallelDynamicBlocks() {
 	int threadId = 0;
 	int columnsPerThread = M / P;
 	int columnsLeft = M % P;
-	Block blocks[5];
+	Block blocks[100];
 
 	int blockIndex = 0;
 	slice2d(0, 0, N, M, P, blocks, blockIndex);
@@ -326,17 +328,17 @@ int main(int argc, char** argv) {
 	readImage();
 	readKernel();
 
-	// p = stoi(argv[1]);
-	P = 1;
+	// P = stoi(argv[1]);
+	P = 16;
 	if (P == 1) {
 		runSequentiallyDynamic();
 	}
 	else {
 		// runParallelDynamicLines();
 		// runParallelDynamicColumns();
-		// runParallelDynamicBlocks();
+		runParallelDynamicBlocks();
 		// runParallelDynamicLinear();
-		runParallelDynamicCyclic();
+		// runParallelDynamicCyclic();
 	}
 
 	auto endTime = chrono::high_resolution_clock::now();

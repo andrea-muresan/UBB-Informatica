@@ -13,13 +13,15 @@ public class Main {
 //        int P = Integer.parseInt(args[0]);
 
         long startTime = System.nanoTime();
-//        sequential(image, kernel);
-        parallelLines(image, kernel, P);
-//        parallelColumns(image, kernel, P);
-//        parallelBlocks(image, kernel, P);
+        if (P == 1) {
+            sequential(image, kernel);
+        } else {
+//            parallelLines(image, kernel, P);
+//            parallelColumns(image, kernel, P);
+        parallelBlocks(image, kernel, P);
 //        parallelLinearDistribution(image, kernel, P);
 //        parallelCyclicDistribution(image, kernel, P);
-
+        }
         long endTime = System.nanoTime();
 
         System.out.println((double)(endTime - startTime)/1E6);//ms
@@ -33,15 +35,21 @@ public class Main {
     }
 
     private static void generate() throws IOException {
-        MatrixGenerator.generate(10, 10, "image");
-        MatrixGenerator.generate(3, 3, "filter");
+        MatrixGenerator.generate(1000, 1000, "image");
+        MatrixGenerator.generate(5, 5, "filter");
+
+        int[][] image = Utils.readMatrix(Utils.matrixFileName);
+        int[][] kernel = Utils.readMatrix(Utils.kernelFileName);
+
+        Convolution conv = new SequentialConvolution(image, kernel);
+        int[][] answer = conv.apply();
+
+        Utils.writeMatrix(answer, "result.txt");
     }
 
     private static void sequential(int[][] image, int[][] kernel) throws IOException {
         Convolution conv = new SequentialConvolution(image, kernel);
         int[][] answer = conv.apply();
-
-//        Utils.writeMatrix(answer, "result.txt");
 
         verify(answer);
     }
@@ -75,7 +83,8 @@ public class Main {
     }
 
     public static void verify(int[][] answer) throws IOException {
-        int[][] answerFile = Utils.readMatrix("result.txt");
+        int[][] answerFile = Utils.readMatrix("C:\\Users\\Lenovo\\Desktop\\Github\\UBB-Informatica\\Anul_3\\Semestrul_1\\Programare paralela si distributiva\\Tema1\\Tema1_Java\\result.txt");
+
         if (!Arrays.deepEquals(answer, answerFile)) {
             throw new RuntimeException("Rezultatele nu coincide.");
         };

@@ -16,7 +16,7 @@
 		},
 		{
 			"isGenerated" : true,
-			"path" : "cmake-build-debug/CMakeFiles/3.29.6/CMakeSystem.cmake"
+			"path" : "cmake-build-release/CMakeFiles/3.29.6/CMakeSystem.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -290,7 +290,7 @@
 		},
 		{
 			"isGenerated" : true,
-			"path" : "cmake-build-debug/CMakeFiles/3.29.6/CMakeCCompiler.cmake"
+			"path" : "cmake-build-release/CMakeFiles/3.29.6/CMakeCCompiler.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -544,7 +544,7 @@
 		},
 		{
 			"isGenerated" : true,
-			"path" : "cmake-build-debug/CMakeFiles/3.29.6/CMakeCXXCompiler.cmake"
+			"path" : "cmake-build-release/CMakeFiles/3.29.6/CMakeCXXCompiler.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -618,7 +618,7 @@
 		},
 		{
 			"isGenerated" : true,
-			"path" : "cmake-build-debug/CMakeFiles/3.29.6/CMakeRCCompiler.cmake"
+			"path" : "cmake-build-release/CMakeFiles/3.29.6/CMakeRCCompiler.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -702,7 +702,7 @@
 		},
 		{
 			"isGenerated" : true,
-			"path" : "cmake-build-debug/CMakeFiles/3.29.6/CMakeCCompiler.cmake"
+			"path" : "cmake-build-release/CMakeFiles/3.29.6/CMakeCCompiler.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -806,7 +806,7 @@
 		},
 		{
 			"isGenerated" : true,
-			"path" : "cmake-build-debug/CMakeFiles/3.29.6/CMakeCXXCompiler.cmake"
+			"path" : "cmake-build-release/CMakeFiles/3.29.6/CMakeCXXCompiler.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -817,7 +817,7 @@
 	"kind" : "cmakeFiles",
 	"paths" : 
 	{
-		"build" : "C:/Users/Lenovo/Desktop/Github/UBB-Informatica/Anul_3/Semestrul_1/Programare paralela si distributiva/Tema1/Tema1_Cpp/Dynamic/cmake-build-debug",
+		"build" : "C:/Users/Lenovo/Desktop/Github/UBB-Informatica/Anul_3/Semestrul_1/Programare paralela si distributiva/Tema1/Tema1_Cpp/Dynamic/cmake-build-release",
 		"source" : "C:/Users/Lenovo/Desktop/Github/UBB-Informatica/Anul_3/Semestrul_1/Programare paralela si distributiva/Tema1/Tema1_Cpp/Dynamic"
 	},
 	"version" : 

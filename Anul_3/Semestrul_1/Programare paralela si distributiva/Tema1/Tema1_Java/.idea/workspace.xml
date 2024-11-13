@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="7cd4f979-becc-4564-bc10-bbba77a4be5e" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../Tema1_Cpp/Dynamic/cmake-build-release/scriptC.ps1" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tema1_Cpp/Dynamic/.idea/editor.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Tema1_Cpp/Dynamic/.idea/editor.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tema1_Cpp/Dynamic/cmake-build-debug/.cmake/api/v1/reply/cmakeFiles-v1-1a7addf0a72294c13b2d.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tema1_Cpp/Dynamic/cmake-build-debug/.cmake/api/v1/reply/index-2024-11-12T16-50-58-0622.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tema1_Cpp/Dynamic/cmake-build-debug/.ninja_deps" beforeDir="false" afterPath="$PROJECT_DIR$/../Tema1_Cpp/Dynamic/cmake-build-debug/.ninja_deps" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tema1_Cpp/Dynamic/cmake-build-debug/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/../Tema1_Cpp/Dynamic/cmake-build-debug/.ninja_log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tema1_Cpp/Dynamic/cmake-build-debug/CMakeFiles/Dynamic.dir/main.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/../Tema1_Cpp/Dynamic/cmake-build-debug/CMakeFiles/Dynamic.dir/main.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tema1_Cpp/Dynamic/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Tema1_Cpp/Dynamic/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tema1_Cpp/Dynamic/cmake-build-debug/Dynamic.exe" beforeDir="false" afterPath="$PROJECT_DIR$/../Tema1_Cpp/Dynamic/cmake-build-debug/Dynamic.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tema1_Cpp/Dynamic/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/../Tema1_Cpp/Dynamic/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tema1_Cpp/Dynamic/cmake-build-debug/build.ninja" beforeDir="false" afterPath="$PROJECT_DIR$/../Tema1_Cpp/Dynamic/cmake-build-debug/build.ninja" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tema1_Cpp/Dynamic/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../Tema1_Cpp/Dynamic/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tema1_Cpp/Static/.idea/editor.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Tema1_Cpp/Static/.idea/editor.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tema1_Cpp/Static/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Tema1_Cpp/Static/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tema1_Cpp/Static/cmake-build-debug/.cmake/api/v1/reply/cmakeFiles-v1-1ee39fa381013bbcc997.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tema1_Cpp/Static/cmake-build-debug/.cmake/api/v1/reply/index-2024-11-12T16-50-37-0334.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tema1_Cpp/Static/cmake-build-debug/.ninja_deps" beforeDir="false" afterPath="$PROJECT_DIR$/../Tema1_Cpp/Static/cmake-build-debug/.ninja_deps" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tema1_Cpp/Static/cmake-build-debug/.ninja_log" beforeDir="false" afterPath="$PROJECT_DIR$/../Tema1_Cpp/Static/cmake-build-debug/.ninja_log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tema1_Cpp/Static/cmake-build-debug/CMakeFiles/Static.dir/main.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/../Tema1_Cpp/Static/cmake-build-debug/CMakeFiles/Static.dir/main.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tema1_Cpp/Static/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Tema1_Cpp/Static/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tema1_Cpp/Static/cmake-build-debug/Static.exe" beforeDir="false" afterPath="$PROJECT_DIR$/../Tema1_Cpp/Static/cmake-build-debug/Static.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tema1_Cpp/Static/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/../Tema1_Cpp/Static/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tema1_Cpp/Static/cmake-build-debug/build.ninja" beforeDir="false" afterPath="$PROJECT_DIR$/../Tema1_Cpp/Static/cmake-build-debug/build.ninja" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Tema1_Cpp/Static/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/../Tema1_Cpp/Static/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.4/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.4/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.4/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.4/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.4/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.4/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/BlocksConvolution.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/BlocksConvolution.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/org/example/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/org/example/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kernel.txt" beforeDir="false" afterPath="$PROJECT_DIR$/kernel.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/result.txt" beforeDir="false" afterPath="$PROJECT_DIR$/result.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/BlocksConvolution.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/BlocksConvolution.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DarkyenusTimeTracker">
+    <option name="totalTimeSeconds" value="22276" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/../../../../.." value="AI" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../../.." />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="2oi6fBAo3yTEIquiVEjQ3AXIW8e" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.Build Tema1_Java.executor": "Run",
+    "Gradle.Tema1_Java [:Main.main()].executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "PPD",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.21679688",
+    "project.structure.side.proportion": "0.3483146",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Lenovo\Desktop\Github\UBB-Informatica\Anul_3\Semestrul_1\Programare paralela si distributiva\Tema1\Tema1_Java\out" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.Main" />
+      <module name="Tema1_Java.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7cd4f979-becc-4564-bc10-bbba77a4be5e" name="Changes" comment="" />
+      <created>1731340150359</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1731340150359</updated>
+      <workItem from="1731340151998" duration="12557000" />
+      <workItem from="1731358929420" duration="6381000" />
+      <workItem from="1731424149730" duration="6869000" />
+      <workItem from="1731442449390" duration="3532000" />
+      <workItem from="1731495147119" duration="7732000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/LinearDistributionConvolution.java</url>
+          <line>17</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/BlocksConvolution.java</url>
+          <line>41</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

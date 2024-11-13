@@ -18,13 +18,13 @@ public class BlocksConvolution extends Convolution {
         List<Block> blocks = new ArrayList<>();
 
         if (n - i > m - j) {
-            Block[] s1 = slice2d(i, j, n / 2, m, p / 2);
+            Block[] s1 = slice2d(i, j, (n + m) / 2, m, p / 2);
             Block[] s2 = slice2d(i + n / 2, j, n, m, p / 2 + p % 2);
 
             Collections.addAll(blocks, s1);
             Collections.addAll(blocks, s2);
         } else {
-            Block[] s1 = slice2d(i, j, n, m / 2, p / 2 + p % 2);
+            Block[] s1 = slice2d(i, j, n, (m + n) / 2, p / 2 + p % 2);
             Block[] s2 = slice2d(i, j + m / 2, n, m, p / 2);
 
             Collections.addAll(blocks, s1);
