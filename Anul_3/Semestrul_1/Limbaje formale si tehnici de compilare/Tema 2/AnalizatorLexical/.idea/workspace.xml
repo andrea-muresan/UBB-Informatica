@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="c000c572-6a3e-4b05-8850-ffd3e88e62fe" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../../Tema 1/AnalizatorLexical/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../Tema 1/AnalizatorLexical/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Programare paralela si distributiva/Tema1/Tema1_Cpp/.idea/.idea.Tema1_Cpp/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Programare paralela si distributiva/Tema1/Tema1_Cpp/.idea/.idea.Tema1_Cpp/.idea/indexLayout.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Programare paralela si distributiva/Tema1/Tema1_Cpp/.idea/.idea.Tema1_Cpp/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Programare paralela si distributiva/Tema1/Tema1_Cpp/Tema1_Cpp.sln" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Programare paralela si distributiva/Tema1/Tema1_Cpp/Tema1_Cpp/Tema1_Cpp.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Programare paralela si distributiva/Tema1/Tema1_Cpp/Tema1_Cpp/Tema1_Cpp.vcxproj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Programare paralela si distributiva/Tema1/Tema1_Cpp/Tema1_Cpp/Tema1_Cpp.vcxproj.filters" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Programare paralela si distributiva/Tema1/Tema1_Cpp/Tema1_Cpp/x64/Debug/Tema1_Cpp.exe.recipe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Programare paralela si distributiva/Tema1/Tema1_Cpp/Tema1_Cpp/x64/Debug/Tema1_Cpp.ilk" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Programare paralela si distributiva/Tema1/Tema1_Cpp/Tema1_Cpp/x64/Debug/Tema1_Cpp.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Programare paralela si distributiva/Tema1/Tema1_Cpp/Tema1_Cpp/x64/Debug/Tema1_Cpp.tlog/CL.command.1.tlog" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Programare paralela si distributiva/Tema1/Tema1_Cpp/Tema1_Cpp/x64/Debug/Tema1_Cpp.tlog/CL.read.1.tlog" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Programare paralela si distributiva/Tema1/Tema1_Cpp/Tema1_Cpp/x64/Debug/Tema1_Cpp.tlog/CL.write.1.tlog" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Programare paralela si distributiva/Tema1/Tema1_Cpp/Tema1_Cpp/x64/Debug/Tema1_Cpp.tlog/Tema1_Cpp.lastbuildstate" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Programare paralela si distributiva/Tema1/Tema1_Cpp/Tema1_Cpp/x64/Debug/Tema1_Cpp.tlog/link.command.1.tlog" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Programare paralela si distributiva/Tema1/Tema1_Cpp/Tema1_Cpp/x64/Debug/Tema1_Cpp.tlog/link.read.1.tlog" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Programare paralela si distributiva/Tema1/Tema1_Cpp/Tema1_Cpp/x64/Debug/Tema1_Cpp.tlog/link.write.1.tlog" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Programare paralela si distributiva/Tema1/Tema1_Cpp/Tema1_Cpp/x64/Debug/vc143.idb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Programare paralela si distributiva/Tema1/Tema1_Cpp/Tema1_Cpp/x64/Debug/vc143.pdb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Programare paralela si distributiva/Tema1/Tema1_Cpp/x64/Debug/Tema1_Cpp.exe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Programare paralela si distributiva/Tema1/Tema1_Cpp/x64/Debug/Tema1_Cpp.pdb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Programare paralela si distributiva/Tema1/Tema1_Java/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Programare paralela si distributiva/Tema1/Tema1_Java/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Programare paralela si distributiva/Tema1/Tema1_Java/.idea/gradle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Programare paralela si distributiva/Tema1/Tema1_Java/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Programare paralela si distributiva/Tema1/Tema1_Java/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Programare paralela si distributiva/Tema1/Tema1_Java/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Programare paralela si distributiva/Tema1/Tema1_Java/build.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Programare paralela si distributiva/Tema1/Tema1_Java/data.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Programare paralela si distributiva/Tema1/Tema1_Java/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Programare paralela si distributiva/Tema1/Tema1_Java/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Programare paralela si distributiva/Tema1/Tema1_Java/gradlew" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Programare paralela si distributiva/Tema1/Tema1_Java/gradlew.bat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Programare paralela si distributiva/Tema1/Tema1_Java/kernel.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Programare paralela si distributiva/Tema1/Tema1_Java/result.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Programare paralela si distributiva/Tema1/Tema1_Java/settings.gradle" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Programare paralela si distributiva/Tema1/Tema1_Java/src/main/java/org/example/ColumnsBatchConvolution.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Programare paralela si distributiva/Tema1/Tema1_Java/src/main/java/org/example/Convolution.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Programare paralela si distributiva/Tema1/Tema1_Java/src/main/java/org/example/LinesBatchConvolution.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Programare paralela si distributiva/Tema1/Tema1_Java/src/main/java/org/example/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Programare paralela si distributiva/Tema1/Tema1_Java/src/main/java/org/example/MatrixGenerator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Programare paralela si distributiva/Tema1/Tema1_Java/src/main/java/org/example/SequentialConvolution.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Programare paralela si distributiva/Tema1/Tema1_Java/src/main/java/org/example/Utils.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../../.." />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 6
+}]]></component>
+  <component name="ProjectId" id="2oi6W5fEyQBEZPxpWyyoxvv0r11" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "Rebasing PPD",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c000c572-6a3e-4b05-8850-ffd3e88e62fe" name="Changes" comment="" />
+      <created>1731340083391</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1731340083391</updated>
+      <workItem from="1731340087793" duration="60000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
