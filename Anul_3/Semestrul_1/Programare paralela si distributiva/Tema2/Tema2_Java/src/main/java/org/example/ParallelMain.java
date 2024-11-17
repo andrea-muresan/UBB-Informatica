@@ -1,13 +1,12 @@
 package org.example;
 
-
 import java.io.IOException;
 import java.util.concurrent.CyclicBarrier;
 
 public class ParallelMain {
     public static void main(String[] args) throws IOException {
-        int P = 2;
-//        int P = Integer.parseInt(args[0]);
+//        int P = 2;
+        int P = Integer.parseInt(args[0]);
         CyclicBarrier barrier = new CyclicBarrier(P);
 
         int[][] image = Utils.readMatrix("C:\\Users\\Lenovo\\Desktop\\Github\\UBB-Informatica\\Anul_3\\Semestrul_1\\Programare paralela si distributiva\\Tema2\\Tema2_Java\\data.txt");

@@ -335,10 +335,15 @@ int main(int argc, char** argv) {
 	}
 	else {
 		// runParallelDynamicLines();
+		// verify();
 		// runParallelDynamicColumns();
+		// verify();
 		runParallelDynamicBlocks();
-		// runParallelDynamicLinear();
-		// runParallelDynamicCyclic();
+		verify();
+		runParallelDynamicLinear();
+		verify();
+		runParallelDynamicCyclic();
+		verify();
 	}
 
 	auto endTime = chrono::high_resolution_clock::now();

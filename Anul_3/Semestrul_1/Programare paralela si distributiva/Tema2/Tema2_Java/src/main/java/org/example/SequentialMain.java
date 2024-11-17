@@ -6,8 +6,8 @@ public class SequentialMain {
     private static final ConvolutionOperation convolution = ConvolutionOperation.getInstance();
 
     public static void main(String[] args) throws IOException {
-//        MatrixGenerator.generate(5, 5, "image");
-//        MatrixGenerator.generate(3, 3, "kernel");
+        MatrixGenerator.generate(1000, 1000, "image");
+        MatrixGenerator.generate(3, 3, "kernel");
 
         int[][] image = Utils.readMatrix("C:\\Users\\Lenovo\\Desktop\\Github\\UBB-Informatica\\Anul_3\\Semestrul_1\\Programare paralela si distributiva\\Tema2\\Tema2_Java\\data.txt");
         int[][] kernel = Utils.readMatrix("C:\\Users\\Lenovo\\Desktop\\Github\\UBB-Informatica\\Anul_3\\Semestrul_1\\Programare paralela si distributiva\\Tema2\\Tema2_Java\\filter.txt");

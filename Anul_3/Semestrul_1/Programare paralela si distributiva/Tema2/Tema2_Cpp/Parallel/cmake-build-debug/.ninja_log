@@ -1,0 +1,13 @@
+# ninja log v6
+31	3203	7532376864370669	CMakeFiles/Parallel.dir/my_barrier.cpp.obj	9f7e8eb4d24810ee
+16	3774	7532377531577293	CMakeFiles/Parallel.dir/main_buffer.cpp.obj	4f82e18cb2cf16c2
+18	3549	7532379560432866	CMakeFiles/Parallel.dir/main_mutex.cpp.obj	ab4c887f1bdbcd56
+5	432	7532408539354046	build.ninja	8f26c5fff60d7786
+14	3747	7532395251519527	CMakeFiles/Parallel.dir/main.cpp.obj	3df2cf7314170679
+3749	4126	7532395288869152	Parallel.exe	7f034d838f5effb2
+15	5582	7532409875279041	CMakeFiles/Parallel.dir/main.cpp.obj	3df2cf7314170679
+5584	5935	7532409930969979	Parallel.exe	7f034d838f5effb2
+20	5316	7532410275737517	CMakeFiles/Parallel.dir/main.cpp.obj	3df2cf7314170679
+5319	5801	7532410328723224	Parallel.exe	7f034d838f5effb2
+22	3843	7532410757032848	CMakeFiles/Parallel.dir/main.cpp.obj	3df2cf7314170679
+3844	4151	7532410795244808	Parallel.exe	7f034d838f5effb2
