@@ -1,0 +1,14 @@
+#include <iostream>
+using namespace std;
+
+int main () {
+	float radius, per, pi;
+	pi=3.14;
+	per=100;
+	cin>>radius;
+	area123=pi*radius*radius;
+	cout<<area123;
+	cattimp(per)executa
+	per=per-1;
+	sfcattimp
+}
