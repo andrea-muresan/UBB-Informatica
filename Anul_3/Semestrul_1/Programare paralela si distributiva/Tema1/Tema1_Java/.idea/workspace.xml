@@ -4,27 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7cd4f979-becc-4564-bc10-bbba77a4be5e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../../Tema2/Tema2_Cpp/Parallel/my_barrier.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Tema2/Tema2_Cpp/Parallel/my_barrier.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../Tema2/Tema2_Cpp/Sequential/cmake-build-release/scriptC.ps1" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Tema1_Cpp/Static/cmake-build-release/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/../Tema1_Cpp/Static/cmake-build-release/Testing/Temporary/LastTest.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Tema2/Tema2_Java/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../Tema2/Tema2_Java/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Tema2/Tema2_Java/data.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../Tema2/Tema2_Java/data.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Tema2/Tema2_Java/filter.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../Tema2/Tema2_Java/filter.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Tema2/Tema2_Java/result.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../Tema2/Tema2_Java/result.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Tema2/Tema2_Java/src/main/java/org/example/ParallelMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Tema2/Tema2_Java/src/main/java/org/example/ParallelMain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../Tema2/Tema2_Java/src/main/java/org/example/SequentialMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Tema2/Tema2_Java/src/main/java/org/example/SequentialMain.java" afterDir="false" />
-    </list>
+    <list default="true" id="7cd4f979-becc-4564-bc10-bbba77a4be5e" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="22276" />
+    <option name="totalTimeSeconds" value="22317" />
   </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
@@ -55,27 +42,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Gradle.Build Tema1_Java.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Tema1_Java [:Main.main()].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;PPD&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.21679688&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.3483146&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.Build Tema1_Java.executor": "Run",
+    "Gradle.Tema1_Java [:Main.main()].executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "PPD",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Lenovo/Desktop/Github/UBB-Informatica/Anul_3/Semestrul_1/Programarea dispozitivelor mobile/Ionic 3/server",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.21679688",
+    "project.structure.side.proportion": "0.3483146",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Lenovo\Desktop\Github\UBB-Informatica\Anul_3\Semestrul_1\Programare paralela si distributiva\Tema1\Tema1_Java\out" />
@@ -116,6 +104,7 @@
       <workItem from="1731495147119" duration="7732000" />
       <workItem from="1731536744576" duration="12000" />
       <workItem from="1731571731762" duration="3524000" />
+      <workItem from="1731947557542" duration="44000" />
     </task>
     <servers />
   </component>
