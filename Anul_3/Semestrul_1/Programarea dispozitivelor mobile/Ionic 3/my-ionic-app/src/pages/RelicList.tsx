@@ -68,7 +68,7 @@ const RelicList: React.FC<RouteComponentProps> = ({ history }) => {
                 <IonLoading isOpen={fetching} message="Fetching relics" />
                 {relics && (
                     <><IonList>
-                        {relics.slice(0, loadedRelics).map(({ id, name, location, dateInStock, isCursed, price, photo }) => (
+                        {relics.slice(0, loadedRelics).map(({ id, name, location, dateInStock, isCursed, price, photo, lat, lng }) => (
                             <Relic
                                 key={id}
                                 id={id}
@@ -78,6 +78,8 @@ const RelicList: React.FC<RouteComponentProps> = ({ history }) => {
                                 isCursed={isCursed}
                                 price={price}
                                 photo={photo}
+                                lat={lat}
+                                lng={lng}
                                 onEdit={(relicId) => history.push(`/relic/${relicId}`)}
                             />
                         ))}

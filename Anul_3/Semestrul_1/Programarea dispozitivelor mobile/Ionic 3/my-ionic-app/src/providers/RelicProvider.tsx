@@ -6,7 +6,7 @@ import { createRelic, getRelics, newWebSocket, updateRelic } from '../api/relicA
 import { AuthContext } from '.';
 import { useNetwork } from '../hooks/useNetwork';
 import { Preferences } from '@capacitor/preferences';
-import { MyPhoto, usePhotos } from '../hooks/usePhotos';
+import { usePhotos } from '../hooks/usePhotos';
 
 const log = getLogger('RelicProvider');
 

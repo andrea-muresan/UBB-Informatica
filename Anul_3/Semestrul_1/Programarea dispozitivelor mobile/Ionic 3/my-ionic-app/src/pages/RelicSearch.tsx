@@ -65,7 +65,7 @@ const RelicSearch: React.FC<RouteComponentProps> = ({ history }) => {
                             return nameMatch && locationMatch;
                         })
                         .slice(0, loadedRelics)
-                        .map(({ id, name, location, dateInStock, isCursed, price }) => (
+                        .map(({ id, name, location, dateInStock, isCursed, price, photo }) => (
                             <Relic
                                 key={id}
                                 id={id}
@@ -74,6 +74,7 @@ const RelicSearch: React.FC<RouteComponentProps> = ({ history }) => {
                                 dateInStock={dateInStock}
                                 isCursed={isCursed}
                                 price={price}
+                                photo={photo}
                                 onEdit={id => history.push(`/relic/${id}`)}
                             />
                         ))

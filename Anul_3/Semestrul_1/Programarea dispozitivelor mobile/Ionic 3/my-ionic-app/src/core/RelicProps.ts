@@ -9,4 +9,6 @@ export interface RelicProps {
     price : number;
     dirty?: boolean;
     photo?: string;
+    lat?: number;
+    lng?: number;
 }

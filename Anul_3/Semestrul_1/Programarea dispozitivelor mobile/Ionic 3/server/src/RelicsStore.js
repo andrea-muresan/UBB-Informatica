@@ -58,6 +58,7 @@ export class RelicStore {
 
     async update(props, relic) {
         const { name, location, dateInStock, isCursed, price, photo, lat, lng } = relic;
+        console.log("^^^^^^^^^^^^^^^^^^^^" + {photo});
         await this.db.run('UPDATE relics SET name = ?, location = ?, dateInStock = ?, isCursed = ?, price = ?, photo = ?, lat = ?, lng = ? WHERE id = ?',
             [name, location, dateInStock, isCursed, price, photo, lat, lng, props.id]);
         return 1;

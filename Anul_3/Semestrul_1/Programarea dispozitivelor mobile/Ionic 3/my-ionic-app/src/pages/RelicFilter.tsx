@@ -117,7 +117,7 @@ const RelicFilter: React.FC<RouteComponentProps> = ({ history }) => {
 
 
                 <IonList>
-                    {!loading && filteredRelics && filteredRelics.slice(0, loadedRelics).map(({ id, name, location, dateInStock, isCursed, price }) => (
+                    {!loading && filteredRelics && filteredRelics.slice(0, loadedRelics).map(({ id, name, location, dateInStock, isCursed, price, photo }) => (
                         <Relic
                             key={id}
                             id={id}
@@ -126,6 +126,7 @@ const RelicFilter: React.FC<RouteComponentProps> = ({ history }) => {
                             dateInStock={dateInStock}
                             isCursed={isCursed}
                             price={price}
+                            photo={photo}
                             onEdit={() => history.push(`/relic/${id}`)}
                         />
                     ))}

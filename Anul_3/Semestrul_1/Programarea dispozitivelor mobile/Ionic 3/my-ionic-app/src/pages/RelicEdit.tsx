@@ -24,6 +24,9 @@ import { format, set } from 'date-fns';
 import CustomToolbar from '../components/CustomToolbar';
 import { camera, images, trash, close } from 'ionicons/icons';
 import { MyPhoto, usePhotos } from '../hooks/usePhotos';
+import { useMyLocation } from '../hooks/useMyLocation';
+import MyMap from '../components/MyMap';
+import { createAnimation } from '@ionic/react';
 
 const log = getLogger('RelicEdit');
 
@@ -63,14 +66,27 @@ const RelicEdit: React.FC<RelicEditProps> = ({ history, match }) => {
     const { relics, saving, saveRelic } = useContext(RelicContext);
     const { takePhoto, deletePhoto } = usePhotos();
     const [relic, setRelic] = useState<RelicProps | undefined>(undefined);
-    const [name, setName] = useState('Type a name');
-    const [location, setLocation] = useState('Type an location');
+    const [name, setName] = useState('');
+    const [location, setLocation] = useState('');
     const [dateInStock, setDateInStock] = useState<Date | undefined>(undefined);
     const [isCursed, setIsCursed] = useState(false);
     const [price, setPrice] = useState(0);
     const [photo, setPhoto] = useState<string | undefined>(undefined);
+    const [lat, setLat] = useState<number | undefined>(undefined);
+    const [lng, setLng] = useState<number | undefined>(undefined);
     const [photoToDelete, setPhotoToDelete] = useState<MyPhoto>();
     const [unsavedChanges, setUnsavedChanges] = useState(false);
+    const myLocation = useMyLocation();
+    const [shakeAnimation, setShakeAnimation] = useState(false);
+
+    useEffect(() => {
+        if (myLocation.position?.coords && !lat && !lng) {
+            const { latitude, longitude } = myLocation.position.coords;
+            log(`useEffect - Setting lat: ${latitude}, lng: ${longitude}`);
+            setLat(latitude);
+            setLng(longitude);
+        }
+    }, [myLocation]);
 
     useEffect(() => {
         log('useEffect - Fetching relic details');
@@ -86,6 +102,8 @@ const RelicEdit: React.FC<RelicEditProps> = ({ history, match }) => {
             setIsCursed(foundRelic.isCursed);
             setPrice(foundRelic.price);
             setPhoto(foundRelic.photo);
+            setLat(foundRelic.lat);
+            setLng(foundRelic.lng);
         }
     }, [match.params.id, relics]);
 
@@ -95,6 +113,14 @@ const RelicEdit: React.FC<RelicEditProps> = ({ history, match }) => {
     } : undefined;
 
     const handleSave = useCallback(() => {
+        if (!name || !location) {
+            setShakeAnimation(true);
+            setTimeout(() => {
+                setShakeAnimation(false);
+            }, 1000);
+            return;
+        }
+
         const editedRelic: RelicProps = {
             id: relic?.id,
             name,
@@ -102,7 +128,9 @@ const RelicEdit: React.FC<RelicEditProps> = ({ history, match }) => {
             dateInStock: dateInStock || new Date(),
             isCursed,
             price,
-            photo
+            photo,
+            lat,
+            lng
         };
 
         setUnsavedChanges(false);
@@ -111,7 +139,55 @@ const RelicEdit: React.FC<RelicEditProps> = ({ history, match }) => {
             log('handleSave - Relic saved successfully. Navigating back.');
             history.goBack();
         });
-    }, [relic, saveRelic, name, location, dateInStock, isCursed, price, photo, history]);
+    }, [relic, saveRelic, name, location, dateInStock, isCursed, price, photo, lat, lng, history]);
+
+    const handleMapClick = useCallback((latLng: { latitude: number; longitude: number }) => {
+        const { latitude, longitude } = latLng;
+        log(`handleMapClick - lat: ${latitude}, lng: ${longitude}`);
+        setLat(latitude);
+        setLng(longitude);
+        setUnsavedChanges(true);
+    }, []);
+    useEffect(() => {
+        if (shakeAnimation) {
+            const emptyInputFields = [];
+            // Check if name is empty
+            if (!name.trim()) {
+                const nameInput = document.querySelector('.inputContainer.name input');
+                if (nameInput) {
+                    emptyInputFields.push(nameInput);
+                }
+            }
+            // Check if location is empty
+            if (!location.trim()) {
+                const locationInput = document.querySelector('.inputContainer.location input');
+                if (locationInput) {
+                    emptyInputFields.push(locationInput);
+                }
+            }
+            if (emptyInputFields.length > 0) {
+                emptyInputFields.forEach((inputField) => {
+                    const container = inputField.closest('.inputContainer');
+                    if (container) {
+                        const animation = createAnimation()
+                            .addElement(container)
+                            .duration(500)
+                            .direction('alternate')
+                            .iterations(3)
+                            .keyframes([
+                                { offset: 0, transform: 'translateX(0)' },
+                                { offset: 0.25, transform: 'translateX(-10px)' },
+                                { offset: 0.5, transform: 'translateX(10px)' },
+                                { offset: 0.75, transform: 'translateX(-10px)' },
+                                { offset: 1, transform: 'translateX(0)' }
+                            ]);
+                        animation.play();
+                    }
+                });
+            }
+        }
+    }, [shakeAnimation, name, location]);
+
 
     log('render ' + name);
     return (
@@ -120,14 +196,14 @@ const RelicEdit: React.FC<RelicEditProps> = ({ history, match }) => {
                 <CustomToolbar title="Edit Relic" titleStyle="title" />
             </IonHeader>
             <IonContent>
-                <div className='inputContainer' >
+                <div className='inputContainer name' >
                     <IonLabel className='label'>Name:</IonLabel>
-                    <IonInput className='input' value={name} onIonChange={(e) => {setName(e.detail.value || ''); setUnsavedChanges(true);}} />
+                    <IonInput className='input'  placeholder='Type a name' value={name} onIonChange={(e) => {setName(e.detail.value || ''); setUnsavedChanges(true);}} />
                 </div>
 
-                <div className='inputContainer'>
+                <div className='inputContainer location'>
                     <IonLabel className='label'>Location:</IonLabel>
-                    <IonInput className='input' value={location} onIonChange={(e) => {setLocation(e.detail.value || '');  setUnsavedChanges(true);}} />
+                    <IonInput className='input' placeholder='Type an location' value={location} onIonChange={(e) => {setLocation(e.detail.value || '');  setUnsavedChanges(true);}} />
                 </div>
 
                 <div className='inputContainer'>
@@ -135,6 +211,7 @@ const RelicEdit: React.FC<RelicEditProps> = ({ history, match }) => {
                     <IonInput
                         class="input"
                         className='input'
+                        placeholder='dd/MM/yyyy'
                         value={dateInStock ? format(new Date(dateInStock), 'dd/MM/yyyy') : ''}
                         onIonChange={(e) => {
                             const inputDate = parseDDMMYYYY(e.detail.value || '');
@@ -159,12 +236,19 @@ const RelicEdit: React.FC<RelicEditProps> = ({ history, match }) => {
                     <IonInput className='input' type="number" value={price.toString()} onIonChange={(e) => {setPrice(parseInt(e.detail.value || '0')); setUnsavedChanges(true);}} />
                 </div>
 
+                {lat && lng &&
+                    <MyMap
+                        lat={lat}
+                        lng={lng}
+                        onMapClick={(e) => handleMapClick(e)}
+                    />}
+
                 {myPhoto && (
                     <IonImg
                         onClick={() => setPhotoToDelete(myPhoto)}
                         src={myPhoto.webviewPath}
                         alt={myPhoto.filepath}
-                        style={{ width: '100%', height: 'auto' }}
+                        style={{ width: '20%', height: 'auto', marginLeft: '40%' }}
                     />
                 )}
 
