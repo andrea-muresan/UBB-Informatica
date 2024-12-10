@@ -1,0 +1,4 @@
+S -> aA | bB 
+A -> a  
+B -> b 
+Defineste o clasa de gramatica care afiseaza productiile la stanga, fiecare regula e scrisa pe o linie
