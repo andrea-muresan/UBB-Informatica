@@ -1,0 +1,4 @@
+bison -d lab4.y
+flex lab4.l
+gcc lab4.tab.c lex.yy.c
+a.exe < mlp_example.txt
