@@ -1,0 +1,1 @@
+Rezolvarile partiale la Bogdan nu au implementata calcularea lui A si B.
