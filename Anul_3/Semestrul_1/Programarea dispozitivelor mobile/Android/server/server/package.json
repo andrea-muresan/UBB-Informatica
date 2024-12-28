@@ -1,0 +1,28 @@
+{
+  "name": "Book Store Server",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "keywords": [],
+  "author": "Martin Fabian",
+  "license": "",
+  "dependencies": {
+    "@koa/cors": "^3.1.0",
+    "@seald-io/nedb": "^4.0.2",
+    "jsonwebtoken": "9.0.0",
+    "koa": "^2.13.0",
+    "koa-bodyparser": "^4.3.0",
+    "koa-jwt": "^4.0.4",
+    "koa-router": "^8.0.8",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.6",
+    "ws": "7.4.6"
+  },
+  "engines": {
+    "node": ">= 7.6"
+  }
+}
