@@ -1,0 +1,236 @@
+/* Ionic Variables and Theming. For more info, please see:
+http://ionicframework.com/docs/theming/ */
+
+ion-range {
+    --bar-background: #8a4dbb;
+    --bar-background-active: #703ca0;
+    --bar-height: 8px;
+    --bar-border-radius: 8px;
+    --knob-background: var(--ion-color-tertiary-tint);
+    --knob-size: 30px;
+    --pin-background: var(--ion-color-primary);
+    --pin-color: #fff;
+    --pin-font-size: 14px;
+    max-width: 65%;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.header {
+    background-color: #1a1a1a;
+    color: #ffffff;
+}
+
+.content {
+    padding: 20px;
+}
+
+.inputContainer {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(34, 15, 84, 0.6);
+}
+
+.label {
+    margin-left: 20px;
+    margin-right: 10px;
+    min-width: 120px;
+    color: var(--ion-color-tertiary);
+    font-weight: bold;
+}
+
+.input {
+    flex: 1;
+    border-radius: 5px;
+    color: var(--ion-color-tertiary-tint);
+}
+
+.checkbox {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.button {
+    background-color: #8a4dbb;
+    color: #ffffff;
+    border-radius: 15px;
+}
+
+.errorMessage {
+    color: #ff4d4d;
+    margin-top: 10px;
+}
+
+.title {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--ion-color-secondary);
+}
+
+.custom-title {
+    text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 3rem;
+    font-weight: 600;
+    color: var(--ion-color-primary);
+}
+
+.custom-input {
+    width: 75%;
+    margin: 0 auto;
+}
+
+.custom-button {
+    width: 75%;
+    margin: 10px auto;
+    display: block;
+}
+
+.custom-toast {
+    --background: #5e3c6c;
+    --border-radius: 10px;
+    --color: white;
+    text-align: center;
+    max-width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    top: 90%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: fixed;
+    align-items: center;
+}
+
+/* Relic.css */
+.relic-item {
+    overflow: hidden;
+    margin-bottom: 10px;
+    background-color: #4b2b6e;
+}
+
+.relic-item h2 {
+    color: var(--ion-color-secondary-shade);
+    font-weight: bolder;
+    margin-bottom: 10px;
+}
+
+.relic-item p {
+    color: var(--ion-color-tertiary-tint);
+    margin: 5px 0;
+}
+
+.relic-item p.available {
+    color: #42d77d;
+}
+
+.relic-item p.not-available {
+    color: #dc3545;
+}
+
+/* Ionic CSS Variables */
+:root {
+    /** primary **/
+    --ion-color-primary: #5a2a7d;
+    --ion-color-primary-rgb: 90, 42, 125;
+    --ion-color-primary-contrast: #ffffff;
+    --ion-color-primary-contrast-rgb: 255, 255, 255;
+    --ion-color-primary-shade: #502572;
+    --ion-color-primary-tint: #693f8b;
+
+    /** secondary **/
+    --ion-color-secondary: #75499a;
+    --ion-color-secondary-rgb: 117, 73, 154;
+    --ion-color-secondary-contrast: #ffffff;
+    --ion-color-secondary-contrast-rgb: 255, 255, 255;
+    --ion-color-secondary-shade: #694287;
+    --ion-color-secondary-tint: #8750a7;
+
+    /** tertiary **/
+    --ion-color-tertiary: #8f6ab4;
+    --ion-color-tertiary-rgb: 143, 106, 180;
+    --ion-color-tertiary-contrast: #ffffff;
+    --ion-color-tertiary-contrast-rgb: 255, 255, 255;
+    --ion-color-tertiary-shade: #7f5e9f;
+    --ion-color-tertiary-tint: #9b76c1;
+
+    /** success **/
+    --ion-color-success: #42d77d;
+    --ion-color-success-rgb: 66, 215, 125;
+    --ion-color-success-contrast: #ffffff;
+    --ion-color-success-contrast-rgb: 255, 255, 255;
+    --ion-color-success-shade: #3ab469;
+    --ion-color-success-tint: #008000;
+
+    /** warning **/
+    --ion-color-warning: #b98834;
+    --ion-color-warning-rgb: 185, 136, 52;
+    --ion-color-warning-contrast: #000000;
+    --ion-color-warning-contrast-rgb: 0, 0, 0;
+    --ion-color-warning-shade: #a67a30;
+    --ion-color-warning-tint: #c89743;
+
+    /** danger **/
+    --ion-color-danger: #a54d6a;
+    --ion-color-danger-rgb: 165, 77, 106;
+    --ion-color-danger-contrast: #ffffff;
+    --ion-color-danger-contrast-rgb: 255, 255, 255;
+    --ion-color-danger-shade: #8f455c;
+    --ion-color-danger-tint: #FF0000;
+
+    /** dark **/
+    --ion-color-dark: #1a1a1a;
+    --ion-color-dark-rgb: 26, 26, 26;
+    --ion-color-dark-contrast: #ffffff;
+    --ion-color-dark-contrast-rgb: 255, 255, 255;
+    --ion-color-dark-shade: #161616;
+    --ion-color-dark-tint: #2e2e2e;
+
+    /** medium **/
+    --ion-color-medium: #6d647d;
+    --ion-color-medium-rgb: 109, 100, 125;
+    --ion-color-medium-contrast: #ffffff;
+    --ion-color-medium-contrast-rgb: 255, 255, 255;
+    --ion-color-medium-shade: #5d546c;
+    --ion-color-medium-tint: #7d748e;
+
+    /** light **/
+    --ion-color-light: #f3f2f5;
+    --ion-color-light-rgb: 243, 242, 245;
+    --ion-color-light-contrast: #000000;
+    --ion-color-light-contrast-rgb: 0, 0, 0;
+    --ion-color-light-shade: #d9d8da;
+    --ion-color-light-tint: #f5f4f7;
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        --ion-background-color: #1a1a1a;
+        --ion-text-color: #ffffff;
+        --ion-item-background: #262626;
+        --ion-card-background: #2e2e2e;
+
+        --ion-color-primary: #7a3db7;
+        --ion-color-primary-tint: #8a4dbb;
+
+        --ion-color-secondary: #a36db8;
+        --ion-color-secondary-tint: #b487c5;
+
+        --ion-color-tertiary: #bb83d3;
+        --ion-color-tertiary-tint: #c79ce0;
+
+        --ion-color-dark: #000000;
+    }
+}
+
+/*Search Page*/
+.custom-searchbar {
+    color: var(--ion-text-color);
+    margin: 5px 0;
+}
+
+.alert-radio-label .sc-ion-alert-md {
+    color: white;
+}

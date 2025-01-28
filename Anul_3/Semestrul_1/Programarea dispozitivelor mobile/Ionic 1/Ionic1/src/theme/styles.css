@@ -1,0 +1,8 @@
+
+:root{
+    ion-input {
+        --color: grey;
+        color: grey;
+        background: darkslategray;
+    }
+}

@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">BookStoreAndroid</string>
+    <string name="book">Book</string>
+    <string name="books">Books</string>
+    <string name="login">Login</string>
+    <string name="map_id">MAP_ID</string>
+</resources>
