@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 kotlin {
@@ -94,4 +95,16 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+
+    // WorkManager
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.5.1")
+    // Maps
+    implementation ("com.google.accompanist:accompanist-permissions:0.23.1")
+    implementation ("com.google.android.gms:play-services-location:21.0.1")
+    implementation ("com.google.maps.android:maps-compose:2.7.2")
+    implementation ("com.google.android.gms:play-services-maps:18.1.0")
+
+    implementation("androidx.compose.animation:animation:1.5.4")
+    implementation("androidx.transition:transition-ktx:1.4.1")
 }

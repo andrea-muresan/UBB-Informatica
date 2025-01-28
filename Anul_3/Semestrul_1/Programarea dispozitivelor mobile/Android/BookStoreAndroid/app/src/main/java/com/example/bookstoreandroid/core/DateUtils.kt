@@ -4,6 +4,10 @@ import android.util.Log
 import java.text.SimpleDateFormat
 import java.util.*
 import com.example.bookstoreandroid.core.TAG
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
+import java.util.TimeZone
 class DateUtils {
 
     companion object {
@@ -15,48 +19,39 @@ class DateUtils {
                 val formattedDateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
                 formattedDateFormat.format(date)
             } catch (e: Exception) {
-                Log.d(TAG, "Error converting date: ${e.toString()}")
+                Log.e(TAG, "Error converting date: $e")
                 return null
             }
         }
 
         fun parseDDMMYYYY(dateString: String): Date? {
-            try {
-                val (day, month, year) = dateString.split('/').map { it.toInt() }
-
-                if (day < 1 || month < 1 || year < 1) {
-                    Log.e(TAG, "Invalid date")
-                    return null
+            Log.d(TAG, "Parsing date: $dateString")
+            val formats = listOf(
+                SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()),
+                SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()),
+                SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+            )
+            for (format in formats) {
+                try {
+                    format.isLenient = false
+                    val parsedDate = format.parse(dateString)
+                    Log.d(TAG, "Parsed date: $parsedDate")
+                    if (parsedDate != null) {
+                        val yearFormat = SimpleDateFormat("yyyy", Locale.getDefault())
+                        val yearString = yearFormat.format(parsedDate)
+                        val year = yearString.toInt()
+                        val currentYear =
+                            Calendar.getInstance(TimeZone.getDefault()).get(Calendar.YEAR)
+                        if (year in 1000..currentYear) {
+                            Log.i(TAG, "Date parsed successfully")
+                            return parsedDate
+                        }
+                    }
+                } catch (e: Exception) {
+                    Log.e(TAG, "Error parsing date: $e")
                 }
-
-                val adjustedMonth = month - 1
-                val calendar = Calendar.getInstance()
-                calendar.timeZone = TimeZone.getTimeZone("UTC")
-                calendar.set(year, adjustedMonth, day, 0, 0, 0)
-                calendar.set(Calendar.MILLISECOND, 0)
-
-                val parsedDate = calendar.time
-
-                if (
-                    calendar.get(Calendar.DAY_OF_MONTH) != day ||
-                    calendar.get(Calendar.MONTH) != adjustedMonth ||
-                    calendar.get(Calendar.YEAR) != year
-                ) {
-                    Log.e(TAG, "Invalid date")
-                    return null
-                }
-
-                if (parsedDate.time < 0) {
-                    Log.e(TAG, "Invalid date")
-                    return null
-                }
-
-                return Date(parsedDate.time)
-            } catch (e: Exception) {
-                // Handle parsing errors
-                Log.e(TAG, "Error parsing date: ${e.toString()}")
-                return null
             }
+            return null
         }
     }
 }

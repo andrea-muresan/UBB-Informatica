@@ -16,6 +16,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getSystemService
 import com.example.bookstoreandroid.MainActivity
 import com.example.bookstoreandroid.R
+import android.util.Log
+import com.example.bookstoreandroid.BookStoreAndroid
 
 fun createNotificationChannel(channelId: String, context: Context) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -58,6 +60,8 @@ fun showSimpleNotificationWithTapAction(
         .setAutoCancel(true)
         .setSound(sound)
 
+    Log.d("Notification about to be sent", "Context: $context")
+
     with(NotificationManagerCompat.from(context)) {
         if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.POST_NOTIFICATIONS) != android.content.pm.PackageManager.PERMISSION_GRANTED) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -65,6 +69,8 @@ fun showSimpleNotificationWithTapAction(
                     arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), 1)
             }
         }
+        Log.d("Notification about to be built", "Context: $context")
         notify(notificationId, builder.build())
+        Log.d("Notification sent", "Context: $context")
     }
 }

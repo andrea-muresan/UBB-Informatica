@@ -15,9 +15,8 @@ import com.example.bookstoreandroid.core.TAG
 import com.example.bookstoreandroid.todo.data.Book
 import com.example.bookstoreandroid.todo.data.BookRepository
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
-import java.util.*
 import com.example.bookstoreandroid.core.DateUtils
+
 
 data class BookUiState(
     val bookId: String? = null,
@@ -41,13 +40,16 @@ class BookViewModel(private val bookId: String?, private val bookRepository: Boo
         }
     }
 
-    fun loadBook() {
+    private fun loadBook() {
         viewModelScope.launch {
             bookRepository.bookStream.collect { books ->
-                if (!(uiState.loadResult is Result.Loading)) {
+                Log.d(TAG, "Collecting books")
+                if (uiState.loadResult !is Result.Loading) {
                     return@collect
                 }
+                Log.d(TAG, "Collecting books - loadResult is loading, attempting to find book with id: $bookId")
                 val book = books.find { it.id == bookId } ?: Book()
+                Log.d(TAG, "Collecting books - book: $book")
                 uiState = uiState.copy(book = book, loadResult = Result.Success(book))
             }
         }
@@ -58,7 +60,9 @@ class BookViewModel(private val bookId: String?, private val bookRepository: Boo
         author: String,
         publicationDate: String,
         isAvailable: Boolean,
-        price: Double
+        price: Double,
+        lat: Double,
+        lng: Double
     ) {
         viewModelScope.launch {
             try {
@@ -77,14 +81,16 @@ class BookViewModel(private val bookId: String?, private val bookRepository: Boo
                     author = author,
                     publicationDate = formattedDateStr,
                     isAvailable = if (isAvailable) 1 else 0,
-                    price = price
+                    price = price,
+                    lat = lat,
+                    lng = lng
                 )
 
                 val savedBook: Book
-                if (bookId == null) {
-                    savedBook = bookRepository.save(book)
+                savedBook = if (bookId == null) {
+                    bookRepository.save(book)
                 } else {
-                    savedBook = bookRepository.update(book)
+                    bookRepository.update(book)
                 }
 
                 uiState = uiState.copy(submitResult = Result.Success(savedBook))
