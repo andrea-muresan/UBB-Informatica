@@ -1,0 +1,113 @@
+%{
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include "bison.tab.h"
+#include <string.h>
+
+int yyerror(char * s);
+int yyparse();
+
+FILE *fout;
+FILE *fin;
+char *dataSection;
+char *codeSection;
+
+%}
+
+%option noyywrap
+%option caseless
+
+digit				[0-9]
+ndigit				[1-9]
+
+int_const		{ndigit}{digit}*
+id   			[a-zA-Z][a-zA-Z0-9]*
+
+%%
+"#include" 			{ return INCLUDE; }
+
+"<iostream>" 		{ return IOSTREAM; }
+
+"using" 			{ return USING; }
+
+"namespace" 		{ return NAMESPACE; }
+
+"std" 				{ return STD; }
+
+"main" 				{ return MAIN; }
+
+"int" 				{ return INT; }
+
+"cin>>"|"cin >>" 	{ return CIN; }
+
+"cout <<"|"cout<<" 	{ return COUT; }
+
+";" 				{ return ';'; }
+
+"(" 				{ return '('; }
+
+")" 				{ return ')'; }
+
+"{" 				{ return '{'; }
+
+"}" 				{ return '}'; }
+
+"," 				{ return ','; }
+
+"=" 				{ return '='; }
+
+"-" 				{ return '-'; }
+
+"+" 				{ return '+'; }
+
+"*" 				{ return '*'; }
+
+"/" 				{ return '/'; }
+
+{id} 				{ strcpy(yylval.varname, yytext);	return ID; }
+
+{int_const}			{ strcpy(yylval.varname, yytext);	return CONST; }
+
+\n|\r|\r\n			;
+[ \t]+ 	        	;
+.                	;
+%%
+
+int yyerror(char* str){
+	printf("%s\n", str);
+	return 1;
+}
+
+void addToDataSection(char seq[500]) {
+	strcat(dataSection, seq);
+}
+
+void addToCodeSection(char seq[500]) {
+	strcat(codeSection, seq);
+}
+
+int main(int argc, char** argv) {
+	fin = fopen(argv[1], "r");
+	fout = fopen("out.asm", "w");
+	yyin = fin;
+	
+	dataSection = malloc(3000 * sizeof(char));
+	codeSection = malloc(3000 * sizeof(char));
+	
+	addToCodeSection("%include 'io.inc'\n");
+	addToCodeSection("global main\n");
+	addToCodeSection("section .text\n");
+	addToCodeSection("main:\n");
+	
+	addToDataSection("section .data\n");
+		
+	int val = yyparse();
+	
+	addToCodeSection("\n\tret\n");
+
+	fprintf(fout, "%s\n\n", codeSection);
+	fprintf(fout, "%s\n\n", dataSection);
+
+	return val;
+}

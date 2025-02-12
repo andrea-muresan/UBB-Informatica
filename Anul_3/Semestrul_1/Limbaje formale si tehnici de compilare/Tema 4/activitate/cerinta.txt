@@ -1,0 +1,3 @@
+Verfifica daca parantezele se inchid corect. Expresia are:
+	- numai paranteze drepte
+	- numai inmultiri

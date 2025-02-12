@@ -1,0 +1,22 @@
+#include <iostream>
+using namespace std;
+
+
+typedef struct ceva {
+	int a, b;
+};
+
+int main() {
+	int perimetru,ceva;
+	int r, r0;
+	cin>>r;
+	r=r+2;
+
+	if (r == 11.2) {
+		r = 2.1f;	
+	};
+
+	while (i != 0) {
+		i = i - 1;
+	};
+}
