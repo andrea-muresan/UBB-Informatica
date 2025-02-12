@@ -13,4 +13,4 @@ Comenzi:
   * out.exe  
 
 
-!!! Mi-e nu imi respecta ordinea operatiilor, aparent trebuia.
+!!! Mie nu imi respecta ordinea operatiilor, aparent trebuia.
