@@ -1,0 +1,41 @@
+<program> ::=	<import> <bloc_instructiuni>
+
+<import> ::= “#include” “<iostream>” “using” “namespace” “std”";"
+
+<bloc_instructiuni> ::= “int” “main””(“”)” “{“ <lista_instructiuni> “}”
+
+<lista_instructiuni> ::= <instructiune> <lista_instructiuni> 
+				| <instructiune>
+
+<instructiune ::= <instr_declarativa>
+				|	<instr_citire>
+				|	<instr_scriere>
+				|	<instr_atribuire>
+
+<instr_declarativa> ::=	"int" ID ";"
+
+<instr_citire> ::= “cin” “>>” ID ";"
+
+<instr_scriere> ::= “cout” “<<” ID ";"
+
+<instr_atribuire> ::= ID “=” <expresie>
+
+<expresie> ::= <expresie> <op_aritmetic> <operand>
+				| <operand>
+
+<operand> ::= ID | CONST
+
+<op_aritmetic> ::= “*” | “-” | “+” | “/”
+
+
+
+ID ::= <litera> | <litera> <lista_ch>
+<litera> ::= “a” | “b” | ... | “z” | “A” | “B” | ... | “Z”
+<lista_ch> ::= <caracter> | <caracter> <lista_ch>
+<caracter> ::= <litera> | <cifra>
+<cifra> ::= “0” | “1” | ... | “9”
+
+CONST ::= <cifra> | <cifra_nenula> <lista_cifre>
+				| "-" <cifra> | "-" <cifra_nenula> <lista_cifre>
+<cifra_nenula> ::= “1” | ... | “9”
+<lista_cifre> ::= <cifra> | <cifra> <lista_cifre>
