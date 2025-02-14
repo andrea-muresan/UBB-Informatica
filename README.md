@@ -35,12 +35,12 @@
 
 ## Third year
 * ***First semester***
-  * 📲 Mobile Application Programming
-  * ⚙️ Parallel and Distributed Programming
-  * 📝 Formal Languages and Compiler Design
+  * 📲 [Mobile Application Programming](https://github.com/andrea-muresan/UBB-Informatica/tree/main/Anul_3/Semestrul_1/Programarea%20dispozitivelor%20mobile)
+  * ⚙️ [Parallel and Distributed Programming](https://github.com/andrea-muresan/UBB-Informatica/tree/main/Anul_3/Semestrul_1/Programare%20paralela%20si%20distributiva)
+  * 📝 [Formal Languages and Compiler Design](https://github.com/andrea-muresan/UBB-Informatica/tree/main/Anul_3/Semestrul_1/Limbaje%20formale%20si%20tehnici%20de%20compilare)
   * Electives:
       * 🕵️ [CASE Tools](https://github.com/andrea-muresan/UBB-Informatica/tree/main/Anul_3/Semestrul_1/Instrumente%20CASE)
-      * 💰 Public Finance (FSEGA)
+      * 💰 Public Finance (FSEGA) --- ECHIVALATĂ
       * 🚀 Designing Innovative Projects
 * ***Second semester***
   * 🧮 Numerical Calculus
